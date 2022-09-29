@@ -6,7 +6,7 @@ An online E-store system built in Java 8=>11 and ___ _replace with other platfor
 ## Team
 
 - MEMBER1
-- MEMBER2
+- Monoshiz Mahbub Khan
 - MEMBER3
 - MEMBER4
 
