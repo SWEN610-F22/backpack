@@ -1,0 +1,25 @@
+[{
+    "id": 1,
+    "name": "Decathlon Rockrider ST520 24-Speed Mountain Bike",
+    "price": 399,
+    "quantity": 15
+},
+{
+    "id": 2,
+    "name": "Cannondale Scalpel HT Carbon 4 Mountain Bike",
+    "price": 2200,
+    "quantity": 3
+},
+{
+    "id": 3,
+    "name": "Black Diamond FirstLight Tent",
+    "price": 449.99,
+    "quantity": 7
+},
+{
+    "id": 4,
+    "name": "Nemo Aurora Tent",
+    "price": 279.95,
+    "quantity": 10
+}
+]
