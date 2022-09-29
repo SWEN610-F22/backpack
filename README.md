@@ -1,11 +1,11 @@
-# E-Store:  _____ _replace with your particular store type_ _____
+# E-Store:  __Backpack__
 # Modify this document to expand any and all sections that are applicable for a better understanding from your users/testers/collaborators (remove this comment and other instructions areas for your FINAL release)
 
-An online E-store system built in Java 8=>11 and ___ _replace with other platform requirements_ ___
+An online E-store system built in Java 17, Spring Boot and Angular.
   
 ## Team
 
-- MEMBER1
+- Sam Singh Anantha
 - Monoshiz Mahbub Khan
 - MEMBER3
 - MEMBER4
