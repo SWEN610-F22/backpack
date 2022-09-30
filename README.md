@@ -8,7 +8,7 @@ An online E-store system built in Java 17, Spring Boot and Angular.
 - Monoshiz Mahbub Khan
 - Vidit Naithani
 - Regina Afu
-- MEMBER5
+- Utkarsh Sharma
 
 ## Prerequisites
 
