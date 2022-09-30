@@ -1,7 +1,5 @@
 # E-Store: **Backpack**
 
-# Modify this document to expand any and all sections that are applicable for a better understanding from your users/testers/collaborators (remove this comment and other instructions areas for your FINAL release)
-
 An online E-store system built in Java 17, Spring Boot and Angular.
 
 ## Team
@@ -9,21 +7,19 @@ An online E-store system built in Java 17, Spring Boot and Angular.
 - Sam Singh Anantha
 - Monoshiz Mahbub Khan
 - Vidit Naithani
-- MEMBER4
+- Regina Afu
 - MEMBER5
 
 ## Prerequisites
 
 - Java 8=>11 (Make sure to have correct JAVA_HOME setup in your environment)
 - Maven
-- _add any other tech stack requirements_
 
 ## How to run it
 
 1. Clone the repository and go to the root directory.
 2. Execute `mvn compile exec:java`
 3. Open in your browser `http://localhost:8080/`
-4. _add any other steps required or examples of how to use/run_
 
 ## Known bugs and disclaimers
 
