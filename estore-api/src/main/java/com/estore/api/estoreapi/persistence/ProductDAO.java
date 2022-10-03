@@ -6,4 +6,6 @@ import com.estore.api.estoreapi.model.Product;
 
 public interface ProductDAO {
     Product[] getProducts() throws IOException;
+
+    Product[] findProducts(String containsText) throws IOException;
 }

@@ -38,12 +38,18 @@ public class ProductFileDAO implements ProductDAO {
         return true;
     }
 
-
     private Product[] getProductsArray(){
+        return getProductsArray(null);
+    }
+
+
+    private Product[] getProductsArray(String containsText){
         ArrayList<Product> productsList = new ArrayList<>();
 
         for (Product product : products.values()) {
-            productsList.add(product);
+            if (containsText == null || product.getName().contains(containsText)) {
+                productsList.add(product);
+            }
 
         }
 
@@ -57,6 +63,13 @@ public class ProductFileDAO implements ProductDAO {
     public Product[] getProducts() {
         synchronized(products){
             return getProductsArray();
+        }
+    }
+
+    @Override
+    public Product[] findProducts(String containsText) {
+        synchronized(products) {
+            return getProductsArray(containsText);
         }
     }
 }
