@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 import com.estore.api.estoreapi.model.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Implements object persistence of Product objects through JSON file.
+ */
 @Component
 public class ProductFileDAO implements ProductDAO {
     Map<Integer, Product> products;
@@ -25,6 +28,11 @@ public class ProductFileDAO implements ProductDAO {
         load();
     }
 
+    /**
+     * Loads {@linkplain Product products} from the JSON file into the map and sets nextId to be the greatestId in the file.
+     * @return true if the file was read successfully
+     * @throws IOException when file cannot be accessed or read from
+     */
     private boolean load() throws IOException {
         products = new TreeMap<>();
         nextId = 0;
@@ -38,11 +46,19 @@ public class ProductFileDAO implements ProductDAO {
         return true;
     }
 
+    /**
+     * Generates an array of {@linkplain Product products} that includes all the products
+     * @return  The array of {@link Product products}, may be empty
+     */
     private Product[] getProductsArray(){
         return getProductsArray(null);
     }
 
-
+    /**
+     * Generates an array of {@linkplain Product products} from the tree map for any {@linkplain Product products} that contains the text specified by containsText
+     * If containsText is null, the array contains all of the {@linkplain Product products} in the tree map
+     * @return  The array of {@link Product products}, may be empty
+     */
     private Product[] getProductsArray(String containsText){
         ArrayList<Product> productsList = new ArrayList<>();
 
@@ -59,6 +75,11 @@ public class ProductFileDAO implements ProductDAO {
     }
 
 
+    
+    /** 
+     * Makes a call to read all the products saved in the JSON file and the consequent processes to convert it to an array.
+     * @return Product[] of all products, may be empty
+     */
     @Override
     public Product[] getProducts() {
         synchronized(products){
@@ -66,6 +87,11 @@ public class ProductFileDAO implements ProductDAO {
         }
     }
 
+    
+    /** Finds all products with name matching the string in containsText
+     * @param containsText string to be matched against
+     * @return Product[] array that matches the search text
+     */
     @Override
     public Product[] findProducts(String containsText) {
         synchronized(products) {

@@ -24,6 +24,16 @@ public class ProductController {
         this.productDao = productDAO;
     }
 
+    /**
+     * Responds to the GET request for all {@linkplain Product products} whose name
+     * contains the text in name. If text is empty, returns all products.
+     * 
+     * @param name The name parameter which contains the text used to find the
+     *             {@link Product products}
+     * 
+     * @return ResponseEntity with array of {@link Product product} objects (may be empty) and HTTP status of OK.
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
+     */
     @GetMapping("")
     public ResponseEntity<Product[]> getProducts(@RequestParam(required = false) String name){
         try{
