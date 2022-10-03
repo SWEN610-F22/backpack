@@ -60,6 +60,10 @@ public class ProductFileDAO implements ProductDAO {
         }
     }
 
+    
+    /**
+    ** {@inheritDoc}
+     */
     @Override
     public Product updateProduct(Product product) throws IOException {
         synchronized(products) {
