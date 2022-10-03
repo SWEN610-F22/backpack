@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.estore.api.estoreapi.model.Product;
@@ -24,9 +25,14 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Product[]> getAllProducts(){
+    public ResponseEntity<Product[]> getProducts(@RequestParam(required = false) String name){
         try{
-            Product[] products = productDao.getProducts();
+            Product[] products;
+            if(name==null){
+                products = productDao.getProducts();
+            } else {
+                products = productDao.findProducts(name);
+            }
             return new ResponseEntity<Product[]>(products, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
