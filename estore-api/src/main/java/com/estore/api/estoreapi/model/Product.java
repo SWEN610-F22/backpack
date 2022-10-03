@@ -2,25 +2,26 @@ package com.estore.api.estoreapi.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Class to represent a product
+ */
 public class Product {
     @JsonProperty("id") private int id;
     @JsonProperty("name") private String name;
+    @JsonProperty("description") private String description;
     @JsonProperty("price") private double price;
     @JsonProperty("quantity") private int quantity;
 
-    public Product(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("price") double price, @JsonProperty("quantity") int quantity) {
+    public Product(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("description") String description, @JsonProperty("price") double price, @JsonProperty("quantity") int quantity) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.price = price;
         this.quantity = quantity;
     }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -47,9 +48,19 @@ public class Product {
         this.quantity = quantity;
     }
 
+    
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
-        return "Product [id=" + id + ", name=" + name + ", price=" + price + ", quantity=" + quantity + "]";
+        return "Product [id=" + id +", name=" + name + ", description=" + description + ", price=" + price + ", quantity=" + quantity + "]";
     }
 
     @Override
