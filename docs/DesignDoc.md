@@ -3,67 +3,77 @@ geometry: margin=1in
 ---
 # PROJECT Design Documentation
 
-> _The following template provides the headings for your Design
-> Documentation.  As you edit each section make sure you remove these
-> commentary 'blockquotes'; the lines that start with a > character
-> and appear in the generated PDF in italics._
-
 ## Team Information
-* Team name: TEAMNAME
+* Team name: TEAM 1
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  - Sam Singh Anantha
+  - Monoshiz Mahbub Khan
+  - Vidit Naithani
+  - Regina Afu
+  - Utkarsh Sharma
 
 ## Executive Summary
 
-This is a summary of the project.
-
-### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
-
-### Glossary and Acronyms
-> _Provide a table of terms and acronyms._
-
-| Term | Definition |
-|------|------------|
-| SPA | Single Page |
-
+Backpack is an e-store that sells outdoor gear and equipment for camping, biking, hiking, fishing trips, and so on. Users can also create a curated list of equipment they used on their trip to a certain destination. Other users can view these lists and add them to their cart, making it easier for them to buy equipment based on their necessity. 
 
 ## Requirements
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
-
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+A minimum viable product is an early iteration of the product that provides a minimum number of essential features a customer can use. Additional features are built on top of the MVP features.  
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+**User Login**  
+The user login feature enables the admin and customer to login so they can see the respective screens.  
+
+*Admin login*  
+As an admin, I want to login through my username to Backpack so that I can access my dashboard to view orders and inventory.  
+
+*Customer login*  
+As a customer, I want to login through my username to Backpack so that I can access member-only features.  
+
+**Inventory Management**  
+The Inventory Management feature provides a dashboard for the admin to keep track of their inventory.  
+  
+- As an admin, I want to add new equipment to my inventory.  
+- As an admin, I want to remove equipment from my inventory.  
+- As an admin, I want to edit details the equipment.  
+- As an admin, I want to adjust quantities of equipment.  
+
+**Product search**  
+The Product Search feature lets the customer browse through the catalogue.  
+
+- As a customer, I want to see a list of all the equipment in the product catalogue.  
+- As a customer, I want to search for an equipment in the product catalogue.  
+
+**Cart Management**
+The cart management feature lets the customer manipulate the cart.
+
+- As a customer, I want to add equipment to my cart.
+- As a customer, I want to update the quantity of items in my cart. 
+- As a customer, I want to delete equipment from my cart
+- As a customer, I want my cart data to be preserved, even when I close the tab.
+
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
+**Curated Equipment**
+- As a customer, I want to create a list of curated equipment.
+- As a customer, I want to modify a curated list I created.
+- As a customer, I want to delete a curated list I created.
+- As a customer, I want to search for curated lists.
+- As a customer, I want to add items from a curated list to my cart.
 
 
 ## Application Domain
 
 This section describes the application domain.
 
-![Domain Model](domain-model-placeholder.png)
+![Domain Model](domain-model.png)
 
-> _Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
 
 
 ## Architecture and Design
-
-This section describes the application architecture.
 
 ### Summary
 
