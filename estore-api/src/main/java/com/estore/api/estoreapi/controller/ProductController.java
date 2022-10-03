@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.estore.api.estoreapi.model.Product;
@@ -26,10 +27,25 @@ public class ProductController {
         this.productDao = productDAO;
     }
 
+    /**
+     * Responds to the GET request for all {@linkplain Product products} whose name
+     * contains the text in name. If text is empty, returns all products.
+     * 
+     * @param name The name parameter which contains the text used to find the
+     *             {@link Product products}
+     * 
+     * @return ResponseEntity with array of {@link Product product} objects (may be empty) and HTTP status of OK.
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
+     */
     @GetMapping("")
-    public ResponseEntity<Product[]> getAllProducts(){
+    public ResponseEntity<Product[]> getProducts(@RequestParam(required = false) String name){
         try{
-            Product[] products = productDao.getProducts();
+            Product[] products;
+            if(name==null){
+                products = productDao.getProducts();
+            } else {
+                products = productDao.findProducts(name);
+            }
             return new ResponseEntity<Product[]>(products, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
