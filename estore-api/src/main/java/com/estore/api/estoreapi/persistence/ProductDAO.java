@@ -6,4 +6,5 @@ import com.estore.api.estoreapi.model.Product;
 
 public interface ProductDAO {
     Product[] getProducts() throws IOException;
+    Product updateProduct(Product product) throws IOException;
 }

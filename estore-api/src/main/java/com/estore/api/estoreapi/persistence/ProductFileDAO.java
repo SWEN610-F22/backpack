@@ -59,4 +59,21 @@ public class ProductFileDAO implements ProductDAO {
             return getProductsArray();
         }
     }
+
+    @Override
+    public Product updateProduct(Product product) throws IOException {
+        synchronized(products) {
+            if (products.containsKey(product.getId()) == false)
+                return null;  // product does not exist
+
+            products.put(product.getId(), product);
+            save();
+            return product;
+        }
+    }
+
+    public boolean save()
+    {
+        return false;
+    }
 }
