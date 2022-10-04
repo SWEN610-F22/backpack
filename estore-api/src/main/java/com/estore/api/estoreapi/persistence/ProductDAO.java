@@ -56,5 +56,13 @@ public interface ProductDAO {
      */
     Product getProduct(int id) throws IOException;
 
+    /**
+     * Deletes a {@linkplain Product product} with the given id
+     * @param id The id of the {@link Product product}
+     * @return true if the {@link Product product} was deleted
+     * false if product with the given id does not exist
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    boolean deleteProduct(int id) throws IOException;
 }
 

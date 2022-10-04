@@ -117,24 +117,49 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<Product[]> deleteProducts(@RequestParam(required = false) String name) {
+    // @DeleteMapping("")
+    // public ResponseEntity<Product[]> deleteProducts(@RequestParam(required = false) String name) {
+    //     try {
+    //         Product[] products;
+    //         if (name == null) {
+    //             products = productDao.getProducts();
+    //             System.out.println("no products deleted");
+    //         } else {
+    //             products = productDao.findProducts(name);
+    //             List<Product> list = Arrays.asList(products);
+    //             for (Product p : list) {
+    //                 if (p.getName() == name) {
+    //                     list.remove(p);
+    //                 }
+    //             }
+    //             products = (Product[]) list.toArray();
+    //         }
+    //         return new ResponseEntity<Product[]>(products, HttpStatus.OK);
+    //     } catch (IOException e) {
+    //         LOG.log(Level.SEVERE, e.getLocalizedMessage());
+    //         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    //     }
+
+    // }
+
+    /**
+     * Deletes a {@linkplain Product product} with the given id
+     * 
+     * @param id The id of the {@link Product product} to deleted
+     * 
+     * @return ResponseEntity HTTP status of OK if deleted<br>
+     *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Product> deleteProduct(@PathVariable int id) {
+        LOG.info("DELETE /products/" + id);
         try {
-            Product[] products;
-            if (name == null) {
-                products = productDao.getProducts();
-                System.out.println("no products deleted");
+            if (productDao.deleteProduct(id)) {
+                return new ResponseEntity<>(HttpStatus.OK);
             } else {
-                products = productDao.findProducts(name);
-                List<Product> list = Arrays.asList(products);
-                for (Product p : list) {
-                    if (p.getName() == name) {
-                        list.remove(p);
-                    }
-                }
-                products = (Product[]) list.toArray();
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<Product[]>(products, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

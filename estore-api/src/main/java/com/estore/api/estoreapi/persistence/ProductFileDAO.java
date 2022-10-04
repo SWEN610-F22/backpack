@@ -106,9 +106,8 @@ public class ProductFileDAO implements ProductDAO {
             return products.getOrDefault(id, null);
         }
     }
-    /**
-    ** {@inheritDoc}
-     */
+    
+
     @Override
     public Product updateProduct(Product product) throws IOException {
         synchronized(products) {
@@ -128,10 +127,6 @@ public class ProductFileDAO implements ProductDAO {
      */
     private boolean save() throws IOException {
         Product[] productArray = getProductsArray();
-
-        // Serializes the Java Objects to JSON objects into the file
-        // writeValue will thrown an IOException if there is an issue
-        // with the file or reading from the file
         objectMapper.writeValue(new File(filename),productArray);
         return true;
     }
@@ -139,12 +134,22 @@ public class ProductFileDAO implements ProductDAO {
     @Override
     public Product createProduct(Product product) throws IOException {
         synchronized(products) {
-            // We create a new product object because the id field is immutable
-            // and we need to assign the next unique id
             Product newProduct = new Product(nextId(),product.getName(), product.getDescription(), product.getPrice(), product.getQuantity());
             products.put(newProduct.getId(),newProduct);
-            save(); // may throw an IOException
+            save();
             return newProduct;
+        }
+    }
+
+    @Override
+    public boolean deleteProduct(int id) throws IOException {
+        synchronized(products) {
+            if (products.containsKey(id)) {
+                products.remove(id);
+                return save();
+            }
+            else
+                return false;
         }
     }
 
