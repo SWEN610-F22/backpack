@@ -53,6 +53,23 @@ public class ProductController {
         }
         
     }
+
+    @PutMapping("")
+    public ResponseEntity<Product> updateHero(@RequestBody Product product) {
+        LOG.info("PUT /product " + product);
+
+        try {
+            Product newProduct = productDao.updateProduct(product);
+            if (newProduct != null)
+                return new ResponseEntity<Product>(newProduct,HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        catch(IOException e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @PostMapping("")
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         LOG.info("POST /product " + product);
