@@ -1,6 +1,8 @@
 package com.estore.api.estoreapi.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,7 +26,7 @@ public class ProductController {
     private static final Logger LOG = Logger.getLogger(ProductController.class.getName());
     private ProductDAO productDao;
 
-    public ProductController(ProductDAO productDAO){
+    public ProductController(ProductDAO productDAO) {
         this.productDao = productDAO;
     }
 
@@ -35,14 +37,15 @@ public class ProductController {
      * @param name The name parameter which contains the text used to find the
      *             {@link Product products}
      * 
-     * @return ResponseEntity with array of {@link Product product} objects (may be empty) and HTTP status of OK.
+     * @return ResponseEntity with array of {@link Product product} objects (may be
+     *         empty) and HTTP status of OK.
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
      */
     @GetMapping("")
-    public ResponseEntity<Product[]> getProducts(@RequestParam(required = false) String name){
-        try{
+    public ResponseEntity<Product[]> getProducts(@RequestParam(required = false) String name) {
+        try {
             Product[] products;
-            if(name==null){
+            if (name == null) {
                 products = productDao.getProducts();
             } else {
                 products = productDao.findProducts(name);
@@ -52,8 +55,9 @@ public class ProductController {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
+
     }
+
     /**
      * Responds to the GET request for a {@linkplain Product product} for the given id
      *
@@ -79,6 +83,7 @@ public class ProductController {
         }
     }
 
+
     @PutMapping("")
     public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
         LOG.info("PUT /product " + product);
@@ -86,12 +91,11 @@ public class ProductController {
         try {
             Product newProduct = productDao.updateProduct(product);
             if (newProduct != null)
-                return new ResponseEntity<Product>(newProduct,HttpStatus.OK);
+                return new ResponseEntity<Product>(newProduct, HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        catch(IOException e) {
-            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -111,5 +115,30 @@ public class ProductController {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @DeleteMapping("")
+    public ResponseEntity<Product[]> deleteProducts(@RequestParam(required = false) String name) {
+        try {
+            Product[] products;
+            if (name == null) {
+                products = productDao.getProducts();
+                System.out.println("no products deleted");
+            } else {
+                products = productDao.findProducts(name);
+                List<Product> list = Arrays.asList(products);
+                for (Product p : list) {
+                    if (p.getName() == name) {
+                        list.remove(p);
+                    }
+                }
+                products = (Product[]) list.toArray();
+            }
+            return new ResponseEntity<Product[]>(products, HttpStatus.OK);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }
