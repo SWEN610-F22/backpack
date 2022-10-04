@@ -15,6 +15,26 @@ public interface ProductDAO {
      */
     Product[] getProducts() throws IOException;
 
+     /**
+     * Updates and saves a {@linkplain Product product}
+     * 
+     * @param {@link Product product} object to be updated and saved
+     * 
+     * @return updated {@link Product product} if successful, null if
+     * {@link Product product} could not be found
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    Product updateProduct(Product product) throws IOException;
+    /**
+     * Creates and saves a {@linkplain Product product}
+     * @param product {@linkplain Product product} object to be created and saved.
+     * The id of the product object is ignored and a new unique id is assigned.
+     * @return new {@link Product product} if successful, false otherwise.
+     * @throws IOException if there is an issue with underlying storage.
+     */
+    Product createProduct(Product product) throws IOException;
+
     /**
      * Finds all {@linkplain Product products} whose name contains the given text
      * @param containsText The text to match against
@@ -36,5 +56,5 @@ public interface ProductDAO {
      */
     Product getProduct(int id) throws IOException;
 
-
 }
+

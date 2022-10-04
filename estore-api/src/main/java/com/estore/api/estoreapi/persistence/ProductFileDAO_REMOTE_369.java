@@ -48,21 +48,6 @@ public class ProductFileDAO implements ProductDAO {
         return id;
     }
 
-    private Product[] getProductsArray(String containsText){
-        ArrayList<Product> productsList = new ArrayList<>();
-
-        for (Product product : products.values()) {
-            if (containsText == null || product.getName().toLowerCase().contains(containsText.toLowerCase())) {
-                productsList.add(product);
-            }
-
-        }
-
-        Product[] productArray = new Product[productsList.size()];
-        productsList.toArray(productArray);
-        return productArray;
-    }
-
     private Product[] getProductsArray(){
         ArrayList<Product> productsList = new ArrayList<>();
 
@@ -80,44 +65,6 @@ public class ProductFileDAO implements ProductDAO {
     public Product[] getProducts() {
         synchronized(products){
             return getProductsArray();
-        }
-    }
-
-    /** Finds all products with name matching the string in containsText
-     * @param containsText string to be matched against
-     * @return Product[] array that matches the search text
-     */
-    @Override
-    public Product[] findProducts(String containsText) {
-        synchronized(products) {
-            return getProductsArray(containsText);
-        }
-    }
-
-    /**
-     *  Returns the product with the specific id
-     * @param id The id of the {@link Product product} to get
-     *
-     * @return Product with the specific id
-     */
-    @Override
-    public Product getProduct(int id) {
-        synchronized(products) {
-            return products.getOrDefault(id, null);
-        }
-    }
-    /**
-    ** {@inheritDoc}
-     */
-    @Override
-    public Product updateProduct(Product product) throws IOException {
-        synchronized(products) {
-            if (products.containsKey(product.getId()) == false)
-                return null;  // product does not exist
-
-            products.put(product.getId(), product);
-            save();
-            return product;
         }
     }
 
