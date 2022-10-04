@@ -68,28 +68,6 @@ public class ProductFileDAO implements ProductDAO {
         }
     }
 
-<<<<<<< HEAD
-    
-    /**
-    ** {@inheritDoc}
-     */
-    @Override
-    public Product updateProduct(Product product) throws IOException {
-        synchronized(products) {
-            if (products.containsKey(product.getId()) == false)
-                return null;  // product does not exist
-
-            products.put(product.getId(), product);
-            save();
-            return product;
-        }
-    }
-
-    public boolean save()
-    {
-        return false;
-    }
-=======
     /**
      * Saves the {@linkplain Product products} from the map into the file as an array of JSON objects
      * @return true if the {@link Product products} were written successfully
@@ -118,5 +96,4 @@ public class ProductFileDAO implements ProductDAO {
     }
 
 
->>>>>>> 7a8049a79b6bbeabf44a84841b2bd086d833e83d
 }

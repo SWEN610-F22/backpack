@@ -7,9 +7,14 @@ import java.util.logging.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+<<<<<<< HEAD
+=======
+import org.springframework.web.bind.annotation.PostMapping;
+>>>>>>> 7a8049a79b6bbeabf44a84841b2bd086d833e83d
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.estore.api.estoreapi.model.Product;
@@ -25,10 +30,25 @@ public class ProductController {
         this.productDao = productDAO;
     }
 
+    /**
+     * Responds to the GET request for all {@linkplain Product products} whose name
+     * contains the text in name. If text is empty, returns all products.
+     * 
+     * @param name The name parameter which contains the text used to find the
+     *             {@link Product products}
+     * 
+     * @return ResponseEntity with array of {@link Product product} objects (may be empty) and HTTP status of OK.
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
+     */
     @GetMapping("")
-    public ResponseEntity<Product[]> getAllProducts(){
+    public ResponseEntity<Product[]> getProducts(@RequestParam(required = false) String name){
         try{
-            Product[] products = productDao.getProducts();
+            Product[] products;
+            if(name==null){
+                products = productDao.getProducts();
+            } else {
+                products = productDao.findProducts(name);
+            }
             return new ResponseEntity<Product[]>(products, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
@@ -36,6 +56,7 @@ public class ProductController {
         }
         
     }
+<<<<<<< HEAD
 
     @PutMapping("")
     public ResponseEntity<Product> updateHero(@RequestBody Product product) {
@@ -53,4 +74,24 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+=======
+    @PostMapping("")
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+        LOG.info("POST /product " + product);
+        try {
+            Product[] existingProducts = productDao.findProducts(product.getName());
+            if (existingProducts.length > 0) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            } else {
+                Product createdProduct = productDao.createProduct(product);
+                return new ResponseEntity<Product>(createdProduct, HttpStatus.CREATED);
+            }
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+  
+   
+>>>>>>> 7a8049a79b6bbeabf44a84841b2bd086d833e83d
 }
