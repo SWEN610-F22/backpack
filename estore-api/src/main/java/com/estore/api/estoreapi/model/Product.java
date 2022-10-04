@@ -77,11 +77,9 @@ public class Product {
         if (name == null) {
             if (other.name != null)
                 return false;
-        } else if (!name.equals(other.name))
+        } else if (!name.equalsIgnoreCase(other.name))
             return false;
         if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
-            return false;
-        if (quantity != other.quantity)
             return false;
         return true;
     }
