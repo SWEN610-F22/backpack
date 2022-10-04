@@ -48,6 +48,21 @@ public class ProductFileDAO implements ProductDAO {
         return id;
     }
 
+    private Product[] getProductsArray(String containsText){
+        ArrayList<Product> productsList = new ArrayList<>();
+
+        for (Product product : products.values()) {
+            if (containsText == null || product.getName().toLowerCase().contains(containsText.toLowerCase())) {
+                productsList.add(product);
+            }
+
+        }
+
+        Product[] productArray = new Product[productsList.size()];
+        productsList.toArray(productArray);
+        return productArray;
+    }
+
     private Product[] getProductsArray(){
         ArrayList<Product> productsList = new ArrayList<>();
 
@@ -68,7 +83,16 @@ public class ProductFileDAO implements ProductDAO {
         }
     }
 
-<<<<<<< HEAD
+    /** Finds all products with name matching the string in containsText
+     * @param containsText string to be matched against
+     * @return Product[] array that matches the search text
+     */
+    @Override
+    public Product[] findProducts(String containsText) {
+        synchronized(products) {
+            return getProductsArray(containsText);
+        }
+    }
     
     /**
     ** {@inheritDoc}
@@ -85,11 +109,6 @@ public class ProductFileDAO implements ProductDAO {
         }
     }
 
-    public boolean save()
-    {
-        return false;
-    }
-=======
     /**
      * Saves the {@linkplain Product products} from the map into the file as an array of JSON objects
      * @return true if the {@link Product products} were written successfully
@@ -118,5 +137,4 @@ public class ProductFileDAO implements ProductDAO {
     }
 
 
->>>>>>> 7a8049a79b6bbeabf44a84841b2bd086d833e83d
 }

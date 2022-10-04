@@ -7,10 +7,7 @@ import java.util.logging.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-<<<<<<< HEAD
-=======
 import org.springframework.web.bind.annotation.PostMapping;
->>>>>>> 7a8049a79b6bbeabf44a84841b2bd086d833e83d
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,7 +53,6 @@ public class ProductController {
         }
         
     }
-<<<<<<< HEAD
 
     @PutMapping("")
     public ResponseEntity<Product> updateHero(@RequestBody Product product) {
@@ -74,7 +70,6 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-=======
     @PostMapping("")
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         LOG.info("POST /product " + product);
@@ -93,5 +88,4 @@ public class ProductController {
     }
   
    
->>>>>>> 7a8049a79b6bbeabf44a84841b2bd086d833e83d
 }

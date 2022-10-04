@@ -15,7 +15,6 @@ public interface ProductDAO {
      */
     Product[] getProducts() throws IOException;
 
-<<<<<<< HEAD
      /**
      * Updates and saves a {@linkplain Product product}
      * 
@@ -27,7 +26,6 @@ public interface ProductDAO {
      * @throws IOException if underlying storage cannot be accessed
      */
     Product updateProduct(Product product) throws IOException;
-=======
     /**
      * Creates and saves a {@linkplain Product product}
      * @param product {@linkplain Product product} object to be created and saved.
@@ -45,6 +43,5 @@ public interface ProductDAO {
      */
     Product[] findProducts(String containsText) throws IOException;
 
->>>>>>> 7a8049a79b6bbeabf44a84841b2bd086d833e83d
 }
 
