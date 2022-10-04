@@ -12,9 +12,6 @@ import org.springframework.stereotype.Component;
 import com.estore.api.estoreapi.model.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- * Implements object persistence of Product objects through JSON file.
- */
 @Component
 public class ProductFileDAO implements ProductDAO {
     Map<Integer, Product> products;
@@ -28,11 +25,6 @@ public class ProductFileDAO implements ProductDAO {
         load();
     }
 
-    /**
-     * Loads {@linkplain Product products} from the JSON file into the map and sets nextId to be the greatestId in the file.
-     * @return true if the file was read successfully
-     * @throws IOException when file cannot be accessed or read from
-     */
     private boolean load() throws IOException {
         products = new TreeMap<>();
         nextId = 0;
@@ -45,7 +37,6 @@ public class ProductFileDAO implements ProductDAO {
         ++nextId;
         return true;
     }
-<<<<<<< HEAD
     /**
      * Generates the next id for a new {@linkplain Product product}
      * 
@@ -57,29 +48,11 @@ public class ProductFileDAO implements ProductDAO {
         return id;
     }
 
-=======
-
-    /**
-     * Generates an array of {@linkplain Product products} that includes all the products
-     * @return  The array of {@link Product products}, may be empty
-     */
->>>>>>> 06e58930d05dcf1c66a9f98d56fdbf551048bb89
     private Product[] getProductsArray(){
-        return getProductsArray(null);
-    }
-
-    /**
-     * Generates an array of {@linkplain Product products} from the tree map for any {@linkplain Product products} that contains the text specified by containsText
-     * If containsText is null, the array contains all of the {@linkplain Product products} in the tree map
-     * @return  The array of {@link Product products}, may be empty
-     */
-    private Product[] getProductsArray(String containsText){
         ArrayList<Product> productsList = new ArrayList<>();
 
         for (Product product : products.values()) {
-            if (containsText == null || product.getName().toLowerCase().contains(containsText.toLowerCase())) {
-                productsList.add(product);
-            }
+            productsList.add(product);
 
         }
 
@@ -88,15 +61,6 @@ public class ProductFileDAO implements ProductDAO {
         return productArray;
     }
 
-<<<<<<< HEAD
-=======
-
-    
-    /** 
-     * Makes a call to read all the products saved in the JSON file and the consequent processes to convert it to an array.
-     * @return Product[] of all products, may be empty
-     */
->>>>>>> 06e58930d05dcf1c66a9f98d56fdbf551048bb89
     @Override
     public Product[] getProducts() {
         synchronized(products){
@@ -104,7 +68,6 @@ public class ProductFileDAO implements ProductDAO {
         }
     }
 
-<<<<<<< HEAD
     /**
      * Saves the {@linkplain Product products} from the map into the file as an array of JSON objects
      * @return true if the {@link Product products} were written successfully
@@ -133,17 +96,4 @@ public class ProductFileDAO implements ProductDAO {
     }
 
 
-=======
-    
-    /** Finds all products with name matching the string in containsText
-     * @param containsText string to be matched against
-     * @return Product[] array that matches the search text
-     */
-    @Override
-    public Product[] findProducts(String containsText) {
-        synchronized(products) {
-            return getProductsArray(containsText);
-        }
-    }
->>>>>>> 06e58930d05dcf1c66a9f98d56fdbf551048bb89
 }
