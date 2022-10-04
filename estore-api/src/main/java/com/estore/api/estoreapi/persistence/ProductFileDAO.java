@@ -98,4 +98,18 @@ public class ProductFileDAO implements ProductDAO {
             return getProductsArray(containsText);
         }
     }
+
+    /**
+     *  Returns the product with the specific id
+     * @param id The id of the {@link Product product} to get
+     *
+     * @return Product with the specific id
+     */
+    @Override
+    public Product getProduct(int id) {
+        synchronized(products) {
+            return products.getOrDefault(id, null);
+        }
+    }
+
 }
