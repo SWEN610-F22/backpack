@@ -37,7 +37,16 @@ public class ProductFileDAO implements ProductDAO {
         ++nextId;
         return true;
     }
-
+    /**
+     * Generates the next id for a new {@linkplain Product product}
+     * 
+     * @return The next id
+     */
+    private synchronized static int nextId() {
+        int id = nextId;
+        ++nextId;
+        return id;
+    }
 
     private Product[] getProductsArray(){
         ArrayList<Product> productsList = new ArrayList<>();
@@ -52,11 +61,39 @@ public class ProductFileDAO implements ProductDAO {
         return productArray;
     }
 
-
     @Override
     public Product[] getProducts() {
         synchronized(products){
             return getProductsArray();
         }
     }
+
+    /**
+     * Saves the {@linkplain Product products} from the map into the file as an array of JSON objects
+     * @return true if the {@link Product products} were written successfully
+     * @throws IOException when file cannot be accessed or written to
+     */
+    private boolean save() throws IOException {
+        Product[] productArray = getProductsArray();
+
+        // Serializes the Java Objects to JSON objects into the file
+        // writeValue will thrown an IOException if there is an issue
+        // with the file or reading from the file
+        objectMapper.writeValue(new File(filename),productArray);
+        return true;
+    }
+
+    @Override
+    public Product createProduct(Product product) throws IOException {
+        synchronized(products) {
+            // We create a new product object because the id field is immutable
+            // and we need to assign the next unique id
+            Product newProduct = new Product(nextId(),product.getName(), product.getDescription(), product.getPrice(), product.getQuantity());
+            products.put(newProduct.getId(),newProduct);
+            save(); // may throw an IOException
+            return newProduct;
+        }
+    }
+
+
 }
