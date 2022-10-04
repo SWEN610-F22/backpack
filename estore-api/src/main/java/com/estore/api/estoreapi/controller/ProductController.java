@@ -55,7 +55,7 @@ public class ProductController {
     }
 
     @PutMapping("")
-    public ResponseEntity<Product> updateHero(@RequestBody Product product) {
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
         LOG.info("PUT /product " + product);
 
         try {
