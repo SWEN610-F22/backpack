@@ -1,11 +1,13 @@
 package com.estore.api.estoreapi.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @Tag("Model-tier")
 public class ProductTest {
-
+Product product = new Product(10,"doesn't matter", "it doesn't matter", 45.78, 7);
     @Test
     void createProduct(){
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
