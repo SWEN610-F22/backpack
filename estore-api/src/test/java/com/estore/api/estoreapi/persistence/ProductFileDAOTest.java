@@ -20,6 +20,7 @@ import static org.mockito.Mockito.when;
 
 import com.estore.api.estoreapi.model.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.test.context.TestPropertySource;
 
 public class ProductFileDAOTest {
     ProductFileDAO productFileDAO; 
@@ -44,5 +45,11 @@ public class ProductFileDAOTest {
     void getProducts(){
         Product[] products = productFileDAO.getProducts();
         System.out.println(products[0]);
+    }
+
+    @Test
+    void getProduct(){
+        Product product = productFileDAO.getProduct(1);
+        assertEquals(product, testProducts[0]);
     }
 }
