@@ -1,5 +1,7 @@
 package com.estore.api.estoreapi.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +16,29 @@ public class ProductTest {
         assertEquals("Can be used for fishing", product.getDescription());
         assertEquals(35.0, product.getPrice());
         assertEquals(10, product.getQuantity());
+    }
+
+    @Test
+    void equals(){
+        Product productOriginal = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
+        Product productSame = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
+        Product productNewDiff = new Product(2, "Not a fishing rod", "Can not be used for fishing", 53.0, 1);
+        Product productNull = new Product(2, null, "Can not be used for fishing", 53.0, 1);
+        
+        assertTrue(productOriginal!=productNewDiff);
+        assertTrue(productOriginal!=null);
+        assertTrue(productOriginal.getId()!=productNewDiff.getId());
+        assertTrue(productNull.getName()!=productOriginal.getName());
+        assertTrue(productOriginal.getName()!=productNewDiff.getName());
+        assertTrue(productOriginal.getQuantity()!=productNewDiff.getQuantity());
+
+        assertTrue(productOriginal==productOriginal);
+        assertTrue(productOriginal.getClass()==productSame.getClass());
+        assertTrue(productOriginal.getClass()==productNewDiff.getClass());
+        assertTrue(null==null);
+        assertTrue(productOriginal.getId()==productSame.getId());
+        assertTrue(productOriginal.getName()==productSame.getName());
+        assertTrue(productOriginal.getQuantity()==productSame.getQuantity());
     }
     
 }
