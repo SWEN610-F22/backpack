@@ -12,7 +12,7 @@ public class User {
 
     public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("admin") boolean admin) {
         this.id = id;
-        this.username = name;
+        this.username = username;
         this.admin = admin;
     }
 
