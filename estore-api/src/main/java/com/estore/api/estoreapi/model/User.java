@@ -38,7 +38,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id=" + id +", username=" + username+ ", admin=" + isAdmin"]";
+        return "User [id=" + id +", username=" + username+ ", admin=" + isAdmin+"]";
     }
 
     @Override
@@ -48,15 +48,14 @@ public class User {
         if (getClass() != obj.getClass())
             return false;
         User other = (User) obj;
-        if (id != other.id)
+        if (id != other.id){
             return false;
         } else if (!username.equals(other.username))
             return false;
-        if (admin != other.admin)
+        if (isAdmin != other.isAdmin)
             return false;
         return true;
     }
 
-   
-    
+       
 }
