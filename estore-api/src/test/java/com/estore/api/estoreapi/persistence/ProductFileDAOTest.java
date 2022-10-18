@@ -57,12 +57,15 @@ public class ProductFileDAOTest {
     }
 
     @Test
-    public void testSaveException() throws IOException{
-        doThrow(new IOException()).when(mockObjectMapper).writeValue(any(File.class),any(Product[].class));
+    public void testSaveException() throws IOException {
+        doThrow(new IOException()).when(mockObjectMapper).writeValue(any(File.class), any(Product[].class));
         Product product = new Product(1, "BootsBootsBoots", "They are indeed boots", 100.00, 10000);
         assertThrows(IOException.class, () -> productFileDAO.createProduct(product), "IOException not thrown");
+    }
+    @Test
     void getProduct(){
         Product product = productFileDAO.getProduct(1);
         assertEquals(product, testProducts[0]);
     }
+
 }
