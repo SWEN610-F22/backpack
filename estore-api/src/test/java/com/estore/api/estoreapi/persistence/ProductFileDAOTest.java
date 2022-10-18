@@ -20,6 +20,7 @@ import static org.mockito.Mockito.when;
 
 import com.estore.api.estoreapi.model.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.test.context.TestPropertySource;
 
 public class ProductFileDAOTest {
     ProductFileDAO productFileDAO; 
@@ -60,5 +61,8 @@ public class ProductFileDAOTest {
         doThrow(new IOException()).when(mockObjectMapper).writeValue(any(File.class),any(Product[].class));
         Product product = new Product(1, "BootsBootsBoots", "They are indeed boots", 100.00, 10000);
         assertThrows(IOException.class, () -> productFileDAO.createProduct(product), "IOException not thrown");
+    void getProduct(){
+        Product product = productFileDAO.getProduct(1);
+        assertEquals(product, testProducts[0]);
     }
 }
