@@ -28,12 +28,16 @@ public class ProductFileDAOTest {
 
     @BeforeEach
     public void setupProductFileDAO() throws IOException {
-    mockObjectMapper = mock(ObjectMapper.class);
-    Product[] testProducts = new Product[3];
-    testProducts[0] = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
-    
-    when(mockObjectMapper).readValue(new File("products.json"), Product[].class).thenReturn(testProducts);
-    productFileDAO = new ProductFileDAO("doesnt_matter.txt",mockObjectMapper);
+        mockObjectMapper = mock(ObjectMapper.class);
+        testProducts = new Product[3];
+        testProducts[0] = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
+        testProducts[1] = new Product(2, "Fishing rod 2", "Can be used for fishing", 35.0, 10);
+        testProducts[2] = new Product(3, "Fishing rod 3", "Can be used for fishing", 35.0, 10);
+
+        when(mockObjectMapper
+            .readValue(new File("products.json"),Product[].class))
+                .thenReturn(testProducts);
+        productFileDAO = new ProductFileDAO("products.json",mockObjectMapper);
     }
 
     @Test
