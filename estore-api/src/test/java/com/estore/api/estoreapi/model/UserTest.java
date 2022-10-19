@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 @Tag("Model-tier")
 public class UserTest {
+    User user = new User(2, "Dachu", true);
 
     @Test
     void createUser() {
@@ -16,6 +17,16 @@ public class UserTest {
         assertEquals("Regina", user.getUsername());
         assertEquals(true, user.getIsAdmin());
     }
-   
+    @Test
+    void setUsername(){
+        user.setUsername("Dachu");
+        assertEquals("Dachu", user.getUsername());
+    }
+    @Test
+    void setAdmin(){
+        user.setAdmin(true);
+        assertEquals(true, user.getIsAdmin());
+    }
+  
     
 }

@@ -19,6 +19,10 @@ public class User {
     public int getId() {
         return id;
     }
+    public int setId(){
+        return id;
+    }
+
 
     public String getUsername() {
         return username;
