@@ -20,6 +20,7 @@ import static org.mockito.Mockito.when;
 
 import com.estore.api.estoreapi.model.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.test.context.TestPropertySource;
 
 public class ProductFileDAOTest {
     ProductFileDAO productFileDAO; 
@@ -28,12 +29,16 @@ public class ProductFileDAOTest {
 
     @BeforeEach
     public void setupProductFileDAO() throws IOException {
-    mockObjectMapper = mock(ObjectMapper.class);
-    Product[] testProducts = new Product[3];
-    testProducts[0] = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
-    
-    when(mockObjectMapper).readValue(new File("products.json"), Product[].class).thenReturn(testProducts);
-    productFileDAO = new ProductFileDAO("doesnt_matter.txt",mockObjectMapper);
+        mockObjectMapper = mock(ObjectMapper.class);
+        testProducts = new Product[3];
+        testProducts[0] = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
+        testProducts[1] = new Product(2, "Fishing rod 2", "Can be used for fishing", 35.0, 10);
+        testProducts[2] = new Product(3, "Fishing rod 3", "Can be used for fishing", 35.0, 10);
+
+        when(mockObjectMapper
+            .readValue(new File("products.json"),Product[].class))
+                .thenReturn(testProducts);
+        productFileDAO = new ProductFileDAO("products.json",mockObjectMapper);
     }
 
     @Test
@@ -41,4 +46,26 @@ public class ProductFileDAOTest {
         Product[] products = productFileDAO.getProducts();
         System.out.println(products[0]);
     }
+
+    @Test
+    void updateProduct(){
+        Product product = new Product(1, "BootsBootsBoots", "They are indeed boots", 100.00, 10000);
+        Product result = assertDoesNotThrow(() -> productFileDAO.updateProduct(product), "Unexpected exception thrown");
+        assertNotNull(result);
+        Product realProduct = productFileDAO.getProduct(product.getId());
+        assertEquals(realProduct, product);
+    }
+
+    @Test
+    public void testSaveException() throws IOException {
+        doThrow(new IOException()).when(mockObjectMapper).writeValue(any(File.class), any(Product[].class));
+        Product product = new Product(1, "BootsBootsBoots", "They are indeed boots", 100.00, 10000);
+        assertThrows(IOException.class, () -> productFileDAO.createProduct(product), "IOException not thrown");
+    }
+    @Test
+    void getProduct(){
+        Product product = productFileDAO.getProduct(1);
+        assertEquals(product, testProducts[0]);
+    }
+
 }
