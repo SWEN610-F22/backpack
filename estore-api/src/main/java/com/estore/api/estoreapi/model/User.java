@@ -8,12 +8,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class User {
     @JsonProperty("id") private int id;
     @JsonProperty("username") private String username;
-    @JsonProperty("admin") private boolean admin;
+    @JsonProperty("isAdmin") private boolean isAdmin;
 
-    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("admin") boolean admin) {
+    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("isAdmin") boolean isAdmin) {
         this.id = id;
         this.username = username;
-        this.admin = admin;
+        this.isAdmin = isAdmin;
     }
 
     public int getId() {
@@ -28,17 +28,17 @@ public class User {
         this.username = name;
     }
 
-    public boolean getAdmin() {
-        return admin;
+    public boolean getIsAdmin() {
+        return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
+    public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     @Override
     public String toString() {
-        return "User [id=" + id +", username=" + username+ ", admin=" + admin +"]" ;
+        return "User [id=" + id +", username=" + username+ ", admin=" + isAdmin+"]";
     }
 
     @Override
@@ -52,7 +52,7 @@ public class User {
             return false;
         } else if (!username.equals(other.username))
             return false;
-        if (admin != other.admin)
+        if (isAdmin != other.isAdmin)
             return false;
         return true;
     }
