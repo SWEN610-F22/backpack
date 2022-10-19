@@ -32,8 +32,8 @@ public class ProductFileDAOTest {
         mockObjectMapper = mock(ObjectMapper.class);
         testProducts = new Product[3];
         testProducts[0] = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
-        testProducts[1] = new Product(2, "Fishing rod 2", "Can be used for fishing", 35.0, 10);
-        testProducts[2] = new Product(3, "Fishing rod 3", "Can be used for fishing", 35.0, 10);
+        testProducts[1] = new Product(2, "Camping gear", "Can be used for gear", 5.0, 2);
+        testProducts[2] = new Product(3, "Hiking boots", "Can be used for boots", 13.0, 5);
 
         when(mockObjectMapper
             .readValue(new File("products.json"),Product[].class))
@@ -44,7 +44,16 @@ public class ProductFileDAOTest {
     @Test
     void getProducts(){
         Product[] products = productFileDAO.getProducts();
-        System.out.println(products[0]);
+        assertEquals(products.length,products.length);
+        for (int i = 0; i < testProducts.length;i++){
+            assertEquals(testProducts[i], products[i]);
+        }
+    }
+
+    @Test
+    public void findProducts() {
+        Product[] products = productFileDAO.findProducts("camp");
+        assertEquals(1, products.length);
     }
 
     @Test
