@@ -85,7 +85,7 @@ public class ProductFileDAOTest {
     @Test
     public void testCreateProduct() {
         // Setup
-       Product product = new Product(1,"Fishing Rod","a fishing rod",10.11,100);
+       Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
 
         // Invoke
         Product result = assertDoesNotThrow(() -> productFileDAO.createProduct(product),
