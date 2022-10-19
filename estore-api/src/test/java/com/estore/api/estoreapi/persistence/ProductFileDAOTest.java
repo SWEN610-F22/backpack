@@ -57,6 +57,12 @@ public class ProductFileDAOTest {
     }
 
     @Test
+    public void findProductWithoutText(){
+        Product[] products = productFileDAO.findProducts(null);
+        assertEquals(testProducts.length, products.length);
+    }
+
+    @Test
     void updateProduct(){
         Product product = new Product(1, "BootsBootsBoots", "They are indeed boots", 100.00, 10000);
         Product result = assertDoesNotThrow(() -> productFileDAO.updateProduct(product), "Unexpected exception thrown");
