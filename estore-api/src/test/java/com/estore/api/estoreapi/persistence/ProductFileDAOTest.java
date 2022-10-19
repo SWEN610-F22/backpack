@@ -87,7 +87,7 @@ public class ProductFileDAOTest {
     @Test
     public void testCreateProduct() {
         // Setup
-       Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
+        Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
 
         // Invoke
         Product result = assertDoesNotThrow(() -> productFileDAO.createProduct(product),
@@ -106,21 +106,27 @@ public class ProductFileDAOTest {
 
     @Test
     public void testDeleteProduct() {
-        // Setup
+        // new product
         Product product = new Product(1, "Fishing Rod", "a fishing rod", 10.11, 100);
+        // product currently in system with same id
+        Product realProduct = productFileDAO.getProduct(product.getId());
 
-        // Invoke
-        Boolean result = assertDoesNotThrow(() -> productFileDAO.deleteProduct(product),
+        // delete product
+        Boolean result = assertDoesNotThrow(() -> productFileDAO.deleteProduct(realProduct.getId()),
                 "Unexpected exception thrown");
 
-        // Analyze
+        // check if its there
         assertNotNull(result);
-        Product actual = productFileDAO.getProduct(product.getId());
-        assertEquals(actual.getId(), product.getId());
-        assertEquals(actual.getName(), product.getName());
-        assertEquals(actual.getDescription(), product.getDescription());
-        assertEquals(actual.getPrice(), product.getPrice());
-        assertEquals(actual.getQuantity(), product.getQuantity());
+
+        // create new product with same id
+        Product result2 = assertDoesNotThrow(() -> productFileDAO.createProduct(product),
+                "Unexpected exception thrown");
+
+        // check if its there
+        assertNotNull(result2);
+
+        assertEquals(result, true);
+        assertEquals(result2, false);
 
     }
 
