@@ -82,5 +82,24 @@ public class ProductFileDAOTest {
         Product product = productFileDAO.getProduct(1);
         assertEquals(product, testProducts[0]);
     }
+    @Test
+    public void testCreateProduct() {
+        // Setup
+       Product product = new Product(1,"Fishing Rod","a fishing rod",10.11,100);
+
+        // Invoke
+        Product result = assertDoesNotThrow(() -> productFileDAO.createProduct(product),
+                                "Unexpected exception thrown");
+
+        // Analyze
+        assertNotNull(result);
+        Product actual = productFileDAO.getProduct(product.getId());
+        assertEquals(actual.getId(),product.getId());
+        assertEquals(actual.getName(),product.getName());
+        assertEquals(actual.getDescription(),product.getDescription());
+        assertEquals(actual.getPrice(),product.getPrice());
+        assertEquals(actual.getQuantity(),product.getQuantity());
+
+    }
 
 }

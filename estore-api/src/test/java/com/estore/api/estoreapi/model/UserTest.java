@@ -14,6 +14,7 @@ public class UserTest {
         User user = new User(1, "Regina", true);
         assertEquals(1, user.getId());
         assertEquals("Regina", user.getUsername());
+        assertEquals(true, user.getIsAdmin());
     }
    
     
