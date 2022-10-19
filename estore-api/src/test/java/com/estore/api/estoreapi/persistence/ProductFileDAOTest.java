@@ -3,18 +3,18 @@ package com.estore.api.estoreapi.persistence;
 import java.io.File;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals; 
-import static org.junit.jupiter.api.Assertions.assertNotNull; 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows; 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.mockito.ArgumentMatchers.any; 
-import static org.mockito.Mockito.doThrow; 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.test.context.TestPropertySource;
 
 public class ProductFileDAOTest {
-    ProductFileDAO productFileDAO; 
+    ProductFileDAO productFileDAO;
     Product[] testProducts;
     ObjectMapper mockObjectMapper;
 
@@ -36,16 +36,16 @@ public class ProductFileDAOTest {
         testProducts[2] = new Product(3, "Hiking boots", "Can be used for boots", 13.0, 5);
 
         when(mockObjectMapper
-            .readValue(new File("products.json"),Product[].class))
+                .readValue(new File("products.json"), Product[].class))
                 .thenReturn(testProducts);
-        productFileDAO = new ProductFileDAO("products.json",mockObjectMapper);
+        productFileDAO = new ProductFileDAO("products.json", mockObjectMapper);
     }
 
     @Test
-    void getProducts(){
+    void getProducts() {
         Product[] products = productFileDAO.getProducts();
-        assertEquals(products.length,products.length);
-        for (int i = 0; i < testProducts.length;i++){
+        assertEquals(products.length, products.length);
+        for (int i = 0; i < testProducts.length; i++) {
             assertEquals(testProducts[i], products[i]);
         }
     }
@@ -57,13 +57,13 @@ public class ProductFileDAOTest {
     }
 
     @Test
-    public void findProductWithoutText(){
+    public void findProductWithoutText() {
         Product[] products = productFileDAO.findProducts(null);
         assertEquals(testProducts.length, products.length);
     }
 
     @Test
-    void updateProduct(){
+    void updateProduct() {
         Product product = new Product(1, "BootsBootsBoots", "They are indeed boots", 100.00, 10000);
         Product result = assertDoesNotThrow(() -> productFileDAO.updateProduct(product), "Unexpected exception thrown");
         assertNotNull(result);
@@ -77,28 +77,50 @@ public class ProductFileDAOTest {
         Product product = new Product(1, "BootsBootsBoots", "They are indeed boots", 100.00, 10000);
         assertThrows(IOException.class, () -> productFileDAO.createProduct(product), "IOException not thrown");
     }
+
     @Test
-    void getProduct(){
+    void getProduct() {
         Product product = productFileDAO.getProduct(1);
         assertEquals(product, testProducts[0]);
     }
+
     @Test
     public void testCreateProduct() {
         // Setup
-       Product product = new Product(1,"Fishing Rod","a fishing rod",10.11,100);
+        Product product = new Product(1, "Fishing Rod", "a fishing rod", 10.11, 100);
 
         // Invoke
         Product result = assertDoesNotThrow(() -> productFileDAO.createProduct(product),
-                                "Unexpected exception thrown");
+                "Unexpected exception thrown");
 
         // Analyze
         assertNotNull(result);
         Product actual = productFileDAO.getProduct(product.getId());
-        assertEquals(actual.getId(),product.getId());
-        assertEquals(actual.getName(),product.getName());
-        assertEquals(actual.getDescription(),product.getDescription());
-        assertEquals(actual.getPrice(),product.getPrice());
-        assertEquals(actual.getQuantity(),product.getQuantity());
+        assertEquals(actual.getId(), product.getId());
+        assertEquals(actual.getName(), product.getName());
+        assertEquals(actual.getDescription(), product.getDescription());
+        assertEquals(actual.getPrice(), product.getPrice());
+        assertEquals(actual.getQuantity(), product.getQuantity());
+
+    }
+
+    @Test
+    public void testDeleteProduct() {
+        // Setup
+        Product product = new Product(1, "Fishing Rod", "a fishing rod", 10.11, 100);
+
+        // Invoke
+        Boolean result = assertDoesNotThrow(() -> productFileDAO.deleteProduct(product),
+                "Unexpected exception thrown");
+
+        // Analyze
+        assertNotNull(result);
+        Product actual = productFileDAO.getProduct(product.getId());
+        assertEquals(actual.getId(), product.getId());
+        assertEquals(actual.getName(), product.getName());
+        assertEquals(actual.getDescription(), product.getDescription());
+        assertEquals(actual.getPrice(), product.getPrice());
+        assertEquals(actual.getQuantity(), product.getQuantity());
 
     }
 
