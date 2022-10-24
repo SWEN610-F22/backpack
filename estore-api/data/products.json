@@ -1,1 +1,92 @@
-[{"id":1,"name":"Decathlon Rockrider ST520 24-Speed Mountain Bike","description":"Raised position., stem can be raised up to 1.18 in., ergonomic saddle: comfort that also yields greater efficiency.","price":599.0,"quantity":50},{"id":2,"name":"Cannondale Scalpel HT Carbon 4 Mountain Bike","description":"The Cannondale Trail SE 4 Mountain Bike is great for any rider who wants the freedom to get off the road and explore some paths and trails. Great for entry-level riders who want a little bit more than the basic, the Trail SE 4 has a Shimano Deore 10-speed drivetrain and a Suntour fork with 120mm of travel.","price":2200.0,"quantity":3},{"id":3,"name":"Black Diamond FirstLight Tent","description":"The new Flow Manifold (patent pending) allows interior heat convection and exterior airflow to draw moisture vapor and stale air out of the tent. New, high tenacity 30D poly fabric keeps the tent tight as a drum in all conditions and is treated for flame resistance for North America compliance/availability. Available in 2 and 3 person capacity.","price":459.99,"quantity":11},{"id":4,"name":"Nemo Aurora Tent","description":"NEMO's award-winning Hornet Two-Person Ultralight Backpacking Tent comes in at a mere 1lb, 15oz in the two-person size, making it a light option for a pair out on a long trek or an individual looking for a little more sleeping and gear room without adding weight.","price":279.95,"quantity":10}]
+[
+    {
+        "id": 1,
+        "name": "Decathlon Rockrider ST520 24-Speed Mountain Bike",
+        "description": "Raised position., stem can be raised up to 1.18 in., ergonomic saddle: comfort that also yields greater efficiency.",
+        "price": 599.0,
+        "quantity": 50,
+        "manufacturer": "Decathlon",
+        "imageUrl": "https://curated-uploads.imgix.net/AgAAAB0AiZI7iYKNN42WgBtUH7wRGg.jpg?auto=compress%2Cformat&ch=Width%2CDPR%2CSave-Data&ixlib=react-9.4.0&w=538"
+    },
+    {
+        "id": 2,
+        "name": "Cannondale Scalpel HT Carbon 4 Mountain Bike",
+        "description": "The Cannondale Trail SE 4 Mountain Bike is great for any rider who wants the freedom to get off the road and explore some paths and trails. Great for entry-level riders who want a little bit more than the basic, the Trail SE 4 has a Shimano Deore 10-speed drivetrain and a Suntour fork with 120mm of travel.",
+        "price": 2200.0,
+        "quantity": 3,
+        "manufacturer":"Cannondale",
+        "imageUrl":"https://curated-uploads.imgix.net/AgAAAB0AmWdjJZWGOz2loDWvFZ8TLg.png?auto=compress%2Cformat&ch=Width%2CDPR%2CSave-Data&ixlib=react-9.4.0&w=538"
+    },
+    {
+        "id": 3,
+        "name": "Black Diamond FirstLight Tent",
+        "description": "The new Flow Manifold (patent pending) allows interior heat convection and exterior airflow to draw moisture vapor and stale air out of the tent. New, high tenacity 30D poly fabric keeps the tent tight as a drum in all conditions and is treated for flame resistance for North America compliance/availability. Available in 2 and 3 person capacity.",
+        "price": 459.99,
+        "quantity": 11,
+        "manufacturer":"Black Diamond",
+        "imageUrl":"https://curated-uploads.imgix.net/AgAAAB0AmWdjJZWGOz2loDWvFZ8TLg.png?auto=compress%2Cformat&ch=Width%2CDPR%2CSave-Data&ixlib=react-9.4.0&w=538"
+    },
+    {
+        "id": 4,
+        "name": "Nemo Aurora Tent",
+        "description": "NEMO's award-winning Hornet Two-Person Ultralight Backpacking Tent comes in at a mere 1lb, 15oz in the two-person size, making it a light option for a pair out on a long trek or an individual looking for a little more sleeping and gear room without adding weight.",
+        "price": 279.95,
+        "quantity": 10,
+        "manufacturer":"Nemo",
+        "imageUrl":"https://curated-uploads.imgix.net/AgAAAB0AmWdjJZWGOz2loDWvFZ8TLg.png?auto=compress%2Cformat&ch=Width%2CDPR%2CSave-Data&ixlib=react-9.4.0&w=538"
+    },
+    {
+        "id": 5,
+        "name": "Decathlon Rockrider ST520 24-Speed Mountain Bike",
+        "description": "Raised position., stem can be raised up to 1.18 in., ergonomic saddle: comfort that also yields greater efficiency.",
+        "price": 599.0,
+        "quantity": 50,
+        "manufacturer":"Decathlon",
+        "imageUrl":"https://curated-uploads.imgix.net/AgAAAB0AmWdjJZWGOz2loDWvFZ8TLg.png?auto=compress%2Cformat&ch=Width%2CDPR%2CSave-Data&ixlib=react-9.4.0&w=538"
+    },
+    {
+        "id": 6,
+        "name": "Decathlon Rockrider ST520 24-Speed Mountain Bike",
+        "description": "Raised position., stem can be raised up to 1.18 in., ergonomic saddle: comfort that also yields greater efficiency.",
+        "price": 599.0,
+        "quantity": 50,
+        "manufacturer":"Decathlon",
+        "imageUrl":"https://curated-uploads.imgix.net/AgAAAB0AmWdjJZWGOz2loDWvFZ8TLg.png?auto=compress%2Cformat&ch=Width%2CDPR%2CSave-Data&ixlib=react-9.4.0&w=538"
+    },
+    {
+        "id": 7,
+        "name": "Decathlon Rockrider ST520 24-Speed Mountain Bike",
+        "description": "Raised position., stem can be raised up to 1.18 in., ergonomic saddle: comfort that also yields greater efficiency.",
+        "price": 599.0,
+        "quantity": 50,
+        "manufacturer":"Decathlon",
+        "imageUrl":"https://curated-uploads.imgix.net/AgAAAB0AmWdjJZWGOz2loDWvFZ8TLg.png?auto=compress%2Cformat&ch=Width%2CDPR%2CSave-Data&ixlib=react-9.4.0&w=538"
+    },
+    {
+        "id": 8,
+        "name": "Decathlon Rockrider ST520 24-Speed Mountain Bike",
+        "description": "Raised position., stem can be raised up to 1.18 in., ergonomic saddle: comfort that also yields greater efficiency.",
+        "price": 599.0,
+        "quantity": 50,
+        "manufacturer":"Decathlon",
+        "imageUrl":"https://curated-uploads.imgix.net/AgAAAB0AmWdjJZWGOz2loDWvFZ8TLg.png?auto=compress%2Cformat&ch=Width%2CDPR%2CSave-Data&ixlib=react-9.4.0&w=538"
+    },
+    {
+        "id": 9,
+        "name": "Decathlon Rockrider ST520 24-Speed Mountain Bike",
+        "description": "Raised position., stem can be raised up to 1.18 in., ergonomic saddle: comfort that also yields greater efficiency.",
+        "price": 599.0,
+        "quantity": 50,
+        "manufacturer":"Decathlon",
+        "imageUrl":"https://curated-uploads.imgix.net/AgAAAB0AmWdjJZWGOz2loDWvFZ8TLg.png?auto=compress%2Cformat&ch=Width%2CDPR%2CSave-Data&ixlib=react-9.4.0&w=538"
+    },
+    {
+        "id": 10,
+        "name": "Decathlon Rockrider ST520 24-Speed Mountain Bike",
+        "description": "Raised position., stem can be raised up to 1.18 in., ergonomic saddle: comfort that also yields greater efficiency.",
+        "price": 599.0,
+        "quantity": 50,
+        "manufacturer":"Decathlon",
+        "imageUrl":"https://curated-uploads.imgix.net/AgAAAB0AmWdjJZWGOz2loDWvFZ8TLg.png?auto=compress%2Cformat&ch=Width%2CDPR%2CSave-Data&ixlib=react-9.4.0&w=538"
+    }
+]
