@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 
 @Tag("Model-tier")
 public class ProductTest {
-Product product = new Product(10,"doesn't matter", "it doesn't matter", 45.78, 7);
+Product product = new Product(10,"doesn't matter", "it doesn't matter", 45.78, 7,"fish", "http://www.google.com");
     @Test
     void createProduct(){
-        Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
+        Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         assertEquals(1, product.getId());
         assertEquals("Fishing rod", product.getName());
         assertEquals("Can be used for fishing", product.getDescription());
@@ -20,10 +20,10 @@ Product product = new Product(10,"doesn't matter", "it doesn't matter", 45.78, 7
 
     @Test
     void equals(){
-        Product productOriginal = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
-        Product productSame = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
-        Product productNewDiff = new Product(2, "Not a fishing rod", "Can not be used for fishing", 53.0, 1);
-        Product productNull = new Product(2, null, "Can not be used for fishing", 53.0, 1);
+        Product productOriginal = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
+        Product productSame = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
+        Product productNewDiff = new Product(2, "Not a fishing rod", "Can not be used for fishing", 53.0, 1,"fish", "http://www.google.com");
+        Product productNull = new Product(2, null, "Can not be used for fishing", 53.0, 1,"fish", "http://www.google.com");
 
         assertTrue(productOriginal!=productNewDiff);
         assertTrue(productOriginal!=null);
@@ -70,7 +70,8 @@ Product product = new Product(10,"doesn't matter", "it doesn't matter", 45.78, 7
 
     @Test
     public void testToString(){
-        assertEquals("Product [id=" + product.getId() +", name=" + product.getName() + ", description=" + product.getDescription() + ", price=" + product.getPrice() + ", quantity=" + product.getQuantity() + "]", product.toString());
+        assertEquals("Product [id=" + product.getId() + ", name=" + product.getName() + ", description=" + product.getDescription() + ", price=" + product.getPrice()
+        + ", quantity=" + product.getQuantity() + ", manufacturer=" + product.getManufacturer() + ", imageUrl=" + product.getManufacturer() + "]", product.toString());
     }
 
 }
