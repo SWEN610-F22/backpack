@@ -20,7 +20,7 @@ public interface CartDAO {
      * @param id The id of the {@link CartItem CartItem} to get
      * @return CartItem with the specific id
      */
-    public CartItem getProduct(int id) throws IOException;
+    public CartItem getProduct(int id);
     /**
      * Checks if cart is empty
      * @return true if cart is empty, false otherwise

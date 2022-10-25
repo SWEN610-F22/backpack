@@ -121,7 +121,7 @@ public class CartFileDAO implements CartDAO {
 
     
     @Override
-    public CartItem getProduct(int id) throws IOException {
+    public CartItem getProduct(int id){
         synchronized(cart) {
             return cart.getOrDefault(id, null);
         }

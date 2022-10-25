@@ -65,16 +65,11 @@ public class CartController {
     @GetMapping("/{id}")
     public ResponseEntity<CartItem> getCartItem(@PathVariable int id) {
         LOG.info("GET /cart/" + id);
-        try {
-            CartItem product = cartDao.getProduct(id);
-            if (product != null)
-                return new ResponseEntity<CartItem>(product, HttpStatus.OK);
-            else
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (IOException e) {
-            LOG.log(Level.SEVERE, e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        CartItem product = cartDao.getProduct(id);
+        if (product != null)
+            return new ResponseEntity<CartItem>(product, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /**
