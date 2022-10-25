@@ -109,6 +109,7 @@ public class ProductFileDAOTest {
     public void testDeleteProduct() {
         // new product
         Product product = new Product(1, "Fishing Rod", "a fishing rod", 10.11, 100);
+
         // product currently in system with same id
         Product realProduct = productFileDAO.getProduct(product.getId());
 
@@ -119,12 +120,9 @@ public class ProductFileDAOTest {
         // check if its there
         assertNotNull(result);
 
-        // create new product with same id
-        Product result2 = assertDoesNotThrow(() -> productFileDAO.createProduct(product),
+        // delete product again
+        Boolean result2 = assertDoesNotThrow(() -> productFileDAO.deleteProduct(realProduct.getId()),
                 "Unexpected exception thrown");
-
-        // check if its there
-        assertNotNull(result2);
 
         assertEquals(result, true);
         assertEquals(result2, false);
