@@ -9,21 +9,12 @@ public class User {
     @JsonProperty("id") private int id;
     @JsonProperty("username") private String username;
     @JsonProperty("isAdmin") private boolean isAdmin;
-    @JsonProperty("firstName") private String firstName;
-    @JsonProperty("lastName") private String lastName;
 
-    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("isAdmin") boolean isAdmin, @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName) {
+
+    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("isAdmin") boolean isAdmin){
         this.id = id;
         this.username = username;
         this.isAdmin = isAdmin;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public User(@JsonProperty("id") int id, @JsonProperty("username") String username){
-        this.id = id;
-        this.username = username;
-        this.isAdmin = false;
     }
 
     public int getId() {
@@ -46,26 +37,9 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     @Override
     public String toString() {
-        return "User [id=" + id + ", username=" + username + ", isAdmin=" + isAdmin + ", firstName=" + firstName
-                + ", lastName=" + lastName + "]";
+        return "User [id=" + id + ", username=" + username + ", isAdmin=" + isAdmin + "]";
     }
 
     @Override
@@ -89,5 +63,7 @@ public class User {
             return false;
         return true;
     }
+
    
+
 }

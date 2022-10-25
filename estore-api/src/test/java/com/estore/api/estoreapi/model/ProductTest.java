@@ -71,7 +71,7 @@ Product product = new Product(10,"doesn't matter", "it doesn't matter", 45.78, 7
     @Test
     public void testToString(){
         assertEquals("Product [id=" + product.getId() + ", name=" + product.getName() + ", description=" + product.getDescription() + ", price=" + product.getPrice()
-        + ", quantity=" + product.getQuantity() + ", manufacturer=" + product.getManufacturer() + ", imageUrl=" + product.getManufacturer() + "]", product.toString());
+        + ", quantity=" + product.getQuantity() + ", manufacturer=" + product.getManufacturer() + ", imageUrl=" + product.getImageUrl() + "]", product.toString());
     }
 
 }
