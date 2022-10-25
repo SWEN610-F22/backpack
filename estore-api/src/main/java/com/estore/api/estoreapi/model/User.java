@@ -9,11 +9,21 @@ public class User {
     @JsonProperty("id") private int id;
     @JsonProperty("username") private String username;
     @JsonProperty("isAdmin") private boolean isAdmin;
+    @JsonProperty("firstName") private String firstName;
+    @JsonProperty("lastName") private String lastName;
 
-    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("isAdmin") boolean isAdmin) {
+    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("isAdmin") boolean isAdmin, @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName) {
         this.id = id;
         this.username = username;
         this.isAdmin = isAdmin;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public User(@JsonProperty("id") int id, @JsonProperty("username") String username){
+        this.id = id;
+        this.username = username;
+        this.isAdmin = false;
     }
 
     public int getId() {
