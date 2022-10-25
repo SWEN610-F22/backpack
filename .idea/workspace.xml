@@ -28,11 +28,25 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40d2a8da-f001-4e39-936a-140b8bfee718" name="Default Changelist" comment="" />
+    <list default="true" id="40d2a8da-f001-4e39-936a-140b8bfee718" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/estore-api/src/main/java/com/estore/api/estoreapi/controller/InventoryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estore-api/src/main/java/com/estore/api/estoreapi/persistence/InventoryDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estore-api/src/main/java/com/estore/api/estoreapi/persistence/InventoryFileDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estore-api/src/test/java/com/estore/api/estoreapi/persistence/ProductFileDAOTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/estore-api/src/test/java/com/estore/api/estoreapi/persistence/ProductFileDAOTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -51,9 +65,14 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/estore-api/src/test/java/com/estore/api/estoreapi/persistence" />
   </component>
-  <component name="RunManager" selected="JUnit.ProductFileDAOTest.getProduct">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Utkarsh Sharma\IdeaProjects\backpack\estore-api\src\test\java\com\estore\api\estoreapi\persistence" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.ProductFileDAOTest.testDeleteProduct">
     <configuration name="ProductFileDAOTest.getProduct" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="estore-api" />
       <extension name="coverage">
@@ -70,6 +89,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ProductFileDAOTest.getProducts" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="estore-api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.estore.api.estoreapi.persistence.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.estore.api.estoreapi.persistence" />
+      <option name="MAIN_CLASS_NAME" value="com.estore.api.estoreapi.persistence.ProductFileDAOTest" />
+      <option name="METHOD_NAME" value="getProducts" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductFileDAOTest.testDeleteProduct" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="estore-api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.estore.api.estoreapi.persistence.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.estore.api.estoreapi.persistence" />
+      <option name="MAIN_CLASS_NAME" value="com.estore.api.estoreapi.persistence.ProductFileDAOTest" />
+      <option name="METHOD_NAME" value="testDeleteProduct" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ProductTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="estore-api" />
       <extension name="coverage">
@@ -81,38 +132,6 @@
       <option name="PACKAGE_NAME" value="com.estore.api.estoreapi.model" />
       <option name="MAIN_CLASS_NAME" value="com.estore.api.estoreapi.model.ProductTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProductTest.setName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="estore-api" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.estore.api.estoreapi.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.estore.api.estoreapi.model" />
-      <option name="MAIN_CLASS_NAME" value="com.estore.api.estoreapi.model.ProductTest" />
-      <option name="METHOD_NAME" value="setName" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProductTest.setPrice" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="estore-api" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.estore.api.estoreapi.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.estore.api.estoreapi.model" />
-      <option name="MAIN_CLASS_NAME" value="com.estore.api.estoreapi.model.ProductTest" />
-      <option name="METHOD_NAME" value="setPrice" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -135,11 +154,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ProductFileDAOTest.testDeleteProduct" />
+        <item itemvalue="JUnit.ProductFileDAOTest.getProducts" />
         <item itemvalue="JUnit.ProductFileDAOTest.getProduct" />
         <item itemvalue="JUnit.ProductTest" />
         <item itemvalue="JUnit.ProductTest.testToString" />
-        <item itemvalue="JUnit.ProductTest.setPrice" />
-        <item itemvalue="JUnit.ProductTest.setName" />
       </list>
     </recent_temporary>
   </component>
@@ -172,6 +191,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="resolve merge" />
@@ -182,45 +202,54 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="93" y="93" width="1350" height="638" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.1536.824@0.0.1536.824" timestamp="1666134654821" />
-    <state x="527" y="40" key="#com.intellij.ide.util.MemberChooser" timestamp="1666133268733">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="-1261" y="52" key="#com.intellij.ide.util.MemberChooser" timestamp="1666727662052">
+      <screen x="-1920" y="2" width="1920" height="1040" />
     </state>
+    <state x="-1261" y="52" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824/-1920.2.1920.1040@-1920.2.1920.1040" timestamp="1666727662052" />
     <state x="527" y="40" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1666133268733" />
     <state x="502" y="250" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1666136730739">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="502" y="250" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1536.824@0.0.1536.824" timestamp="1666136730739" />
-    <state width="1481" height="196" key="GridCell.Tab.0.bottom" timestamp="1666137118471">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1481" height="245" key="GridCell.Tab.0.bottom" timestamp="1666150593700">
+      <screen x="-1920" y="2" width="1920" height="1040" />
     </state>
+    <state width="1481" height="245" key="GridCell.Tab.0.bottom/0.0.1536.824/-1920.2.1920.1040@-1920.2.1920.1040" timestamp="1666150593700" />
     <state width="1481" height="196" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1666137118471" />
-    <state width="1481" height="196" key="GridCell.Tab.0.center" timestamp="1666137118471">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1481" height="245" key="GridCell.Tab.0.center" timestamp="1666150593700">
+      <screen x="-1920" y="2" width="1920" height="1040" />
     </state>
+    <state width="1481" height="245" key="GridCell.Tab.0.center/0.0.1536.824/-1920.2.1920.1040@-1920.2.1920.1040" timestamp="1666150593700" />
     <state width="1481" height="196" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1666137118471" />
-    <state width="1481" height="196" key="GridCell.Tab.0.left" timestamp="1666137118470">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1481" height="245" key="GridCell.Tab.0.left" timestamp="1666150593699">
+      <screen x="-1920" y="2" width="1920" height="1040" />
     </state>
+    <state width="1481" height="245" key="GridCell.Tab.0.left/0.0.1536.824/-1920.2.1920.1040@-1920.2.1920.1040" timestamp="1666150593699" />
     <state width="1481" height="196" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1666137118470" />
-    <state width="1481" height="196" key="GridCell.Tab.0.right" timestamp="1666137118471">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1481" height="245" key="GridCell.Tab.0.right" timestamp="1666150593700">
+      <screen x="-1920" y="2" width="1920" height="1040" />
     </state>
+    <state width="1481" height="245" key="GridCell.Tab.0.right/0.0.1536.824/-1920.2.1920.1040@-1920.2.1920.1040" timestamp="1666150593700" />
     <state width="1481" height="196" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1666137118471" />
-    <state width="1481" height="245" key="GridCell.Tab.1.bottom" timestamp="1666134259622">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1481" height="245" key="GridCell.Tab.1.bottom" timestamp="1666150593700">
+      <screen x="-1920" y="2" width="1920" height="1040" />
     </state>
+    <state width="1481" height="245" key="GridCell.Tab.1.bottom/0.0.1536.824/-1920.2.1920.1040@-1920.2.1920.1040" timestamp="1666150593700" />
     <state width="1481" height="245" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1666134259622" />
-    <state width="1481" height="245" key="GridCell.Tab.1.center" timestamp="1666134259622">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1481" height="245" key="GridCell.Tab.1.center" timestamp="1666150593700">
+      <screen x="-1920" y="2" width="1920" height="1040" />
     </state>
+    <state width="1481" height="245" key="GridCell.Tab.1.center/0.0.1536.824/-1920.2.1920.1040@-1920.2.1920.1040" timestamp="1666150593700" />
     <state width="1481" height="245" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1666134259622" />
-    <state width="1481" height="245" key="GridCell.Tab.1.left" timestamp="1666134259622">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1481" height="245" key="GridCell.Tab.1.left" timestamp="1666150593700">
+      <screen x="-1920" y="2" width="1920" height="1040" />
     </state>
+    <state width="1481" height="245" key="GridCell.Tab.1.left/0.0.1536.824/-1920.2.1920.1040@-1920.2.1920.1040" timestamp="1666150593700" />
     <state width="1481" height="245" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1666134259622" />
-    <state width="1481" height="245" key="GridCell.Tab.1.right" timestamp="1666134259622">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1481" height="245" key="GridCell.Tab.1.right" timestamp="1666150593700">
+      <screen x="-1920" y="2" width="1920" height="1040" />
     </state>
+    <state width="1481" height="245" key="GridCell.Tab.1.right/0.0.1536.824/-1920.2.1920.1040@-1920.2.1920.1040" timestamp="1666150593700" />
     <state width="1481" height="245" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1666134259622" />
     <state x="147" y="65" key="MergeDialog" timestamp="1666136479907">
       <screen x="0" y="0" width="1536" height="824" />
