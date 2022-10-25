@@ -46,23 +46,46 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     @Override
     public String toString() {
-        return "User [id=" + id +", username=" + username+ ", admin=" + isAdmin+"]";
+        return "User [id=" + id + ", username=" + username + ", isAdmin=" + isAdmin + ", firstName=" + firstName
+                + ", lastName=" + lastName + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        return result;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
+        if (obj == null)
+            return false;
         if (getClass() != obj.getClass())
             return false;
         User other = (User) obj;
-        if (id != other.id){
-            return false;
-        } else if (!username.equals(other.username))
-            return false;
-        if (isAdmin != other.isAdmin)
+        if (id != other.id)
             return false;
         return true;
     }

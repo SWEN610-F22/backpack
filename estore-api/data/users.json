@@ -1,7 +1,30 @@
-[{
-    "id":1,
-    "username": "zac",
-    "firstName": "Zac",
-    "lastName": "Oyama",
-    "isAdmin": false
-}] 
+[
+    {
+        "id": 1,
+        "username": "admin",
+        "firstName": "Admin",
+        "lastName": "Admin",
+        "isAdmin": true
+    },
+    {
+        "id": 4,
+        "username": "zacoy",
+        "firstName": "Zac",
+        "lastName": "Oyama",
+        "isAdmin": false
+    },
+    {
+        "id": 2,
+        "username": "murph",
+        "firstName": "Brian",
+        "lastName": "Murphy",
+        "isAdmin": false
+    },
+    {
+        "id": 3,
+        "username": "emilyax",
+        "firstName": "Emily",
+        "lastName": "Axford",
+        "isAdmin": false
+    }
+]
