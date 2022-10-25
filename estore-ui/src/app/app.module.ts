@@ -9,6 +9,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ProductCollectionComponent } from './components/product-collection/product-collection.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     NavbarComponent,
     ProductCardComponent,
     ProductCollectionComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
