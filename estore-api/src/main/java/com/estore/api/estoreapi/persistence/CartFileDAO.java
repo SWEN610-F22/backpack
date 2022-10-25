@@ -9,14 +9,15 @@ import java.util.TreeMap;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.estore.api.estoreapi.model.CartItem;
 import com.estore.api.estoreapi.model.Product;
-import com.estore.api.estoreapi.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class CartFileDAO implements CartDAO {
-    Map<Integer, Product> cart;
+    Map<Integer, CartItem> cart;
     private ObjectMapper objectMapper;
+    private static int nextId;
     private String filename;
 
     public CartFileDAO(@Value("${cart.file}") String filename, ObjectMapper objectMapper) throws IOException {
@@ -33,10 +34,14 @@ public class CartFileDAO implements CartDAO {
      */
     private boolean load() throws IOException {
         cart = new TreeMap<>();
-        Product[] productsArray = objectMapper.readValue(new File(filename), Product[].class);
-        for (Product product : productsArray) {
+        nextId = 0;
+        CartItem[] productsArray = objectMapper.readValue(new File(filename), CartItem[].class);
+        for (CartItem product : productsArray) {
             cart.put(product.getId(), product);
+            if (product.getId() > nextId)
+                nextId = product.getId();
         }
+        ++nextId;
         return true;
     }
 
@@ -46,21 +51,21 @@ public class CartFileDAO implements CartDAO {
      * Loads the list of products in the cart.
      * @return An array of {@link Product product} objects, may be empty
      */
-    private Product[] getProductsArray(){
-        ArrayList<Product> productsList = new ArrayList<>();
+    private CartItem[] getProductsArray(){
+        ArrayList<CartItem> productsList = new ArrayList<>();
 
-        for (Product product : cart.values()) {
+        for (CartItem product : cart.values()) {
             productsList.add(product);
 
         }
 
-        Product[] productArray = new Product[productsList.size()];
+        CartItem[] productArray = new CartItem[productsList.size()];
         productsList.toArray(productArray);
         return productArray;
     }
 
     @Override
-    public Product[] getCart() {
+    public CartItem[] getCart() {
         synchronized(cart){
             return getProductsArray();
         }
@@ -75,7 +80,7 @@ public class CartFileDAO implements CartDAO {
     
 
     @Override
-    public Product updateInCart(Product product) throws IOException {
+    public CartItem updateInCart(CartItem product) throws IOException {
         synchronized(cart) {
             if (cart.containsKey(product.getId()) == false)
                 return null;
@@ -98,29 +103,35 @@ public class CartFileDAO implements CartDAO {
      * @throws IOException when file cannot be accessed or written to
      */
     private boolean save() throws IOException {
-        Product[] productArray = getProductsArray();
+        CartItem[] productArray = getProductsArray();
         objectMapper.writeValue(new File(filename),productArray);
         return true;
     }
 
+    /**
+     * Generates the next id for a new {@linkplain Product product}
+     * 
+     * @return The next id
+     */
+    private synchronized static int nextId() {
+        int id = nextId;
+        ++nextId;
+        return id;
+    }
+
     
     @Override
-    public Product getProduct(int id) throws IOException {
+    public CartItem getProduct(int id) throws IOException {
         synchronized(cart) {
             return cart.getOrDefault(id, null);
         }
     }
 
     @Override
-    public Product addToCart(Product product) throws IOException {
+    public CartItem addToCart(CartItem product) throws IOException {
         synchronized(cart) {
-            Product newProduct = new Product(product.getId(),product.getName(), product.getDescription(), product.getPrice(), product.getQuantity());
-            if(cart.containsKey(newProduct.getId())){
-                int oldQuantity = getProduct(newProduct.getId()).getQuantity();
-                int newQuantity = newProduct.getQuantity() + oldQuantity;
-                newProduct.setQuantity(newQuantity);
-            }
-            cart.put(newProduct.getId(),newProduct);
+            CartItem newProduct = new CartItem(nextId(), product.getUserId(), product.getProductId(), product.getQuantity());
+            cart.put(newProduct.getId(), newProduct);
             save();
             return newProduct;
         }
@@ -137,12 +148,4 @@ public class CartFileDAO implements CartDAO {
                 return false;
         }
     }
-
-    @Override
-    public boolean clearCart() throws IOException{
-        cart.clear();
-        return save();
-    }
-
-
 }
