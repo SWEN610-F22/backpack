@@ -16,10 +16,12 @@ export class NavbarComponent implements OnInit {
       let loggedInUsername = this.userService.getUser()?.username;
       if(loggedInUsername){
         this.username = loggedInUsername;
-        console.log("Username set")
-        console.log(this.username);
       }
     }
+  }
+
+  isLoggedIn(){
+    return this.userService.isLoggedIn();
   }
 
 }
