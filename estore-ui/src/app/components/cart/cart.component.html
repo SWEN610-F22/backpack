@@ -1,0 +1,35 @@
+<div class="container-fluid px-3">
+    
+    <div class="row my-3"></div>
+    
+    <table style="width:80%">
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+        <tr>
+            <tr *ngFor="let cartItem of cart">
+                <td>{{cartItem.name}}</td>
+                <td>
+                    <button type="button" style="border-radius:10px; background-color:red; margin:5%" (click)="decrease(cartItem)">
+                        -
+                    </button>
+                    {{cartItem.quantity}}
+                    <button type="button" style="border-radius:10px; background-color:green; margin:5%" (click)="increase(cartItem)">
+                        +
+                    </button>
+                </td>
+                <td>{{cartItem.price}}x{{cartItem.quantity}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><button type="button" style="border-radius:10px; background-color:#FFFFFF; margin-top:1%">
+                    Proceed to checkout</button></td>
+            </tr>
+    </table>
+
+
+</div>
+

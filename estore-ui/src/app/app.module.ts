@@ -10,6 +10,8 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { ProductCollectionComponent } from './components/product-collection/product-collection.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { CartComponent } from './components/cart/cart.component';
+import { CartPageComponent } from './pages/cart-page/cart-page.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { RegisterComponent } from './pages/register/register.component';
     ProductCardComponent,
     ProductCollectionComponent,
     SearchBarComponent,
-    RegisterComponent
+    RegisterComponent,
+    CartComponent,
+    CartPageComponent
   ],
   imports: [
     BrowserModule,

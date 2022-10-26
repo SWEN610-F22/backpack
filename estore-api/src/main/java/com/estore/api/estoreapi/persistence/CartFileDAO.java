@@ -96,6 +96,56 @@ public class CartFileDAO implements CartDAO {
         }
     }
 
+    @Override
+    public CartItem[] decrease(int productId, int userId) throws IOException {
+        synchronized(cart) {
+            int cartId = 0;
+            if (cart.containsKey(productId) == false)
+                return null;
+            for (CartItem product : cart.values()) {
+                if(product.getUserId()==userId && product.getProductId()==productId){
+                    product.setQuantity(product.getQuantity()-1);
+                    cart.put(product.getId(), product);
+                    save();
+                    if(product.getQuantity()==0){
+                        cartId = product.getId();
+                        deleteFromCart(product.getId());
+                        save();
+                    return getCart();
+                }
+            }
+            
+            }
+            if (cart.containsKey(cartId) == false){
+                CartItem product = getProduct(cartId);
+                cart.put(product.getId(), product);
+                save();
+                return getCart();
+            }
+            else{
+                return null;
+            }
+        }
+    }
+
+    @Override
+    public CartItem[] increase(int productId, int userId) throws IOException {
+        synchronized(cart) {
+            if (cart.containsKey(productId) == false)
+                return null;
+            for (CartItem product : cart.values()) {
+                if(product.getUserId()==userId && product.getProductId()==productId){
+                    product.setQuantity(product.getQuantity()+1);
+                    cart.put(product.getId(), product);
+                    save();
+                    return getCart();
+                }
+            }
+        }
+        return null;
+    }
+    
+
     
     /**
      * Saves the {@linkplain Product products} from the map into the file as an array of JSON objects

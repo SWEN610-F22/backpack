@@ -28,9 +28,12 @@ import com.estore.api.estoreapi.persistence.CartDAO;
 public class CartController {
     private static final Logger LOG = Logger.getLogger(CartController.class.getName());
     private CartDAO cartDao;
+    private ProductDAO productDAO;
+    private Integer userId = 2;
 
-    public CartController(CartDAO cartdao) {
+    public CartController(CartDAO cartdao, ProductDAO productDao) {
         this.cartDao = cartdao;
+        this.productDAO = productDao;
     }
 
     /**
@@ -51,6 +54,31 @@ public class CartController {
         }
 
     }
+
+
+    /**
+     * Responds to the GET request for all {@linkplain CartItem CartItem} objects in cart for a user
+     * 
+     * @param userId The userId parameter which contains the id used to find the
+     *             {@link User user}.
+     * 
+     * @return ResponseEntity with array of {@link Product products} objects (may be
+     *         empty) and HTTP status of OK.
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
+     */
+    @GetMapping("/user")
+    public ResponseEntity<Product[]> getCartForUser(@RequestParam(required = true) Integer userId) {
+        try {
+            CartItem[] fullCart = cartDao.getCart();
+            Product[] cart = productDAO.getCart(fullCart, userId);
+            return new ResponseEntity<Product[]>(cart, HttpStatus.OK);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
 
     /**
      * Responds to the GET request for a {@linkplain CartItem CartItem} in cart for the given id
@@ -92,6 +120,36 @@ public class CartController {
                 return new ResponseEntity<CartItem>(cartItem, HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping("/decrease")
+    public ResponseEntity<Product[]> decrease(@RequestParam(required = true) Integer productId) {
+        LOG.info("GET /cart " + this.userId + " " + productId);
+        try {
+            CartItem[] decreasedCart = cartDao.decrease(productId, this.userId);
+            CartItem[] fullCart = cartDao.getCart();
+            Product[] newCart = productDAO.getCart(fullCart, userId);
+            return new ResponseEntity<Product[]>(newCart, HttpStatus.OK);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping("/increase")
+    public ResponseEntity<Product[]> increase(@RequestParam(required = true) Integer productId) {
+        LOG.info("GET /cart " + this.userId + " " + productId);
+        try {
+            CartItem[] increasedCart = cartDao.increase(productId, this.userId);
+            CartItem[] fullCart = cartDao.getCart();
+            Product[] newCart = productDAO.getCart(fullCart, userId);
+            return new ResponseEntity<Product[]>(newCart, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

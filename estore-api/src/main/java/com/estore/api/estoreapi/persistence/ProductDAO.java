@@ -2,6 +2,8 @@ package com.estore.api.estoreapi.persistence;
 
 import java.io.IOException;
 import com.estore.api.estoreapi.model.Product;
+import com.estore.api.estoreapi.model.CartItem;
+import com.estore.api.estoreapi.model.User;
 
 /**
  * Defines the interface for {@linkplain Product product} object persistence
@@ -63,5 +65,13 @@ public interface ProductDAO {
      * @throws IOException if underlying storage cannot be accessed
      */
     boolean deleteProduct(int id) throws IOException;
+
+    /**
+     * Retrieves the cart full of {@linkplain Product products} for a user with the given user id
+     * @param cartItems The {@link CartItem cartItem} with user id, product id and quantities of products.
+     * @param userId The id of the {@link User user}
+     * @return An array of {@link Product products} objects, may be empty
+     */
+    Product[] getCart(CartItem[] cartItems, int userId);
 }
 

@@ -49,5 +49,9 @@ public interface CartDAO {
      * @throws IOException if underlying storage cannot be accessed
      */
     boolean deleteFromCart(int id) throws IOException;
+
+    CartItem[] increase(int productId, int userId) throws IOException;
+    
+    CartItem[] decrease(int productId, int userId) throws IOException;
 }
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.estore.api.estoreapi.model.Product;
+import com.estore.api.estoreapi.model.CartItem;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
@@ -151,6 +152,26 @@ public class ProductFileDAO implements ProductDAO {
             else
                 return false;
         }
+    }
+
+    @Override
+    public Product[] getCart(CartItem[] cartItems, int userId){
+        ArrayList<Product> cart = new ArrayList<>();
+        for (CartItem item : cartItems) {
+            if (item.getUserId()==userId) {
+                Product product = getProduct(item.getProductId());
+                if(product!=null){
+                    Product newProduct = new Product(product.getId(), product.getName(), product.getDescription(),
+                                                    product.getPrice(), item.getQuantity(), product.getManufacturer(),
+                                                    product.getManufacturer());
+                    //product.setQuantity(item.getQuantity());
+                    cart.add(newProduct);
+                }
+            }
+        }
+        Product[] productArray = new Product[cart.size()];
+        cart.toArray(productArray);
+        return productArray;
     }
 
 

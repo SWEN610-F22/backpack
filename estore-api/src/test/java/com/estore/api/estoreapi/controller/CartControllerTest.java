@@ -22,6 +22,7 @@ import com.estore.api.estoreapi.persistence.CartDAO;
 public class CartControllerTest {
     private CartController cartController;
     private CartDAO mockCartDAO;
+    private ProductDAO mockProductDAO;
 
     /**
      * Before each test, create a new ProductController object and inject
@@ -30,7 +31,8 @@ public class CartControllerTest {
     @BeforeEach
     public void setupProductController() {
         mockCartDAO = mock(CartDAO.class);
-        cartController = new CartController(mockCartDAO);
+        mockProductDAO = mock(ProductDAO.class);
+        cartController = new CartController(mockCartDAO, mockProductDAO);
     }
 
     @Test
