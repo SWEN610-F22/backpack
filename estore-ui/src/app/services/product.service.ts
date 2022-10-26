@@ -15,4 +15,11 @@ export class ProductService {
     const products =  this.httpClient.get<Product[]>(this.apiUrl);
     return products;
   }
+
+  searchProducts(containsText:string): Observable<Product[]>{
+    const endpoint = `${this.apiUrl}?name=${containsText}`;
+    console.log(endpoint);
+    const products =  this.httpClient.get<Product[]>(endpoint);
+    return products;
+  }
 }
