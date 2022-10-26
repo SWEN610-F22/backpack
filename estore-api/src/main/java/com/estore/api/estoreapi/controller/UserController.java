@@ -42,13 +42,14 @@ public class UserController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
      */
     @GetMapping("")
-    public ResponseEntity<User[]> getUsers(@RequestParam(required = false) String name) {
+    public ResponseEntity<User[]> getUsers(@RequestParam(required = false) String username) {
         try {
             User[] users;
-            if (name == null) {
+
+            if (username == null) {
                 users = userDao.getUsers();
             } else {
-                users = userDao.findUsers(name);
+                users = userDao.findUsers(username);
             }
             return new ResponseEntity<User[]>(users, HttpStatus.OK);
         } catch (IOException e) {
