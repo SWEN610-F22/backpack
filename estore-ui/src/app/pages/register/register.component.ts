@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
     if(form!=null)
         form.reset();
         this.user={
-          UserName:""
+          username:""
         }
   }
 
@@ -33,11 +33,11 @@ this.submitted = true;
     console.log("user: "+username);
               
 
-            localStorage.setItem(this.user.UserName,JSON.stringify(this.user));
-             let data: any = localStorage.getItem(this.user.UserName);
+            localStorage.setItem(this.user.username,JSON.stringify(this.user));
+             let data: any = localStorage.getItem(this.user.username);
                     console.log(JSON.parse(data));
 
-                this.userService.createUser(this.user)    
+                this.userService.createUser(this.user).subscribe((user)=>console.log(user));    
      
 }
 
