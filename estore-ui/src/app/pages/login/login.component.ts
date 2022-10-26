@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
   }
 
 doesNotExist = false;
-num = 0;
 
 submitData(username: String){
 
@@ -59,6 +58,7 @@ submitData(username: String){
                   users.forEach(user=>{
                     console.log(user);
                     if(user.username == this.user.username){
+                      this.userService.setUser(user);
                       this.router.navigate(['']);
                       
                     }

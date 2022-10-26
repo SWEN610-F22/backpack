@@ -39,6 +39,28 @@ export class UserService {
     const users =  this.httpClient.get<User[]>(this.apiURL);
     return users;
   }
+
+  isLoggedIn():boolean{
+    let user = localStorage.getItem("user");
+    if(user){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getUser():User|null{
+    let user = localStorage.getItem("user");
+    if(user){
+      return JSON.parse(user);
+    } else {
+      return null;
+    }
+  }
+
+  setUser(user:User){
+    localStorage.setItem("user", JSON.stringify(user));
+  }
  
 
 }
