@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { User } from './user.model';
-import { UserService } from './user.service';
+import { User } from '../../models/user.model';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -28,8 +28,10 @@ export class RegisterComponent implements OnInit {
   }
 
 submitted=false;
+alreadyExists=false;
+
 submitData(username: String){
-this.submitted = true;       
+
     console.log("user: "+username);
               
 
@@ -37,7 +39,16 @@ this.submitted = true;
              let data: any = localStorage.getItem(this.user.username);
                     console.log(JSON.parse(data));
 
-                this.userService.createUser(this.user).subscribe((user)=>console.log(user));    
+                this.userService.createUser(this.user).subscribe((user)=>{
+                  console.log(user);
+                  if(user.username == ""){
+                            this.alreadyExists = true;
+                            this.submitted = false;
+                  }
+                  else{
+                    this.submitted = true;
+                  }
+                });    
      
 }
 
