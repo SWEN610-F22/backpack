@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="estore-api" target="11" />
+      <module name="estore-api" target="14" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
