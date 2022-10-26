@@ -14,7 +14,11 @@ export class LoginComponent implements OnInit {
 
   user: User = new User;
 
-  constructor(private userService: UserService, private router:Router) { }
+  constructor(private userService: UserService, private router:Router) { 
+    if (userService.isLoggedIn()) {
+      router.navigate(['']);
+    }
+  }
 
   ngOnInit(): void {
     this.resetForm();
@@ -70,7 +74,7 @@ submitData(username: String){
 
 
                 })
-     
+    
                 
 }
 
