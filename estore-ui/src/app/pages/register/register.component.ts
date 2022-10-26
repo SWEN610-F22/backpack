@@ -37,7 +37,9 @@ this.submitted = true;
              let data: any = localStorage.getItem(this.user.username);
                     console.log(JSON.parse(data));
 
-                this.userService.createUser(this.user).subscribe((user)=>console.log(user));    
+                this.userService.createUser(this.user).subscribe((user)=>{
+                  console.log(user);
+                });    
      
 }
 
