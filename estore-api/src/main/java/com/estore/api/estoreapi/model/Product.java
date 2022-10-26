@@ -11,17 +11,25 @@ public class Product {
     @JsonProperty("description") private String description;
     @JsonProperty("price") private double price;
     @JsonProperty("quantity") private int quantity;
+    @JsonProperty("manufacturer") private String manufacturer;
+    @JsonProperty("imageUrl") private String imageUrl;
 
-    public Product(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("description") String description, @JsonProperty("price") double price, @JsonProperty("quantity") int quantity) {
+    public Product(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("description") String description, @JsonProperty("price") double price, @JsonProperty("quantity") int quantity, @JsonProperty("manufacturer") String manufacturer, @JsonProperty("imageUrl") String imageUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.quantity = quantity;
+        this.manufacturer = manufacturer;
+        this.imageUrl = imageUrl;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -58,9 +66,34 @@ public class Product {
         this.description = description;
     }
 
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     @Override
     public String toString() {
-        return "Product [id=" + id +", name=" + name + ", description=" + description + ", price=" + price + ", quantity=" + quantity + "]";
+        return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
+                + ", quantity=" + quantity + ", manufacturer=" + manufacturer + ", imageUrl=" + imageUrl + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        return result;
     }
 
     @Override
@@ -74,16 +107,7 @@ public class Product {
         Product other = (Product) obj;
         if (id != other.id)
             return false;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equalsIgnoreCase(other.name))
-            return false;
-        if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
-            return false;
         return true;
     }
 
-   
-    
 }
