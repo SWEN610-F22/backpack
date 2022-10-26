@@ -32,4 +32,13 @@ export class UserService {
       })
     )
   }
+
+
+  getUsersMatchingName(username: string): Observable<User[]>{
+    const endpoint = `${this.apiURL}?name=${username}`
+    const users =  this.httpClient.get<User[]>(this.apiURL);
+    return users;
+  }
+ 
+
 }
