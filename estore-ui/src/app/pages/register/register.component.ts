@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { User } from './user.model';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +13,7 @@ export class RegisterComponent implements OnInit {
 
   user: User = new User;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.resetForm();
@@ -35,6 +36,8 @@ this.submitted = true;
             localStorage.setItem(this.user.UserName,JSON.stringify(this.user));
              let data: any = localStorage.getItem(this.user.UserName);
                     console.log(JSON.parse(data));
+
+                this.userService.createUser(this.user)    
      
 }
 
