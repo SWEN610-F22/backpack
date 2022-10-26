@@ -31,9 +31,9 @@ public class ProductFileDAOTest {
     public void setupProductFileDAO() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
         testProducts = new Product[3];
-        testProducts[0] = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
-        testProducts[1] = new Product(2, "Camping gear", "Can be used for gear", 5.0, 2);
-        testProducts[2] = new Product(3, "Hiking boots", "Can be used for boots", 13.0, 5);
+        testProducts[0] = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
+        testProducts[1] = new Product(2, "Camping gear", "Can be used for gear", 5.0, 2,"fish", "http://www.google.com");
+        testProducts[2] = new Product(3, "Hiking boots", "Can be used for boots", 13.0, 5,"fish", "http://www.google.com");
 
         when(mockObjectMapper
                 .readValue(new File("products.json"), Product[].class))
@@ -64,7 +64,7 @@ public class ProductFileDAOTest {
 
     @Test
     void updateProduct() {
-        Product product = new Product(1, "BootsBootsBoots", "They are indeed boots", 100.00, 10000);
+        Product product = new Product(1, "BootsBootsBoots", "They are indeed boots", 100.00, 10000,"fish", "http://www.google.com");
         Product result = assertDoesNotThrow(() -> productFileDAO.updateProduct(product), "Unexpected exception thrown");
         assertNotNull(result);
         Product realProduct = productFileDAO.getProduct(product.getId());
@@ -74,7 +74,7 @@ public class ProductFileDAOTest {
     @Test
     public void testSaveException() throws IOException {
         doThrow(new IOException()).when(mockObjectMapper).writeValue(any(File.class), any(Product[].class));
-        Product product = new Product(1, "BootsBootsBoots", "They are indeed boots", 100.00, 10000);
+        Product product = new Product(1, "BootsBootsBoots", "They are indeed boots", 100.00, 10000,"fish", "http://www.google.com");
         assertThrows(IOException.class, () -> productFileDAO.createProduct(product), "IOException not thrown");
     }
 
@@ -87,7 +87,7 @@ public class ProductFileDAOTest {
     @Test
     public void testCreateProduct() {
         // Setup
-        Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10);
+        Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
 
         // Invoke
         Product result = assertDoesNotThrow(() -> productFileDAO.createProduct(product),
@@ -107,7 +107,7 @@ public class ProductFileDAOTest {
     @Test
     public void testDeleteProduct() {
         // new product
-        Product product = new Product(1, "Fishing Rod", "a fishing rod", 10.11, 100);
+        Product product = new Product(1, "Fishing Rod", "a fishing rod", 10.11, 100,"fish", "http://www.google.com");
 
         // product currently in system with same id
         Product realProduct = productFileDAO.getProduct(product.getId());
