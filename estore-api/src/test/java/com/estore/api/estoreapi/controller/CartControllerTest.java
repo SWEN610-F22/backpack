@@ -57,7 +57,7 @@ public class CartControllerTest {
     @Test
     public void createProductSuccessfully() throws IOException {
         CartItem cartItem = new CartItem(5, 5, 5, 5);
-        when(mockCartDAO.addToCart(cartItem)).thenReturn(cartItem);
+        when(mockCartDAO.addToCart(cartItem, 5)).thenReturn(cartItem);
         CartItem[] matching = new CartItem[0];
         ResponseEntity<CartItem> response = cartController.addToCart(cartItem);
         assertEquals(HttpStatus.CREATED,response.getStatusCode());

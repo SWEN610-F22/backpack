@@ -15,7 +15,7 @@ export class CartService {
   constructor(private httpClient:HttpClient) { }
 
   getCart(): Observable<Product[]>{
-    const cart =  this.httpClient.get<Product[]>(this.apiUrl);
+    const cart = this.httpClient.get<Product[]>(this.apiUrl);
     return cart;
   }
 
@@ -23,6 +23,7 @@ export class CartService {
     const entireCart = this.httpClient.get<CartItem[]>(this.entireCartUrl)
     return entireCart;
   }
+
 
   decrease(productId:number): Observable<Product[]>{
     let urlToDecrease = "http://localhost:8080/cart/decrease?productId="+productId
@@ -32,6 +33,11 @@ export class CartService {
   increase(productId:number): Observable<Product[]>{
     let urlToIncrease = "http://localhost:8080/cart/increase?productId="+productId
     return this.httpClient.get<Product[]>(urlToIncrease);
+  }
+
+  clearItem(productId:number): Observable<Product[]>{
+    let urlToClear = "http://localhost:8080/cart/clear?productId="+productId
+    return this.httpClient.get<Product[]>(urlToClear);
   }
 
 }

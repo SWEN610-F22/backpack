@@ -85,8 +85,8 @@ public class CartFileDAO implements CartDAO {
             if (cart.containsKey(product.getId()) == false)
                 return null;
             if(product.getQuantity()==0){
-                deleteFromCart(product.getId());
-                return product;
+                deleteFromCart(product.getId());    // If the new quantity of the product is zero, delete
+                return product;                     // the product from the cart
             }
             else{
                 cart.put(product.getId(), product);
@@ -100,47 +100,50 @@ public class CartFileDAO implements CartDAO {
     public CartItem[] decrease(int productId, int userId) throws IOException {
         synchronized(cart) {
             int cartId = 0;
-            if (cart.containsKey(productId) == false)
-                return null;
             for (CartItem product : cart.values()) {
-                if(product.getUserId()==userId && product.getProductId()==productId){
-                    product.setQuantity(product.getQuantity()-1);
-                    cart.put(product.getId(), product);
-                    save();
-                    if(product.getQuantity()==0){
-                        cartId = product.getId();
+                if(product.getUserId()==userId && product.getProductId()==productId){ // If this product exists in the cart
+                    product.setQuantity(product.getQuantity()-1);                     // for the current user,
+                    cart.put(product.getId(), product);                               // Decrement the quantity of the product
+                    save();                                                           // and update the cart
+                    if(product.getQuantity()==0){                                     // If new quantity is zero,
+                        cartId = product.getId();                                     // remove product from cart.
                         deleteFromCart(product.getId());
                         save();
                     return getCart();
+                    }
                 }
             }
-            
-            }
-            if (cart.containsKey(cartId) == false){
-                CartItem product = getProduct(cartId);
-                cart.put(product.getId(), product);
-                save();
-                return getCart();
-            }
-            else{
-                return null;
-            }
+            return null;
         }
     }
 
     @Override
     public CartItem[] increase(int productId, int userId) throws IOException {
         synchronized(cart) {
-            if (cart.containsKey(productId) == false)
-                return null;
             for (CartItem product : cart.values()) {
-                if(product.getUserId()==userId && product.getProductId()==productId){
-                    product.setQuantity(product.getQuantity()+1);
-                    cart.put(product.getId(), product);
-                    save();
+                if(product.getUserId()==userId && product.getProductId()==productId){ // If this product exists in the cart
+                    product.setQuantity(product.getQuantity()+1);                     // for the current user,
+                    cart.put(product.getId(), product);                               // Increment the quantity of the product
+                    save();                                                           // and update the cart
                     return getCart();
                 }
             }
+        }
+        return null;
+    }
+
+
+    @Override
+    public CartItem[] clearItem(int productId, int userId) throws IOException {
+        synchronized(cart) {
+            for (CartItem product : cart.values()) {
+                if(product.getUserId()==userId && product.getProductId()==productId){ // If the product exists in the cart
+                    cart.remove(product.getId());                                     // for the current user,
+                    save();                                                           // Remove the product from the cart
+                return getCart();
+                }
+            }
+            
         }
         return null;
     }
@@ -178,8 +181,16 @@ public class CartFileDAO implements CartDAO {
     }
 
     @Override
-    public CartItem addToCart(CartItem product) throws IOException {
+    public CartItem addToCart(CartItem product, Integer userId) throws IOException {
         synchronized(cart) {
+            for (CartItem cartItem : cart.values()) {
+                if(cartItem.getUserId()==userId && product.getProductId()==cartItem.getId()){ // If product already exists in
+                    product.setQuantity(cartItem.getQuantity()+product.getQuantity());        // this user's cart,
+                    cart.put(cartItem.getId(), product);                                      // set new quantity to total of
+                    save();                                                                   // old quantity and new quantity
+                    return product;
+                }
+            }
             CartItem newProduct = new CartItem(nextId(), product.getUserId(), product.getProductId(), product.getQuantity());
             cart.put(newProduct.getId(), newProduct);
             save();

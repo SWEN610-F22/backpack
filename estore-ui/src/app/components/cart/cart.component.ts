@@ -10,10 +10,21 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class CartComponent implements OnInit {
   cart:Product[] = [];
+  totalPrice:number = 0;
   constructor(private cartService:CartService) { }
 
   ngOnInit(): void {
     this.cartService.getCart().subscribe((cart) => this.cart = cart);
+  }
+
+  updateTotalPrice(): number{
+    let totalPrice = 0;
+    for(let i=0; i<this.cart.length; i++){
+      let thisRowTotal = (this.cart[i].price) * (this.cart[i].quantity!)
+      this.cart[i].totalPrice = Number(thisRowTotal.toFixed(2));
+      totalPrice += thisRowTotal;
+    }
+    return Number(totalPrice.toFixed(2));
   }
 
   decrease(cartItem: Product): void {
@@ -24,6 +35,11 @@ export class CartComponent implements OnInit {
   increase(cartItem: Product): void {
     let productId = cartItem.id;
     if(productId)this.cartService.increase(productId).subscribe((cart) => this.cart = cart);
+  }
+
+  clear(cartItem: Product): void {
+    let productId = cartItem.id;
+    if(productId)this.cartService.clearItem(productId).subscribe((cart) => this.cart = cart);
   }
 
 }
