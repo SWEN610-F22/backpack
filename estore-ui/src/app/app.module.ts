@@ -11,6 +11,7 @@ import { ProductCollectionComponent } from './components/product-collection/prod
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './pages/login/login.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { FormsModule } from '@angular/forms';
     ProductCardComponent,
     ProductCollectionComponent,
     SearchBarComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
