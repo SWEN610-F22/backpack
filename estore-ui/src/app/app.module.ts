@@ -15,6 +15,12 @@ import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './pages/login/login.component';
 
+import { InventoryComponent } from './pages/inventory/inventory.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material.module';
+
+
+
 
 @NgModule({
   declarations: [
@@ -27,14 +33,19 @@ import { LoginComponent } from './pages/login/login.component';
     RegisterComponent,
     CartComponent,
     CartPageComponent,
-    LoginComponent
+    LoginComponent,
+    InventoryComponent,
+    RegisterComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule ,
+    FormsModule,
+    MaterialModule,
     FormsModule
-
   ],
   providers: [],
   bootstrap: [AppComponent]
