@@ -7,5 +7,4 @@ export interface Product{
     manufacturer: string,
     totalPrice?:number,
     imageUrl: string
-    
 }

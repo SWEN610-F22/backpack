@@ -14,8 +14,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './pages/login/login.component';
-
 import { InventoryComponent } from './pages/inventory/inventory.component';
+import { ViewProductComponent } from './pages/view-product/view-product.component';
 
 
 @NgModule({
@@ -27,6 +27,7 @@ import { InventoryComponent } from './pages/inventory/inventory.component';
     ProductCollectionComponent,
     SearchBarComponent,
     RegisterComponent,
+    ViewProductComponent,
     CartComponent,
     CartPageComponent,
     LoginComponent,
