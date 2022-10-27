@@ -13,6 +13,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { FormsModule } from '@angular/forms';
+import { ViewProductComponent } from './pages/view-product/view-product.component';
 import { LoginComponent } from './pages/login/login.component';
 
 
@@ -25,6 +26,7 @@ import { LoginComponent } from './pages/login/login.component';
     ProductCollectionComponent,
     SearchBarComponent,
     RegisterComponent,
+    ViewProductComponent,
     CartComponent,
     CartPageComponent,
     LoginComponent

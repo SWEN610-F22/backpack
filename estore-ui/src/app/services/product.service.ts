@@ -16,6 +16,12 @@ export class ProductService {
     return products;
   }
 
+  getProductById(id:number): Observable<Product>{
+    const endpoint = `${this.apiUrl}/${id}`;
+    const product = this.httpClient.get<Product>(endpoint);
+    return product;
+  }
+  
   searchProducts(containsText:string): Observable<Product[]>{
     const endpoint = `${this.apiUrl}?name=${containsText}`;
     console.log(endpoint);
