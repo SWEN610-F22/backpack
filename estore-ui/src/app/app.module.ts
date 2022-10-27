@@ -9,10 +9,12 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ProductCollectionComponent } from './components/product-collection/product-collection.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+
 import { InventoryComponent } from './pages/inventory/inventory.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { FormsModule } from '@angular/forms';
+import { RegisterComponent } from './pages/register/register.component';
 
 
 
@@ -24,7 +26,9 @@ import { FormsModule } from '@angular/forms';
     ProductCardComponent,
     ProductCollectionComponent,
     SearchBarComponent,
-    InventoryComponent
+    InventoryComponent,
+    RegisterComponent
+
   ],
   imports: [
     BrowserModule,
@@ -32,7 +36,8 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     BrowserAnimationsModule ,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.persistence.ProductDAO;
 
@@ -85,13 +84,14 @@ public class ProductController {
 
 
     @PutMapping("")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
+    public ResponseEntity<Product[]> updateProduct(@RequestBody Product product) {
         LOG.info("PUT /product " + product);
 
         try {
             Product newProduct = productDao.updateProduct(product);
-            if (newProduct != null)
-                return new ResponseEntity<Product>(newProduct, HttpStatus.OK);
+            if (newProduct != null) {
+                return new ResponseEntity<>(productDao.getProducts(), HttpStatus.OK);
+            }
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
