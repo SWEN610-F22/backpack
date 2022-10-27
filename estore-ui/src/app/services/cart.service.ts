@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Product } from '../models/Product';
 import { CartItem } from '../models/CartItem';
 import { CartComponent } from '../components/cart/cart.component';
+import { UserService } from './user.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,11 +16,14 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class CartService {
-  private userId: number = 9;
+  private userId: number = 0;
   private apiUrl = 'http://localhost:8080/cart/user/?userId='+String(this.userId);
   private entireCartUrl = 'http://localhost:8080/cart'
 
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient:HttpClient, private userService:UserService) {
+    this.userId = (userService.getUser())?.id!;
+    this.apiUrl = 'http://localhost:8080/cart/user/?userId='+String(this.userId);
+   }
 
   getCart(): Observable<Product[]>{
     const cart = this.httpClient.get<Product[]>(this.apiUrl);

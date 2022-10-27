@@ -29,7 +29,7 @@ public class CartController {
     private static final Logger LOG = Logger.getLogger(CartController.class.getName());
     private CartDAO cartDao;
     private ProductDAO productDAO;
-    private Integer userId = 9;
+    private Integer userId;
 
     public CartController(CartDAO cartdao, ProductDAO productDao) {
         this.cartDao = cartdao;
@@ -215,6 +215,7 @@ public class CartController {
     public ResponseEntity<CartItem> addToCart(@RequestBody CartItem product) {
         LOG.info("POST /cart " + product);
         try {
+            this.userId = product.getUserId();
             CartItem createdProduct = cartDao.addToCart(product, this.userId);
             return new ResponseEntity<CartItem>(createdProduct, HttpStatus.CREATED);
         } catch (IOException e) {
