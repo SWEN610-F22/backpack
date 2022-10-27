@@ -185,10 +185,10 @@ public class CartFileDAO implements CartDAO {
         synchronized(cart) {
             for (CartItem cartItem : cart.values()) {
                 if(cartItem.getUserId()==userId && product.getProductId()==cartItem.getId()){ // If product already exists in
-                    product.setQuantity(cartItem.getQuantity()+product.getQuantity());        // this user's cart,
-                    cart.put(cartItem.getId(), product);                                      // set new quantity to total of
+                    cartItem.setQuantity(cartItem.getQuantity()+product.getQuantity());        // this user's cart,
+                    cart.put(cartItem.getId(), cartItem);                                      // set new quantity to total of
                     save();                                                                   // old quantity and new quantity
-                    return product;
+                    return cartItem;
                 }
             }
             CartItem newProduct = new CartItem(nextId(), product.getUserId(), product.getProductId(), product.getQuantity());

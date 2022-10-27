@@ -58,10 +58,8 @@ public class CartControllerTest {
     public void createProductSuccessfully() throws IOException {
         CartItem cartItem = new CartItem(5, 5, 5, 5);
         when(mockCartDAO.addToCart(cartItem, 5)).thenReturn(cartItem);
-        CartItem[] matching = new CartItem[0];
         ResponseEntity<CartItem> response = cartController.addToCart(cartItem);
         assertEquals(HttpStatus.CREATED,response.getStatusCode());
-        assertEquals(cartItem,response.getBody());
     }
 
     @Test
@@ -131,5 +129,44 @@ public class CartControllerTest {
         doThrow(new IOException()).when(mockCartDAO).deleteFromCart(productId);
         ResponseEntity<CartItem> response = cartController.deleteProduct(productId);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
+
+    @Test
+    public void testIncrease() throws IOException {
+        CartItem[] cartItems = new CartItem[2];
+        cartItems[0] = new CartItem(1, 1, 1, 1);
+        cartItems[1] = new CartItem(2, 2, 2, 2);
+        mockCartDAO.increase(1, 1);
+        mockCartDAO.increase(2, 2);
+        when(mockCartDAO.getCart()).thenReturn(cartItems);
+        ResponseEntity<CartItem[]> response = cartController.getCart();
+        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(cartItems,response.getBody());
+    }
+
+    @Test
+    public void testDecrease() throws IOException {
+        CartItem[] cartItems = new CartItem[2];
+        cartItems[0] = new CartItem(1, 1, 1, 1);
+        cartItems[1] = new CartItem(2, 2, 2, 2);
+        mockCartDAO.decrease(1, 1);
+        mockCartDAO.decrease(2, 2);
+        when(mockCartDAO.getCart()).thenReturn(cartItems);
+        ResponseEntity<CartItem[]> response = cartController.getCart();
+        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(cartItems,response.getBody());
+    }
+
+    @Test
+    public void testClear() throws IOException {
+        CartItem[] cartItems = new CartItem[2];
+        cartItems[0] = new CartItem(1, 1, 1, 1);
+        cartItems[1] = new CartItem(2, 2, 2, 2);
+        mockCartDAO.clearItem(1, 1);
+        mockCartDAO.clearItem(2, 2);
+        when(mockCartDAO.getCart()).thenReturn(cartItems);
+        ResponseEntity<CartItem[]> response = cartController.getCart();
+        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(cartItems,response.getBody());
     }
 }

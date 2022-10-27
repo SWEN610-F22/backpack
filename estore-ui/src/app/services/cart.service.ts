@@ -24,7 +24,6 @@ export class CartService {
     return entireCart;
   }
 
-
   decrease(productId:number): Observable<Product[]>{
     let urlToDecrease = "http://localhost:8080/cart/decrease?productId="+productId
     return this.httpClient.get<Product[]>(urlToDecrease);
