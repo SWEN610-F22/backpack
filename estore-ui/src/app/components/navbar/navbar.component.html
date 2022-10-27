@@ -13,7 +13,7 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li *ngIf="isAdminLoggedIn()"><a class="dropdown-item" href="#">Inventory</a></li>
-            <li><a class="dropdown-item" href="#">Logout</a></li>
+            <li><a class="dropdown-item" href="#" (click)="logout()">Logout</a></li>
           </ul>
         </li>
       </ul>

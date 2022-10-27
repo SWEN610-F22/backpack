@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 export class NavbarComponent implements OnInit {
   username:string = "";
 
-  constructor(private userService:UserService) { }
+  constructor(private userService:UserService,private router:Router) { }
 
   ngOnInit(): void {
     if(this.userService.isLoggedIn()){
@@ -26,8 +26,12 @@ export class NavbarComponent implements OnInit {
 
   
   isAdminLoggedIn():boolean{
-    return this.isAdminLoggedIn();
+    return this.userService.isAdminLoggedIn();
   }
 
+  logout(){
+    this.userService.logout();
+  }
+  
 
 }
