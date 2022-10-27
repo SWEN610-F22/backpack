@@ -1,0 +1,51 @@
+
+<h2>Inventory</h2>
+<ul>
+    <li *ngFor="let product of products " >
+        <button>
+            <span class="name">{{product.name}}</span>
+            <span class ="quantity_text"> Quantity: </span>
+            <span class="quantity">{{product.quantity}} </span>
+            <button [class.selected]="product === selectedProduct" type="button" (click)="onEdit(product)">
+                <span>Edit</span>
+            </button>
+            <button class = "delete">
+                <span> Delete </span>
+            </button>
+        </button>
+    </li>
+</ul> 
+
+<div *ngIf="selectedProduct && dissapear " >
+    <h2>{{selectedProduct.name | uppercase}} <br/> Edit Details </h2>
+  
+    <div class="center">id: {{selectedProduct.id}}</div>
+    <div class = "center">
+      <label for="product-name"> Name: </label>
+      <input id="product-name" [(ngModel)]="selectedProduct.name" placeholder="name">
+    </div>
+    <div class = "center">
+        <label for = "product-description">Description: </label>
+        <input id = "product-description" [(ngModel)] ="selectedProduct.description" placeholder="description">
+    </div>
+    <div class = "center">
+        <label for = "product-price">Price: </label>
+        <input id = "product-price" [(ngModel)] ="selectedProduct.price" placeholder="price">
+    </div>
+    <div class = "center">
+        <label for = "product-quantity">Quantity: </label>
+        <input id = "product-quantity" [(ngModel)] ="selectedProduct.quantity" placeholder="quantity">
+    </div>
+    <div class = "center">
+        <label for = "product-manufacturer">Manufacturer: </label>
+        <input id = "product-manufacturer" [(ngModel)] ="selectedProduct.manufacturer" placeholder="manufacturer">
+    </div>
+    <div class = "center">
+        <label for = "product-imageUrl">ImageUrl: </label>
+        <input id = "product-imageUrl" [(ngModel)] ="selectedProduct.imageUrl" placeholder="imageUrl">
+    </div>
+    <button [class.selected]="selectedProduct === savedProduct" type="button" (click)="onSave(selectedProduct)" [disabled]="selectedProduct.price < 0 || selectedProduct.quantity < 0"  >
+        <span>Save</span>
+    </button>
+
+  </div>

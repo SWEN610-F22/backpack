@@ -13,7 +13,8 @@ export class ProductCardComponent implements OnInit {
     description:"",
     price:0,
     manufacturer:"",
-    imageUrl:""
+    imageUrl:"",
+    quantity: 0
   }
 
   constructor() { }
