@@ -38,12 +38,16 @@ export class ProductCardComponent implements OnInit {
       };
       this.cartService.addToCart(cartItem).subscribe((cartItem)=> {
         console.log(cartItem)
-        
       });
   
     }
     
     
   }
+
+  isLoggedIn(){
+    return this.userService.isLoggedIn();
+  }
+
 
 }
