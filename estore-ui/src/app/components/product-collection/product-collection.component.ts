@@ -16,4 +16,12 @@ export class ProductCollectionComponent implements OnInit {
     this.productService.getProducts().subscribe((products) => this.products = products)
   }
 
+  searchProducts(searchWith: string){
+    console.log(searchWith)
+    this.productService.searchProducts(searchWith).subscribe((products) => {
+      console.log(products);
+      this.products = products
+    });
+  }
+
 }
