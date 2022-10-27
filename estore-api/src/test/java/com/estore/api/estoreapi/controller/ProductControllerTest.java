@@ -92,7 +92,7 @@ public class ProductControllerTest {
     public void updateProductSuccessfully() throws IOException {
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         when(mockProductDAO.updateProduct(product)).thenReturn(product);
-        ResponseEntity<Product> response = productController.updateProduct(product);
+        ResponseEntity<Product[]> response = productController.updateProduct(product);
         product.setName("New Fishing Rod");
         response = productController.updateProduct(product);
         assertEquals(HttpStatus.OK,response.getStatusCode());
@@ -103,7 +103,7 @@ public class ProductControllerTest {
     public void updateProductFailed() throws IOException {
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         when(mockProductDAO.updateProduct(product)).thenReturn(null);
-        ResponseEntity<Product> response = productController.updateProduct(product);
+        ResponseEntity<Product[]> response = productController.updateProduct(product);
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
     }
 
@@ -111,7 +111,7 @@ public class ProductControllerTest {
     public void updateProductHandleException() throws IOException {
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         doThrow(new IOException()).when(mockProductDAO).updateProduct(product);
-        ResponseEntity<Product> response = productController.updateProduct(product);
+        ResponseEntity<Product[]> response = productController.updateProduct(product);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
     }
 

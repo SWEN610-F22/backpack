@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Product } from '../models/Product';
-
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +19,13 @@ export class ProductService {
     const products =  this.httpClient.get<Product[]>(this.apiUrl);
     return products;
   }
+  updateProduct(product: Product): Observable<Product[]>{
+    return this.httpClient.put<Product[]>(this.apiUrl, product,httpOptions);
+  
+  
+  }
+}
+
 
   getProductById(id:number): Observable<Product>{
     const endpoint = `${this.apiUrl}/${id}`;
@@ -29,3 +40,4 @@ export class ProductService {
     return products;
   }
 }
+

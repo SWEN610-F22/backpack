@@ -9,6 +9,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ProductCollectionComponent } from './components/product-collection/product-collection.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { InventoryComponent } from './pages/inventory/inventory.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material.module';
+import { FormsModule } from '@angular/forms';
+import { RegisterComponent } from './pages/register/register.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
@@ -25,6 +30,8 @@ import { LoginComponent } from './pages/login/login.component';
     ProductCardComponent,
     ProductCollectionComponent,
     SearchBarComponent,
+    InventoryComponent,
+    RegisterComponent,
     RegisterComponent,
     ViewProductComponent,
     CartComponent,
@@ -35,8 +42,10 @@ import { LoginComponent } from './pages/login/login.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule ,
+    FormsModule,
+    MaterialModule,
     FormsModule
-
   ],
   providers: [],
   bootstrap: [AppComponent]
