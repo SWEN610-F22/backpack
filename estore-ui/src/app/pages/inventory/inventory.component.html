@@ -1,51 +1,65 @@
-
-<h2>Inventory</h2>
-<ul>
-    <li *ngFor="let product of products " >
-        <button>
-            <span class="name">{{product.name}}</span>
-            <span class ="quantity_text"> Quantity: </span>
-            <span class="quantity">{{product.quantity}} </span>
-            <button [class.selected]="product === selectedProduct" type="button" (click)="onEdit(product)">
-                <span>Edit</span>
-            </button>
-            <button class = "delete">
-                <span> Delete </span>
-            </button>
-        </button>
-    </li>
-</ul> 
-
-<div *ngIf="selectedProduct && dissapear " >
-    <h2>{{selectedProduct.name | uppercase}} <br/> Edit Details </h2>
-  
-    <div class="center">id: {{selectedProduct.id}}</div>
-    <div class = "center">
-      <label for="product-name"> Name: </label>
-      <input id="product-name" [(ngModel)]="selectedProduct.name" placeholder="name">
+<div class="container-fluid">
+    <h2 class="my-2">INVENTORY</h2>
+    <div class="row">
+        <div class="col-md-6 list-section">
+            <table class="table table-responsive">
+                <thead>
+                  <tr>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let product of products" >
+                    <td scope="row">{{product.name}}</td>
+                    <td>${{product.price}}</td>
+                    <td>{{product.quantity}}</td>
+                    <td> <button [class.selected]="product === selectedProduct" type="button" (click)="onEdit(product)" class="btn btn-warning btn-sm me-2">
+                        <span>Edit</span>
+                    </button>
+                    <button class = "delete btn btn-danger btn-sm">
+                        <span> Delete </span>
+                    </button>
+                </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <div class="col detail-section px-5 py-3">
+            <div *ngIf="selectedProduct && dissapear " >
+                <h5>{{selectedProduct.name | uppercase}} </h5>
+                <div class="mb-3">
+                    <label for="product-name" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" id="product-name" [(ngModel)]="selectedProduct.name">
+                </div>
+                <div class="mb-3">
+                    <label for="product-description" class="form-label">Description</label>
+                    <textarea class="form-control" id = "product-description" [(ngModel)] ="selectedProduct.description" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="product-price" class="form-label">Price</label>
+                    <input type="text" class="form-control" id="product-price" [(ngModel)]="selectedProduct.price">
+                </div>
+                <div class="mb-3">
+                    <label for="product-quantity" class="form-label">Quantity</label>
+                    <input type="text" class="form-control" id="product-quantity" [(ngModel)]="selectedProduct.quantity">
+                </div>
+                <div class="mb-3">
+                    <label for="product-manufacturer" class="form-label">Manufacturer</label>
+                    <input type="text" class="form-control" id="product-manufacturer" [(ngModel)]="selectedProduct.manufacturer">
+                </div>
+                <div class="mb-3">
+                    <label for="product-imageUrl" class="form-label">ImageUrl</label>
+                    <input type="text" class="form-control" id="product-imageUrl" [(ngModel)]="selectedProduct.imageUrl">
+                </div>
+                <div class="d-grid">
+                    <button class="btn btn-dark" [class.selected]="selectedProduct === savedProduct" type="button" (click)="onSave(selectedProduct)" [disabled]="selectedProduct.price < 0 || selectedProduct.quantity < 0">
+                        Save
+                    </button>
+                </div>
+              </div>
+        </div>
     </div>
-    <div class = "center">
-        <label for = "product-description">Description: </label>
-        <input id = "product-description" [(ngModel)] ="selectedProduct.description" placeholder="description">
-    </div>
-    <div class = "center">
-        <label for = "product-price">Price: </label>
-        <input id = "product-price" [(ngModel)] ="selectedProduct.price" placeholder="price">
-    </div>
-    <div class = "center">
-        <label for = "product-quantity">Quantity: </label>
-        <input id = "product-quantity" [(ngModel)] ="selectedProduct.quantity" placeholder="quantity">
-    </div>
-    <div class = "center">
-        <label for = "product-manufacturer">Manufacturer: </label>
-        <input id = "product-manufacturer" [(ngModel)] ="selectedProduct.manufacturer" placeholder="manufacturer">
-    </div>
-    <div class = "center">
-        <label for = "product-imageUrl">ImageUrl: </label>
-        <input id = "product-imageUrl" [(ngModel)] ="selectedProduct.imageUrl" placeholder="imageUrl">
-    </div>
-    <button [class.selected]="selectedProduct === savedProduct" type="button" (click)="onSave(selectedProduct)" [disabled]="selectedProduct.price < 0 || selectedProduct.quantity < 0"  >
-        <span>Save</span>
-    </button>
-
-  </div>
+</div>
