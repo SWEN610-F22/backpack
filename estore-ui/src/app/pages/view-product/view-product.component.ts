@@ -50,4 +50,8 @@ export class ViewProductComponent implements OnInit {
     return this.userService.isLoggedIn();
   }
 
+  isAdminLoggedIn():boolean{
+    return this.userService.isAdminLoggedIn();
+  }
+
 }
