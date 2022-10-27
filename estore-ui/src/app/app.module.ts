@@ -10,6 +10,8 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { ProductCollectionComponent } from './components/product-collection/product-collection.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { CartComponent } from './components/cart/cart.component';
+import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './pages/login/login.component';
 
@@ -23,6 +25,8 @@ import { LoginComponent } from './pages/login/login.component';
     ProductCollectionComponent,
     SearchBarComponent,
     RegisterComponent,
+    CartComponent,
+    CartPageComponent,
     LoginComponent
   ],
   imports: [

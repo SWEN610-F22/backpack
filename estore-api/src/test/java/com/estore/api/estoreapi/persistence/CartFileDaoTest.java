@@ -69,7 +69,7 @@ public class CartFileDaoTest {
     @Test
     public void testAddItem() {
         CartItem cartItem = new CartItem(1, 1, 1, 1);
-        CartItem result = assertDoesNotThrow(() -> cartFileDAO.addToCart(cartItem), "Unexpected exception thrown");
+        CartItem result = assertDoesNotThrow(() -> cartFileDAO.addToCart(cartItem, 1), "Unexpected exception thrown");
         assertNotNull(result);
         CartItem actual = cartFileDAO.getProduct(cartItem.getId());
         assertEquals(actual.getId(), cartItem.getId());

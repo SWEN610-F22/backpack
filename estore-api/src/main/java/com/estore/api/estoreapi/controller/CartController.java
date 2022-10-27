@@ -28,9 +28,12 @@ import com.estore.api.estoreapi.persistence.CartDAO;
 public class CartController {
     private static final Logger LOG = Logger.getLogger(CartController.class.getName());
     private CartDAO cartDao;
+    private ProductDAO productDAO;
+    private Integer userId;
 
-    public CartController(CartDAO cartdao) {
+    public CartController(CartDAO cartdao, ProductDAO productDao) {
         this.cartDao = cartdao;
+        this.productDAO = productDao;
     }
 
     /**
@@ -51,6 +54,31 @@ public class CartController {
         }
 
     }
+
+
+    /**
+     * Responds to the GET request for all {@linkplain CartItem CartItem} objects in cart for a user
+     * 
+     * @param userId The userId parameter which contains the id used to find the
+     *             {@link User user}.
+     * 
+     * @return ResponseEntity with array of {@link Product products} objects (may be
+     *         empty) and HTTP status of OK.
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
+     */
+    @GetMapping("/user")
+    public ResponseEntity<Product[]> getCartForUser(@RequestParam(required = true) Integer userId) {
+        try {
+            CartItem[] fullCart = cartDao.getCart();
+            Product[] cart = productDAO.getCart(fullCart, userId);
+            return new ResponseEntity<Product[]>(cart, HttpStatus.OK);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
 
     /**
      * Responds to the GET request for a {@linkplain CartItem CartItem} in cart for the given id
@@ -99,6 +127,80 @@ public class CartController {
     }
 
 
+   /** 
+    * Responds to the GET request for all {@linkplain CartItem CartItem} objects in cart for a user
+    * after the quantity of a {@linkplain Product product} object has been decremented
+    * @param productId The productId parameter which contains the id used to find the
+    *             {@link Product product}.
+    * 
+    * @return ResponseEntity with array of {@link Product products} objects (may be
+    *         empty) and HTTP status of OK.
+    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
+    */
+    @GetMapping("/decrease")
+    public ResponseEntity<Product[]> decrease(@RequestParam(required = true) Integer productId) {
+        LOG.info("GET /cart " + this.userId + " " + productId);
+        try {
+            CartItem[] decreasedCart = cartDao.decrease(productId, this.userId);
+            CartItem[] fullCart = cartDao.getCart();
+            Product[] newCart = productDAO.getCart(fullCart, userId);
+            return new ResponseEntity<Product[]>(newCart, HttpStatus.OK);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /** 
+    * Responds to the GET request for all {@linkplain CartItem CartItem} objects in cart for a user
+    * after the quantity of a {@linkplain Product product} object has been incremented
+    * @param productId The productId parameter which contains the id used to find the
+    *             {@link Product product}.
+    * 
+    * @return ResponseEntity with array of {@link Product products} objects (may be
+    *         empty) and HTTP status of OK.
+    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
+    */
+    @GetMapping("/increase")
+    public ResponseEntity<Product[]> increase(@RequestParam(required = true) Integer productId) {
+        LOG.info("GET /cart " + this.userId + " " + productId);
+        try {
+            CartItem[] increasedCart = cartDao.increase(productId, this.userId);
+            CartItem[] fullCart = cartDao.getCart();
+            Product[] newCart = productDAO.getCart(fullCart, userId);
+            return new ResponseEntity<Product[]>(newCart, HttpStatus.OK);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    /** 
+    * Responds to the GET request for all {@linkplain CartItem CartItem} objects in cart for a user
+    * after the quantity of a {@linkplain Product product} object has been set to zero
+    * @param productId The productId parameter which contains the id used to find the
+    *             {@link Product product}.
+    * 
+    * @return ResponseEntity with array of {@link Product products} objects (may be
+    *         empty) and HTTP status of OK.
+    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
+    */
+    @GetMapping("/clear")
+    public ResponseEntity<Product[]> clearItem(@RequestParam(required = true) Integer productId) {
+        LOG.info("GET /cart " + this.userId + " " + productId);
+        try {
+            CartItem[] clearedCart = cartDao.clearItem(productId, this.userId);
+            CartItem[] fullCart = cartDao.getCart();
+            Product[] newCart = productDAO.getCart(fullCart, userId);
+            return new ResponseEntity<Product[]>(newCart, HttpStatus.OK);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
     /**
      * Responds to the POST request for a {@linkplain CartItem cartItem} to cart
      *
@@ -113,7 +215,8 @@ public class CartController {
     public ResponseEntity<CartItem> addToCart(@RequestBody CartItem product) {
         LOG.info("POST /cart " + product);
         try {
-            CartItem createdProduct = cartDao.addToCart(product);
+            this.userId = product.getUserId();
+            CartItem createdProduct = cartDao.addToCart(product, this.userId);
             return new ResponseEntity<CartItem>(createdProduct, HttpStatus.CREATED);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
