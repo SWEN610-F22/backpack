@@ -1,0 +1,45 @@
+<div class="container-fluid px-3">
+    
+    <div class="row my-3"></div>
+    
+    <table style="width:80%;">
+        <tr>
+          <td align="left"><b>Product</b></td>
+          <td align="center"><b>Quantity</b></td>
+          <td></td>
+          <td align="center"><b>Price</b></td>
+        </tr>
+        <tr align="center">
+            <tr align="center" *ngFor="let cartItem of cart">
+                <td align="left">{{cartItem.name}}</td>
+                <td>
+                    <button type="button" style="border-radius:10px; background-color:red; margin:5%; color: white" (click)="decrease(cartItem)">
+                        -
+                    </button>
+                    {{cartItem.quantity}}
+                    <button type="button" style="border-radius:10px; background-color:green; margin:5%; color:white" (click)="increase(cartItem)">
+                        +
+                    </button>
+                </td>
+                <td><button type="button" (click)="clear(cartItem)" style="border-radius:10px; background-color:#FFFFFF; margin-top:1%">
+                    Clear</button></td>
+                <td>{{cartItem.totalPrice}}</td>
+            </tr>
+            <tr align="center">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Total price: {{updateTotalPrice()}}</td>
+            </tr>
+            <tr align="center">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><button type="button" onclick="location.href='..'" style="border-radius:10px; background-color:#FFFFFF; margin-top:5%; margin-bottom: 15%">
+                    Proceed to checkout</button></td>
+            </tr>
+    </table>
+
+
+</div>
+

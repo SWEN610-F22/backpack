@@ -37,10 +37,11 @@ public interface CartDAO {
     /**
      * Adds and saves a {@linkplain CartItem cartItem}
      * @param cartItem {@linkplain CartItem cartItem} object to be added to the cart and saved.
+     * @param userId {@linkplain Integer integer} is the id of the user of the cart.
      * @return new {@link CartItem cartItem} if successful, null otherwise.
      * @throws IOException if there is an issue with underlying storage.
      */
-    CartItem addToCart(CartItem cartItem) throws IOException;
+    CartItem addToCart(CartItem cartItem, Integer userId) throws IOException;
     /**
      * Deletes a {@linkplain CartItem cartItem} with the given id
      * @param id The id of the {@link CartItem cartItem}
@@ -49,5 +50,29 @@ public interface CartDAO {
      * @throws IOException if underlying storage cannot be accessed
      */
     boolean deleteFromCart(int id) throws IOException;
+    /**
+     * Increments the quantity of a {@linkplain CartItem cartItem} with the given id for current user
+     * @param productId The id of the {@link CartItem cartItem} to increment
+     * @param userId The id of the current {@link User user}
+     * @return An array of {@link CartItem CartItem} objects, may be empty
+     * @throws IOException if an issue with underlying storaged
+     */
+    CartItem[] increase(int productId, int userId) throws IOException;
+    /**
+     * Decrements the quantity of a {@linkplain CartItem cartItem} with the given id for current user
+     * @param productId The id of the {@link CartItem cartItem} to increment
+     * @param userId The id of the current {@link User user}
+     * @return An array of {@link CartItem CartItem} objects, may be empty
+     * @throws IOException if an issue with underlying storaged
+     */
+    CartItem[] decrease(int productId, int userId) throws IOException;
+    /**
+     * Sets the quantity of a {@linkplain CartItem cartItem} with the given id for current user to zero
+     * @param productId The id of the {@link CartItem cartItem} to increment
+     * @param userId The id of the current {@link User user}
+     * @return An array of {@link CartItem CartItem} objects, may be empty
+     * @throws IOException if an issue with underlying storaged
+     */
+    CartItem[] clearItem(int productId, int userId) throws IOException;
 }
 

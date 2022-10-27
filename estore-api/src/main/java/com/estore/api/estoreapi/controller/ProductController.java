@@ -42,6 +42,7 @@ public class ProductController {
      */
     @GetMapping("")
     public ResponseEntity<Product[]> getProducts(@RequestParam(required = false) String name) {
+        LOG.info("GET /products/" + name);
         try {
             Product[] products;
             if (name == null) {
