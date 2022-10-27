@@ -60,6 +60,7 @@ export class UserService {
 
   setUser(user: User) {
     localStorage.setItem("user", JSON.stringify(user));
+   
   }
 
   isAdminLoggedIn():boolean {
@@ -74,5 +75,9 @@ export class UserService {
 
   }
 
-
+  logout(){
+    localStorage.removeItem("user");
+    
+  }
+ 
 }

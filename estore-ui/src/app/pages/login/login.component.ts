@@ -66,7 +66,6 @@ submitData(username: String){
                       this.router.navigate(['']);
                       
                     }
-                    
                   })
 
                   this.doesNotExist = true;
