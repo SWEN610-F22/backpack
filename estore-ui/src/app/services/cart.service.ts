@@ -3,6 +3,13 @@ import { Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Product } from '../models/Product';
 import { CartItem } from '../models/CartItem';
+import { CartComponent } from '../components/cart/cart.component';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+}
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +44,12 @@ export class CartService {
   clearItem(productId:number): Observable<Product[]>{
     let urlToClear = "http://localhost:8080/cart/clear?productId="+productId
     return this.httpClient.get<Product[]>(urlToClear);
+  }
+
+  addToCart(cartItem:CartItem):Observable<CartItem>{
+    console.log(cartItem);
+    const newCartItem = this.httpClient.post<CartItem>(this.entireCartUrl, cartItem, httpOptions);
+    return newCartItem;
   }
 
 }
