@@ -19,9 +19,6 @@ export class CartComponent implements OnInit {
     this.cartService.getCart().subscribe((cart) => this.cart = cart);
   }
 
-
-    
-
   updateTotalPrice(): number{
     let totalPrice = 0;
     for(let i=0; i<this.cart.length; i++){

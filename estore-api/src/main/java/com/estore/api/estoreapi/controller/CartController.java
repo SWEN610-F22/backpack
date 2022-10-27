@@ -29,7 +29,7 @@ public class CartController {
     private static final Logger LOG = Logger.getLogger(CartController.class.getName());
     private CartDAO cartDao;
     private ProductDAO productDAO;
-    private Integer userId = 2;
+    private Integer userId = 9;
 
     public CartController(CartDAO cartdao, ProductDAO productDao) {
         this.cartDao = cartdao;

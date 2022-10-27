@@ -15,7 +15,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class CartService {
-  private userId: number = 2;
+  private userId: number = 9;
   private apiUrl = 'http://localhost:8080/cart/user/?userId='+String(this.userId);
   private entireCartUrl = 'http://localhost:8080/cart'
 
