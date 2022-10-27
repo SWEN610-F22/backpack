@@ -19,13 +19,6 @@ export class ProductService {
     const products =  this.httpClient.get<Product[]>(this.apiUrl);
     return products;
   }
-  updateProduct(product: Product): Observable<Product[]>{
-    return this.httpClient.put<Product[]>(this.apiUrl, product,httpOptions);
-  
-  
-  }
-}
-
 
   getProductById(id:number): Observable<Product>{
     const endpoint = `${this.apiUrl}/${id}`;
@@ -38,6 +31,10 @@ export class ProductService {
     console.log(endpoint);
     const products =  this.httpClient.get<Product[]>(endpoint);
     return products;
+  }
+  
+  updateProduct(product: Product): Observable<Product[]>{
+    return this.httpClient.put<Product[]>(this.apiUrl, product,httpOptions);
   }
 }
 

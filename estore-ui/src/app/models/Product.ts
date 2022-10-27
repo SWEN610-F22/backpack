@@ -5,6 +5,6 @@ export interface Product{
     price: number,
     quantity: number,
     manufacturer: string,
-    imageUrl: string,
-    totalPrice?:number
+    totalPrice?:number,
+    imageUrl: string
 }
