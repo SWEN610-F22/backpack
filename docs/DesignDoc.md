@@ -36,6 +36,9 @@ As an admin, I want to login through my username to Backpack so that I can acces
 
 _Customer login_  
 As a customer, I want to login through my username to Backpack so that I can access member-only features.
+**User Create Account**
+
+- The create account feature enables a new user to create their account so they can login and access member-only features.
 
 **Inventory Management**  
 The Inventory Management feature provides a dashboard for the admin to keep track of their inventory.
@@ -43,13 +46,17 @@ The Inventory Management feature provides a dashboard for the admin to keep trac
 - As an admin, I want to add new equipment to my inventory.
 - As an admin, I want to remove equipment from my inventory.
 - As an admin, I want to edit details the equipment.
-- As an admin, I want to adjust quantities of equipment.
+- As an admin, I want to adjust quantity and price of equipment.
 
 **Product search**  
 The Product Search feature lets the customer browse through the catalogue.
 
-- As a customer, I want to see a list of all the equipment in the product catalogue.
 - As a customer, I want to search for an equipment in the product catalogue.
+
+**Landing Page**
+This is the first Page a customer would see after Login. This page displays product catalogue.
+
+- As a customer, I want to see a list of all the equipments in the product catalogue.
 
 **Cart Management**
 The cart management feature lets the customer manipulate the cart.
@@ -71,7 +78,7 @@ The cart management feature lets the customer manipulate the cart.
 
 ## Application Domain
 
-This section describes the application domain.
+The domian on this application is E-commerce. It is an e-store application where one can buy or sell products and perform commercial transactions electronically on the internet. It is an application that provides a virtual store of a retailer which sells products over the internet.
 
 ![Domain Model](Domain-Model-Final.png)
 
