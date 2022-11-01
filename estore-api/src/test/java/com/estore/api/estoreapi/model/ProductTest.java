@@ -1,5 +1,7 @@
 package com.estore.api.estoreapi.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Tag;
@@ -72,6 +74,56 @@ Product product = new Product(10,"doesn't matter", "it doesn't matter", 45.78, 7
     public void testToString(){
         assertEquals("Product [id=" + product.getId() + ", name=" + product.getName() + ", description=" + product.getDescription() + ", price=" + product.getPrice()
         + ", quantity=" + product.getQuantity() + ", manufacturer=" + product.getManufacturer() + ", imageUrl=" + product.getImageUrl() + "]", product.toString());
+    }
+
+    @Test
+    public void testsetManufacturer(){
+        Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
+        assertEquals("fish", product.getManufacturer());
+        product.setManufacturer("New Manufacturer");
+        assertEquals("New Manufacturer", product.getManufacturer());
+    }
+
+    @Test
+    public void testHashCode(){
+        Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
+        assertEquals(1, product.hashCode());    
+    }
+
+
+    @Test
+    public void testEqualsNull(){
+        Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
+        assertFalse(product.equals(null));   
+    }
+
+    @Test
+    public void testEqualsDifferentObjects(){
+        Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
+        User user = new User(1, "user", false);
+        assertFalse(product.equals(user));   
+    }
+
+    @Test
+    public void testEqualsProductWithDifferentId(){
+        Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
+        Product product2 = new Product(2, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
+        assertNotEquals(product, product2);
+    }
+
+    @Test
+    public void testEqualsWithSameId(){
+        Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
+        Product product2 = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
+        assertEquals(product, product2);
+    }
+
+    @Test
+    public void testsetImageUrl(){
+        Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
+        assertEquals("http://www.google.com", product.getImageUrl());
+        product.setImageUrl("http://www/yahoo.com");
+        assertEquals("http://www/yahoo.com", product.getImageUrl());
     }
 
 }
