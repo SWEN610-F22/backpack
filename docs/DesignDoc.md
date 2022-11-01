@@ -16,7 +16,10 @@ geometry: margin=1in
 
 ## Executive Summary
 
-Backpack is an e-store that sells outdoor gear and equipment for camping, biking, hiking, fishing trips, and so on. Users can also create a curated list of equipment they used on their trip to a certain destination. Other users can view these lists and add them to their cart, making it easier for them to buy equipment based on their necessity.
+Backpack is an online e-store that sells gear and equipment for outdoor adventures such us camping, biking, hiking, fishing and so on. Backpack is focused on providing quality gear to outdoor enthusiasts at the best prices, nothing more nothing less. Backpack helps you experience the transformational power of nature. We understand the simple joy of having the right clothing and gear work the way it is supposed to. So our purpose is to awaken a lifelong love of the outdoors, for all. 
+
+Backpack also provides the option for users to make a curated list of equipments used during an outdoor trip to a certain destination. Users who are not familiar with the gear needed for a certain trip can reference these curated lists and add them to their cart, this makes it easier for newbies to buy equipment based on their necessity. So whether you are new to the outdoors or a seasoned pro, we hope you'll choose us to enhance your outdoor experiences.
+
 
 ## Requirements
 
