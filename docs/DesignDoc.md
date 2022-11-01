@@ -20,6 +20,8 @@ Backpack is an online e-store that sells gear and equipment for outdoor adventur
 
 Backpack also provides the option for users to make a curated list of equipments used during an outdoor trip to a certain destination. Users who are not familiar with the gear needed for a certain trip can reference these curated lists and add them to their cart, this makes it easier for newbies to buy equipment based on their necessity. So whether you are new to the outdoors or a seasoned pro, we hope you'll choose us to enhance your outdoor experiences.
 
+Backpack targets an audience of people who love fitness and outdoor adventures.
+
 
 ## Requirements
 
