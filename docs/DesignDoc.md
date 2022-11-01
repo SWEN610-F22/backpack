@@ -80,7 +80,25 @@ The cart management feature lets the customer manipulate the cart.
 
 The domian on this application is E-commerce. It is an e-store application where one can buy or sell products and perform commercial transactions electronically on the internet. It is an application that provides a virtual store of a retailer which sells products over the internet.
 
-![Domain Model](Domain-Model-Final.png)
+## Domain Model Description
+
+A Customer profile and an Admin profile both will have same attributes. Both the profiles will have username,id,password,email,Address,contact number and email. id, username and password will be mandatory fields.
+
+An Admin would be able to add and remove products from the inventory. He can also search products in the inventory. Admin can also edit, create and delete a Product.
+
+A Product has various attributes- id,name,description,price and quantity. All these attributes are created by the admin and can be edited by Admin at any time. The inventory is bascically a collection of products.
+
+The Customer can also search products from the inventory. Customers also has access to shopping cart where they can add and save those products which they might buy in the future. Customers can also delete products from the shopping cart. The Shopping cart takes products from the inventory.
+
+A customer can also create a list of products which is called 'backpack'. This is the 10% enhancement feature of this project. This list of products can be accessed by other customers on the platform. A customer creats a backpack for a particular location to do a particular activity. So the whole purpose of this list is that it will act a recommendation to the other customers who are planning to go on the same location to do the same activity.
+
+A backpack is just like a shopping cart as it contains a list of products. A customer can have many backpacks but only one shopping cart. Along with the list of products the backpack also has some other important attributes such as location, description and activity.
+
+A Customer can create Sale. The Sale is an event which occurs after the customer selects the products which are to be purchased and then checks-out from the shopping cart. It takes all the selected products from the shopping cart and then provides different options to pay. Each item in the sale is a product. It has all the attributs of the product except the quantity. Here the quantity will be the number of pieces that the customer wants to purchase and not the total number of pieces present in the inventory. Also each sale item will have the attribute total-price which depends on the selected quantity. The Sale will also have attributes such as date, time and total-price which will be the sum of the total-price of each sale line item present in the sale.
+
+Each sale will be saved in the purchase history after the payment is made (even if you have chosen the cash on delivery option). Purchase history is the collection of sales.
+
+![Domain Model](Domain-Model-Final2.png)
 
 ## Architecture and Design
 
