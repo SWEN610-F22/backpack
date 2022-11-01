@@ -75,8 +75,6 @@ public class CartFileDaoTest {
         assertEquals(actual.getId(), cartItem.getId());
         assertEquals(actual.getUserId(), cartItem.getUserId());
         assertEquals(actual.getProductId(), cartItem.getProductId());
-        assertEquals(actual.getQuantity(), cartItem.getQuantity());
-
     }
 
     @Test
