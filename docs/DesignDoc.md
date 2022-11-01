@@ -95,51 +95,92 @@ Both the ViewModel and Model are built using Java and Spring Framework. Details 
 This section describes the web interface flow; this is how the user views and interacts
 with the e-store application.
 
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+The following are the web interface flows for a customer and an admin respectively:
+Customer: 
+1. Registered Customer: 
+   - The customer lands on the home page.
+   - Since the customer is already registered, the customer proceeds to login by clicking on the login button.
+   - The customer is taken to the login page.
+   - The cutomer enters their username and logs in to their account.
+   - The customer is taken to their home page.
+   - The customer can either a) Lookup a product using the search bar or b) Choose a product to view from the ones listed on the home page.
+            a) The customer chooses to lookup a product using the search bar.
+                - The customer enters a product name
+                - The product appears on the page
+                - The customer clicks on the producta and is taken to a new page displaying a larger image of the product along with its description and price
+                - The customer adds the product to the cart using the "Add to cart" button
+                - The customer clicks on the cart icon on the top of the page and is taken to the cart page
+                - A list of items in the cart alongside their quantities and prices are shown
+                - The customer can add and delete items in the cart.
+                - The customer can checkout the items in the cart using the "Proceed to checkout" button on this page.
+            b) The customer chooses a product to view from the ones listed on the home page
+               - The customer clicks on a product from the set of products shown on their homepage.
+               - Steps 2 through 8 are repeated from a)
+      
+    - The customer can logout once they are done shopping
+2. New Customer :
+  - The customer lands on the home page.
+  - Since they are not registered, if they try to sign in with a username, they will be shown an error message.
+  - They click on the SignUp button on the home page to proceed to register as a customer.
+  - The provide a username to register with.
+  - They click on the "Register" button.
+  - If they enter a username already in use, they will receive the message: "This username already exists."
+  - The enter a username not in use and click on the "Register" button.
+  - They get a success message "Thank you for your registration".
+  - The return to the home page.
+  - They can follow the steps from the beginning to the end in 1. to begin shopping as a registered user.
 
+Admin:
+- The admin lands on the home page.
+- They login as an admin using the "Login" button on the home page.
+- Once logged in, they can either shop as a registered customer following the steps in 1. under "Customer", or manage their store's inventory.
+- To manage the store's inventory, the admin selects the inventory option from the drop-down menu at the top of the page.
+- Navigating to the inventory page, they can either edit a product (its name, quantity, price etc) or add or delete a product in the list of products.
+- They can then return to the previous page if they want to shop or logout using the drop-down at the top of the page.
 
 ### View Tier
-> _Provide a summary of the View Tier UI of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
-
-> _You must also provide sequence diagrams as is relevant to a particular aspects 
-> of the design that you are describing.  For example, in e-store you might create a 
-> sequence diagram of a customer searching for an item and adding to their cart. 
-> Be sure to include an relevant HTTP reuqests from the client-side to the server-side 
-> to help illustrate the end-to-end flow._
-
+- The View Tier is implementd using the Angular framework and constitutes the front-end/client-side functionality of the app.
+- It is composed of the landing page component, login component, register component, view-product component, inventory component, and cart-page component.
+- Each of the components consist of four different types of files- 
+  1. .html file - which is used to design the overall UI of the component page.
+  2. scss file- which is used to style the different UI elements (such as buttons, input text fields etc) of the component page.
+  3. .ts file - which defines the dynamic functionality of the component page such as UI element interactions with the user and the app operations that follow.
+  4. .spec.ts file- which are unit test files for the component source file.
 
 ### ViewModel Tier
-> _Provide a summary of this tier of your architecture. This
-> section will follow the same instructions that are given for the View
-> Tier above._
+- It is implemented using the Spring framework.
+- The ViewModel tier of an application following the MVVM architecture design pattern is composed of the Controller class which provides the REST API services to manage frontend - backend interactions in the app.
+- Our app so far provides 3 controller classes: Product Controller, User Controller and Cart Controller to provde REST API services to operate the app inventory (Product Controller), user login and registration (User Controller) and user cart (Cart Controller).
+- The Product Controller class defines the following methods to provide REST API services to manage the store inventory :
+  1. getProducts() - to access the entire inventory
+  2. getProduct() - to access a specific product using the product id
+  3. updateProduct() - to edit an existing product in the inventory
+  4. createProduct() - to add a new product to the inventory
+  5. deleteProduct() - to delete a specific product from the inventory by providing the product id
 
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class diagrams) with some details such as critical attributes and methods._
+- The User Controller class defines the following methods to provide REST API services to manage the store's users' information:
+  1. getUsers() - to get a list of all the users registered in the store.
+  2. getUser() - to access the details of a particular user
+  3. updateUser() - to update the details of a particular user
+  4. createUser() - to register a new user into the store
+  5. deleteUser() - to close the account of a particular user in the store
 
+- The Cart Controller class defines the following methods to provide REST API services to manage a user's cart:
+1. getCart () - to access all the items in a user's cart an display them to a logged in user.
+2. getCartItem () - to access the details of a particular cart item 
+3. updateCart() - to update the items in a user's cart
+4. deleteProduct() - to delete a product from the user's cart
+5. addToCart() - to add a new item to the user's cart
 
 ### Model Tier
-> _Provide a summary of this tier of your architecture. This
-> section will follow the same instructions that are given for the View
-> Tier above._
-
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class diagrams) with some details such as critical attributes and methods._
+-The Model tier of the app is also implemented using the Spring framework and constitutes the back-end/server-side functionality of the app.
+-It is composed of the model classes each describing a CartItem, User and a Product, their corresponding DAO interfaces and their corresponding FileDAO classes implementing the corresponding DAO interfaces.
+- The FileDao classes define the methods described in their corresponding DAO interfaces when they implement those interfaces.
+- The methods are the same as the ones described in the Controller classes above, but in their FileDao classes, the methods are defined to make changes in the database of the app (in our case local json files).
+- For eg, the createProduct() method, creates and adds a new product to the inventory database file - "products.json"
 
 ### Static Code Analysis/Design Improvements
-> _Discuss design improvements that you would make if the project were
-> to continue. These improvement should be based on your direct
-> analysis of where there are problems in the code base which could be
-> addressed with design changes, and describe those suggested design
-> improvements._
-
-> _With the results from the Static Code Analysis exercise, 
-> discuss the resulting issues/metrics measurements along with your analysis
-> and recommendations for further improvements. Where relevant, include 
-> screenshots from the tool and/or corresponding source code that was flagged._
+ - This section will be added once the code base is complete.
 
 ## Testing
 > _This section will provide information about the testing performed
