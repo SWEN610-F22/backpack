@@ -1,11 +1,13 @@
 ---
 geometry: margin=1in
 ---
+
 # PROJECT Design Documentation
 
 ## Team Information
-* Team name: TEAM 1
-* Team members
+
+- Team name: TEAM 1
+- Team members
   - Sam Singh Anantha
   - Monoshiz Mahbub Khan
   - Vidit Naithani
@@ -14,64 +16,94 @@ geometry: margin=1in
 
 ## Executive Summary
 
-Backpack is an e-store that sells outdoor gear and equipment for camping, biking, hiking, fishing trips, and so on. Users can also create a curated list of equipment they used on their trip to a certain destination. Other users can view these lists and add them to their cart, making it easier for them to buy equipment based on their necessity. 
+Backpack is an online e-store that sells gear and equipment for outdoor adventures such us camping, biking, hiking, fishing and so on. Backpack is focused on providing quality gear to outdoor enthusiasts at the best prices, nothing more nothing less. Backpack helps you experience the transformational power of nature. We understand the simple joy of having the right clothing and gear work the way it is supposed to. So our purpose is to awaken a lifelong love of the outdoors, for all. 
+
+Backpack also provides the option for users to make a curated list of equipments used during an outdoor trip to a certain destination. Users who are not familiar with the gear needed for a certain trip can reference these curated lists and add them to their cart, this makes it easier for newbies to buy equipment based on their necessity. So whether you are new to the outdoors or a seasoned pro, we hope you'll choose us to enhance your outdoor experiences.
+
+Backpack targets an audience of people who love fitness and outdoor adventures.
+
 
 ## Requirements
 
 This section describes the features of the application.
 
 ### Definition of MVP
-A minimum viable product is an early iteration of the product that provides a minimum number of essential features a customer can use. Additional features are built on top of the MVP features.  
+
+A minimum viable product is an early iteration of the product that provides a minimum number of essential features a customer can use. Additional features are built on top of the MVP features.
 
 ### MVP Features
+
 **User Login**  
-The user login feature enables the admin and customer to login so they can see the respective screens.  
+The user login feature enables the admin and customer to login so they can see the respective screens.
 
-*Admin login*  
-As an admin, I want to login through my username to Backpack so that I can access my dashboard to view orders and inventory.  
+_Admin login_  
+As an admin, I want to login through my username to Backpack so that I can access my dashboard to view orders and inventory.
 
-*Customer login*  
-As a customer, I want to login through my username to Backpack so that I can access member-only features.  
+_Customer login_  
+As a customer, I want to login through my username to Backpack so that I can access member-only features.
+**User Create Account**
+
+- The create account feature enables a new user to create their account so they can login and access member-only features.
 
 **Inventory Management**  
-The Inventory Management feature provides a dashboard for the admin to keep track of their inventory.  
-  
-- As an admin, I want to add new equipment to my inventory.  
-- As an admin, I want to remove equipment from my inventory.  
-- As an admin, I want to edit details the equipment.  
-- As an admin, I want to adjust quantities of equipment.  
+The Inventory Management feature provides a dashboard for the admin to keep track of their inventory.
+
+- As an admin, I want to add new equipment to my inventory.
+- As an admin, I want to remove equipment from my inventory.
+- As an admin, I want to edit details the equipment.
+- As an admin, I want to adjust quantity and price of equipment.
 
 **Product search**  
-The Product Search feature lets the customer browse through the catalogue.  
+The Product Search feature lets the customer browse through the catalogue.
 
-- As a customer, I want to see a list of all the equipment in the product catalogue.  
-- As a customer, I want to search for an equipment in the product catalogue.  
+- As a customer, I want to search for an equipment in the product catalogue.
+
+**Landing Page**
+This is the first Page a customer would see after Login. This page displays product catalogue.
+
+- As a customer, I want to see a list of all the equipments in the product catalogue.
 
 **Cart Management**
 The cart management feature lets the customer manipulate the cart.
 
 - As a customer, I want to add equipment to my cart.
-- As a customer, I want to update the quantity of items in my cart. 
+- As a customer, I want to update the quantity of items in my cart.
 - As a customer, I want to delete equipment from my cart
 - As a customer, I want my cart data to be preserved, even when I close the tab.
 
-
 ### Roadmap of Enhancements
+
 **Curated Equipment**
+
 - As a customer, I want to create a list of curated equipment.
 - As a customer, I want to modify a curated list I created.
 - As a customer, I want to delete a curated list I created.
 - As a customer, I want to search for curated lists.
 - As a customer, I want to add items from a curated list to my cart.
 
-
 ## Application Domain
 
-This section describes the application domain.
+The domian on this application is E-commerce. It is an e-store application where one can buy or sell products and perform commercial transactions electronically on the internet. It is an application that provides a virtual store of a retailer which sells products over the internet.
 
-![Domain Model](domain-model.png)
+## Domain Model Description
 
+A Customer profile and an Admin profile both will have same attributes. Both the profiles will have username,id,password,email,Address,contact number and email. id, username and password will be mandatory fields.
 
+An Admin would be able to add and remove products from the inventory. He can also search products in the inventory. Admin can also edit, create and delete a Product.
+
+A Product has various attributes- id,name,description,price and quantity. All these attributes are created by the admin and can be edited by Admin at any time. The inventory is bascically a collection of products.
+
+The Customer can also search products from the inventory. Customers also has access to shopping cart where they can add and save those products which they might buy in the future. Customers can also delete products from the shopping cart. The Shopping cart takes products from the inventory.
+
+A customer can also create a list of products which is called 'backpack'. This is the 10% enhancement feature of this project. This list of products can be accessed by other customers on the platform. A customer creats a backpack for a particular location to do a particular activity. So the whole purpose of this list is that it will act a recommendation to the other customers who are planning to go on the same location to do the same activity.
+
+A backpack is just like a shopping cart as it contains a list of products. A customer can have many backpacks but only one shopping cart. Along with the list of products the backpack also has some other important attributes such as location, description and activity.
+
+A Customer can create Sale. The Sale is an event which occurs after the customer selects the products which are to be purchased and then checks-out from the shopping cart. It takes all the selected products from the shopping cart and then provides different options to pay. Each item in the sale is a product. It has all the attributs of the product except the quantity. Here the quantity will be the number of pieces that the customer wants to purchase and not the total number of pieces present in the inventory. Also each sale item will have the attribute total-price which depends on the selected quantity. The Sale will also have attributes such as date, time and total-price which will be the sum of the total-price of each sale line item present in the sale.
+
+Each sale will be saved in the purchase history after the payment is made (even if you have chosen the cash on delivery option). Purchase history is the collection of sales.
+
+![Domain Model](Domain-Model-Final2.png)
 
 ## Architecture and Design
 
@@ -81,20 +113,20 @@ The following Tiers/Layers model shows a high-level view of the webapp's archite
 
 ![The Tiers & Layers of the Architecture](architecture-tiers-and-layers.png)
 
-The e-store web application, is built using the Model–View–ViewModel (MVVM) architecture pattern. 
+The e-store web application, is built using the Model–View–ViewModel (MVVM) architecture pattern.
 
-The Model stores the application data objects including any functionality to provide persistance. 
+The Model stores the application data objects including any functionality to provide persistance.
 
 The View is the client-side SPA built with Angular utilizing HTML, CSS and TypeScript. The ViewModel provides RESTful APIs to the client (View) as well as any logic required to manipulate the data objects from the Model.
 
 Both the ViewModel and Model are built using Java and Spring Framework. Details of the components within these tiers are supplied below.
-
 
 ### Overview of User Interface
 
 This section describes the web interface flow; this is how the user views and interacts
 with the e-store application.
 
+<<<<<<< HEAD
 The following are the web interface flows for a customer and an admin respectively:
 Customer: 
 1. Registered Customer: 
@@ -157,6 +189,29 @@ Admin:
   3. updateProduct() - to edit an existing product in the inventory
   4. createProduct() - to add a new product to the inventory
   5. deleteProduct() - to delete a specific product from the inventory by providing the product id
+=======
+> _Provide a summary of the application's user interface. Describe, from
+> the user's perspective, the flow of the pages in the web application._
+
+### View Tier
+
+> _Provide a summary of the View Tier UI of your architecture.
+> Describe the types of components in the tier and describe their
+> responsibilities. This should be a narrative description, i.e. it has
+> a flow or "story line" that the reader can follow._
+
+> _You must also provide sequence diagrams as is relevant to a particular aspects
+> of the design that you are describing. For example, in e-store you might create a
+> sequence diagram of a customer searching for an item and adding to their cart.
+> Be sure to include an relevant HTTP reuqests from the client-side to the server-side
+> to help illustrate the end-to-end flow._
+
+### ViewModel Tier
+
+> _Provide a summary of this tier of your architecture. This
+> section will follow the same instructions that are given for the View
+> Tier above._
+>>>>>>> 119a0a1b2e88f19624ce6c82cfa5ba8a06263e0c
 
 - The User Controller class defines the following methods to provide REST API services to manage the store's users' information:
   1. getUsers() - to get a list of all the users registered in the store.
@@ -165,6 +220,7 @@ Admin:
   4. createUser() - to register a new user into the store
   5. deleteUser() - to close the account of a particular user in the store
 
+<<<<<<< HEAD
 - The Cart Controller class defines the following methods to provide REST API services to manage a user's cart:
 1. getCart () - to access all the items in a user's cart an display them to a logged in user.
 2. getCartItem () - to access the details of a particular cart item 
@@ -181,12 +237,37 @@ Admin:
 
 ### Static Code Analysis/Design Improvements
  - This section will be added once the code base is complete.
+=======
+### Model Tier
+
+> _Provide a summary of this tier of your architecture. This
+> section will follow the same instructions that are given for the View
+> Tier above._
+
+> _At appropriate places as part of this narrative provide one or more
+> static models (UML class diagrams) with some details such as critical attributes and methods._
+
+### Static Code Analysis/Design Improvements
+
+> _Discuss design improvements that you would make if the project were
+> to continue. These improvement should be based on your direct
+> analysis of where there are problems in the code base which could be
+> addressed with design changes, and describe those suggested design
+> improvements._
+
+> _With the results from the Static Code Analysis exercise,
+> discuss the resulting issues/metrics measurements along with your analysis
+> and recommendations for further improvements. Where relevant, include
+> screenshots from the tool and/or corresponding source code that was flagged._
+>>>>>>> 119a0a1b2e88f19624ce6c82cfa5ba8a06263e0c
 
 ## Testing
+
 > _This section will provide information about the testing performed
 > and the results of the testing._
 
 ### Acceptance Testing
+
 > _Report on the number of user stories that have passed all their
 > acceptance criteria tests, the number that have some acceptance
 > criteria tests failing, and the number of user stories that
@@ -194,6 +275,7 @@ Admin:
 > acceptance testing and if there are any concerns._
 
 ### Unit Testing and Code Coverage
+
 > _Discuss your unit testing strategy. Report on the code coverage
 > achieved from unit testing of the code base. Discuss the team's
 > coverage targets, why you selected those values, and how well your
