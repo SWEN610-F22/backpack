@@ -91,12 +91,14 @@ public class ProductControllerTest {
     @Test
     public void updateProductSuccessfully() throws IOException {
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
+        Product[] products = new Product[1];
+        products[0] = product;
         when(mockProductDAO.updateProduct(product)).thenReturn(product);
+        when(mockProductDAO.getProducts()).thenReturn(products);
         ResponseEntity<Product[]> response = productController.updateProduct(product);
-        product.setName("New Fishing Rod");
-        response = productController.updateProduct(product);
         assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(product,response.getBody());
+        System.out.println(response.getBody());
+        assertEquals(products,response.getBody());
     }
 
     @Test

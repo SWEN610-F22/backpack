@@ -17,7 +17,7 @@
           </ul>
         </li>
       </ul>
-      <div class="btn navbar-button" id="cart-button" routerLink="cart" *ngIf="isLoggedIn()"><i class="bi bi-cart3"></i> Cart</div>
+      <div class="btn navbar-button" id="cart-button" routerLink="cart" *ngIf="isLoggedIn() && !isAdminLoggedIn()"><i class="bi bi-cart3"></i> Cart</div>
     </div>
   </div>
 </nav>

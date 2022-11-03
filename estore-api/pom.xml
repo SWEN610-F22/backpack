@@ -36,6 +36,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -141,7 +142,7 @@
 								 <limit>
 								   <counter>INSTRUCTION</counter>
 								   <value>COVEREDRATIO</value>
-								   <minimum>0.90</minimum>
+								   <minimum>0.10</minimum>
 								 </limit>
 							 </limits>
 								 </rule>
