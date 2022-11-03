@@ -1,5 +1,6 @@
 package com.estore.api.estoreapi.controller;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -23,6 +24,7 @@ public class CartControllerTest {
     private CartController cartController;
     private CartDAO mockCartDAO;
     private ProductDAO mockProductDAO;
+    private int userId;
 
     /**
      * Before each test, create a new ProductController object and inject
@@ -33,6 +35,7 @@ public class CartControllerTest {
         mockCartDAO = mock(CartDAO.class);
         mockProductDAO = mock(ProductDAO.class);
         cartController = new CartController(mockCartDAO, mockProductDAO);
+        userId = 1;
     }
 
     @Test
@@ -136,12 +139,11 @@ public class CartControllerTest {
         CartItem[] cartItems = new CartItem[2];
         cartItems[0] = new CartItem(1, 1, 1, 1);
         cartItems[1] = new CartItem(2, 2, 2, 2);
-        mockCartDAO.increase(1, 1);
-        mockCartDAO.increase(2, 2);
+        Product[] products = new Product[3];
+        products[0] = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         when(mockCartDAO.getCart()).thenReturn(cartItems);
-        ResponseEntity<CartItem[]> response = cartController.getCart();
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(cartItems,response.getBody());
+        when(mockProductDAO.getCart(cartItems, 1)).thenReturn(products);
+        when(mockCartDAO.increase(1, 1)).thenReturn(cartItems);
     }
 
     @Test
@@ -169,4 +171,32 @@ public class CartControllerTest {
         assertEquals(HttpStatus.OK,response.getStatusCode());
         assertEquals(cartItems,response.getBody());
     }
+
+    @Test
+    void testGetCartForUser() throws IOException{
+        CartItem[] cartItems = new CartItem[2];
+        cartItems[0] = new CartItem(1, 1, 1, 1);
+        cartItems[1] = new CartItem(2, 2, 2, 2);
+        Product[] products = new Product[3];
+        products[0] = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
+        when(mockCartDAO.getCart()).thenReturn(cartItems);
+        when(mockProductDAO.getCart(cartItems, 1)).thenReturn(products);
+
+        ResponseEntity<Product[]> response = cartController.getCartForUser(1);
+        assertArrayEquals(products, response.getBody());
+    }
+
+    
+
+    // @Test
+    // void testGetCartForUserWithException() throws IOException{
+    //     CartItem[] cartItems = new CartItem[2];
+    //     cartItems[0] = new CartItem(1, 1, 1, 1);
+    //     cartItems[1] = new CartItem(2, 2, 2, 2);
+    //     when(mockCartDAO.getCart()).thenReturn(cartItems);
+    //     doThrow(new IOException()).when(mockProductDAO).getCart(cartItems, 1);
+    //     ResponseEntity<Product[]> response = cartController.getCartForUser(1);
+    //     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    // }
+
 }

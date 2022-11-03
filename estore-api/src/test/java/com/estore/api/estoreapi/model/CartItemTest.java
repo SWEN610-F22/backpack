@@ -1,5 +1,7 @@
 package com.estore.api.estoreapi.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Tag;
@@ -64,5 +66,33 @@ CartItem cartItem = new CartItem(1, 1, 1, 1);
         assertEquals("Product [id=" + cartItem.getId() +", userId=" + cartItem.getUserId() + ", productId=" + cartItem.getProductId() + ", quantity=" + cartItem.getQuantity() + "]",
         cartItem.toString());
     }
+
+    @Test
+    public void testEqualsNull(){
+        CartItem cartItem = new CartItem(1, 2, 3, 4);
+        assertFalse(cartItem.equals(null));   
+    }
+
+    @Test
+    public void testEqualsDifferentObjects(){
+        CartItem cartItem = new CartItem(1, 2, 3, 4);
+        User user = new User(1, "user", false);
+        assertFalse(cartItem.equals(user));   
+    }
+
+    @Test
+    public void testEqualsProductWithDifferentId(){
+        CartItem cartItem = new CartItem(1, 2, 3, 4);        
+        CartItem cartItem2 = new CartItem(2, 2, 3, 4); 
+        assertNotEquals(cartItem, cartItem2);
+    }
+
+    @Test
+    public void testEqualsWithSameId(){
+        CartItem cartItem = new CartItem(1, 2, 3, 4);        
+        CartItem cartItem2 = new CartItem(1, 2, 3, 4); 
+        assertEquals(cartItem, cartItem2);
+    }
+
 
 }
