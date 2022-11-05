@@ -3,6 +3,7 @@ package com.estore.api.estoreapi.persistence;
 import java.io.IOException;
 
 import com.estore.api.estoreapi.model.CartItem;
+import com.estore.api.estoreapi.model.UserCart;
 
 /**
  * Defines the interface for Cart persistence
@@ -14,6 +15,10 @@ public interface CartDAO {
      * @throws IOException if an issue with underlying storage
      */
     CartItem[] getCart() throws IOException;
+
+    
+    CartItem[] getCartForUser(int userId) throws IOException ;
+
     /**
      * Returns the CartItem with the specific id
      * @param id The id of the {@link CartItem CartItem} to get

@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.estore.api.estoreapi.model.Product;
+import com.estore.api.estoreapi.helper.UserCartHelper;
 import com.estore.api.estoreapi.model.CartItem;
 import com.estore.api.estoreapi.persistence.ProductDAO;
+import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.model.User;
+import com.estore.api.estoreapi.model.UserCart;
 import com.estore.api.estoreapi.persistence.CartDAO;
 
 @RestController
@@ -29,11 +32,13 @@ public class CartController {
     private static final Logger LOG = Logger.getLogger(CartController.class.getName());
     private CartDAO cartDao;
     private ProductDAO productDAO;
+    private UserDAO userDAO;
     private Integer userId;
 
-    public CartController(CartDAO cartdao, ProductDAO productDao) {
+    public CartController(CartDAO cartdao, ProductDAO productDao, UserDAO userDAO) {
         this.cartDao = cartdao;
         this.productDAO = productDao;
+        this.userDAO = userDAO;
     }
 
     /**
@@ -66,12 +71,13 @@ public class CartController {
      *         empty) and HTTP status of OK.
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
      */
-    @GetMapping("/user")
-    public ResponseEntity<Product[]> getCartForUser(@RequestParam(required = true) Integer userId) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserCart> getCartForUser(@PathVariable int userId) {
         try {
-            CartItem[] fullCart = cartDao.getCart();
-            Product[] cart = productDAO.getCart(fullCart, userId);
-            return new ResponseEntity<Product[]>(cart, HttpStatus.OK);
+            CartItem[] cart = cartDao.getCartForUser(userId);
+            UserCartHelper cartHelper = new UserCartHelper(cart, productDAO, userDAO);
+            UserCart userCart = cartHelper.convert();
+            return new ResponseEntity<UserCart>(userCart, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -80,25 +86,25 @@ public class CartController {
     }
 
 
-    /**
-     * Responds to the GET request for a {@linkplain CartItem CartItem} in cart for the given id
-     *
-     * @param id The id used to locate the {@link CartItem CartItem}
-     *
-     * @return ResponseEntity with {@link CartItem CartItem} object and HTTP status of OK if
-     *         found<br>
-     *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
-     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<CartItem> getCartItem(@PathVariable int id) {
-        LOG.info("GET /cart/" + id);
-        CartItem product = cartDao.getProduct(id);
-        if (product != null)
-            return new ResponseEntity<CartItem>(product, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+    // /**
+    //  * Responds to the GET request for a {@linkplain CartItem CartItem} in cart for the given id
+    //  *
+    //  * @param id The id used to locate the {@link CartItem CartItem}
+    //  *
+    //  * @return ResponseEntity with {@link CartItem CartItem} object and HTTP status of OK if
+    //  *         found<br>
+    //  *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+    //  *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+    //  */
+    // @GetMapping("/{id}")
+    // public ResponseEntity<CartItem> getCartItem(@PathVariable int id) {
+    //     LOG.info("GET /cart/" + id);
+    //     CartItem product = cartDao.getProduct(id);
+    //     if (product != null)
+    //         return new ResponseEntity<CartItem>(product, HttpStatus.OK);
+    //     else
+    //         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    // }
 
     /**
      * Responds to the PUT request for a {@linkplain CartItem CartItem} to cart
