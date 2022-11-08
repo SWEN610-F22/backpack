@@ -1,9 +1,6 @@
 package com.estore.api.estoreapi.helper;
 
 import java.io.IOException;
-
-import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Io;
-
 import com.estore.api.estoreapi.model.CartItem;
 import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.model.User;
