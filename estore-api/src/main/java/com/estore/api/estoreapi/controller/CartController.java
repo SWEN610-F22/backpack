@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.estore.api.estoreapi.model.Product;
+import com.estore.api.estoreapi.helper.UserCartHelper;
 import com.estore.api.estoreapi.model.CartItem;
 import com.estore.api.estoreapi.persistence.ProductDAO;
+import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.model.User;
+import com.estore.api.estoreapi.model.UserCart;
 import com.estore.api.estoreapi.persistence.CartDAO;
 
 @RestController
@@ -29,11 +32,12 @@ public class CartController {
     private static final Logger LOG = Logger.getLogger(CartController.class.getName());
     private CartDAO cartDao;
     private ProductDAO productDAO;
-    private Integer userId;
+    private UserDAO userDAO;
 
-    public CartController(CartDAO cartdao, ProductDAO productDao) {
+    public CartController(CartDAO cartdao, ProductDAO productDao, UserDAO userDAO) {
         this.cartDao = cartdao;
         this.productDAO = productDao;
+        this.userDAO = userDAO;
     }
 
     /**
@@ -45,6 +49,7 @@ public class CartController {
      */
     @GetMapping("")
     public ResponseEntity<CartItem[]> getCart() {
+        LOG.info("GET /cart/");
         try {
             CartItem[] cart = cartDao.getCart();
             return new ResponseEntity<CartItem[]>(cart, HttpStatus.OK);
@@ -66,65 +71,20 @@ public class CartController {
      *         empty) and HTTP status of OK.
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
      */
-    @GetMapping("/user")
-    public ResponseEntity<Product[]> getCartForUser(@RequestParam(required = true) Integer userId) {
+    @GetMapping("{userId}")
+    public ResponseEntity<Product[]> getCartForUser(@PathVariable int userId) {
+        LOG.info("GET /cart/ " + userId);
         try {
-            this.userId = userId;
-            CartItem[] fullCart = cartDao.getCart();
-            Product[] cart = productDAO.getCart(fullCart, userId);
-            return new ResponseEntity<Product[]>(cart, HttpStatus.OK);
+            CartItem[] cart = cartDao.getCartForUser(userId);
+            UserCartHelper cartHelper = new UserCartHelper(productDAO);
+            Product[] userCart = cartHelper.convertCart(cart);
+            System.out.println(Arrays.toString(userCart));
+            return new ResponseEntity<Product[]>(userCart, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-    }
-
-
-    /**
-     * Responds to the GET request for a {@linkplain CartItem CartItem} in cart for the given id
-     *
-     * @param id The id used to locate the {@link CartItem CartItem}
-     *
-     * @return ResponseEntity with {@link CartItem CartItem} object and HTTP status of OK if
-     *         found<br>
-     *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
-     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<CartItem> getCartItem(@PathVariable int id) {
-        LOG.info("GET /cart/" + id);
-        CartItem product = cartDao.getProduct(id);
-        if (product != null)
-            return new ResponseEntity<CartItem>(product, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    /**
-     * Responds to the PUT request for a {@linkplain CartItem CartItem} to cart
-     *
-     * @param product is a {@link CartItem CartItem}
-     *
-     * @return ResponseEntity with {@link CartItem CartItem} object and HTTP status of OK if
-     *         found<br>
-     *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
-     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-     */
-    @PutMapping("")
-    public ResponseEntity<CartItem> updateCart(@RequestBody CartItem cartItem) {
-        LOG.info("PUT /cart " + cartItem);
-
-        try {
-            CartItem newProduct = cartDao.updateInCart(cartItem);
-            if (newProduct != null)
-                return new ResponseEntity<CartItem>(cartItem, HttpStatus.OK);
-            else
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (IOException e) {
-            LOG.log(Level.SEVERE, e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
 
@@ -138,14 +98,14 @@ public class CartController {
     *         empty) and HTTP status of OK.
     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
     */
-    @GetMapping("/decrease")
-    public ResponseEntity<Product[]> decrease(@RequestParam(required = true) Integer productId) {
-        LOG.info("GET /cart " + this.userId + " " + productId);
+    @PutMapping("decrease")
+    public ResponseEntity<Product> decrease(@RequestBody CartItem cartItem) {
+        LOG.info("GET /cart/decrease " + cartItem);
         try {
-            CartItem[] decreasedCart = cartDao.decrease(productId, this.userId);
-            CartItem[] fullCart = cartDao.getCart();
-            Product[] newCart = productDAO.getCart(fullCart, userId);
-            return new ResponseEntity<Product[]>(newCart, HttpStatus.OK);
+            CartItem decreasedCart = cartDao.decrease(cartItem.getProductId(), cartItem.getUserId());
+            UserCartHelper cartHelper = new UserCartHelper(productDAO);
+            Product product = cartHelper.convertCartItem(decreasedCart);
+            return new ResponseEntity<Product>(product, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -162,45 +122,19 @@ public class CartController {
     *         empty) and HTTP status of OK.
     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
     */
-    @GetMapping("/increase")
-    public ResponseEntity<Product[]> increase(@RequestParam(required = true) Integer productId) {
-        LOG.info("GET /cart " + this.userId + " " + productId);
+    @PutMapping("increase")
+    public ResponseEntity<Product> increase(@RequestBody CartItem cartItem) {
+        LOG.info("PUT /cart/increase " + cartItem);
         try {
-            CartItem[] increasedCart = cartDao.increase(productId, this.userId);
-            CartItem[] fullCart = cartDao.getCart();
-            Product[] newCart = productDAO.getCart(fullCart, userId);
-            return new ResponseEntity<Product[]>(newCart, HttpStatus.OK);
+            CartItem increasedCart = cartDao.increase(cartItem.getProductId(), cartItem.getUserId());
+            UserCartHelper cartHelper = new UserCartHelper(productDAO);
+            Product product = cartHelper.convertCartItem(increasedCart);
+            return new ResponseEntity<Product>(product, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-
-    /** 
-    * Responds to the GET request for all {@linkplain CartItem CartItem} objects in cart for a user
-    * after the quantity of a {@linkplain Product product} object has been set to zero
-    * @param productId The productId parameter which contains the id used to find the
-    *             {@link Product product}.
-    * 
-    * @return ResponseEntity with array of {@link Product products} objects (may be
-    *         empty) and HTTP status of OK.
-    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
-    */
-    @GetMapping("/clear")
-    public ResponseEntity<Product[]> clearItem(@RequestParam(required = true) Integer productId) {
-        LOG.info("GET /cart " + this.userId + " " + productId);
-        try {
-            CartItem[] clearedCart = cartDao.clearItem(productId, this.userId);
-            CartItem[] fullCart = cartDao.getCart();
-            Product[] newCart = productDAO.getCart(fullCart, userId);
-            return new ResponseEntity<Product[]>(newCart, HttpStatus.OK);
-        } catch (IOException e) {
-            LOG.log(Level.SEVERE, e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
 
     /**
      * Responds to the POST request for a {@linkplain CartItem cartItem} to cart
@@ -213,41 +147,58 @@ public class CartController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PostMapping("")
-    public ResponseEntity<CartItem> addToCart(@RequestBody CartItem product) {
-        LOG.info("POST /cart " + product);
+    public ResponseEntity<Product> addToCart(@RequestBody CartItem cartItem) {
+        LOG.info("POST /cart " + cartItem);
         try {
-            this.userId = product.getUserId();
-            CartItem createdProduct = cartDao.addToCart(product, this.userId);
-            return new ResponseEntity<CartItem>(createdProduct, HttpStatus.CREATED);
+            CartItem createdCartItem = cartDao.addToCart(cartItem);
+            UserCartHelper cartHelper = new UserCartHelper(productDAO);
+            Product product = cartHelper.convertCartItem(createdCartItem);
+            return new ResponseEntity<Product>(product, HttpStatus.CREATED);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    /**
-     * Deletes a {@linkplain CartItem CartItem} with the given id
-     * 
-     * @param id The id of the {@link CartItem CartItem} to deleted
-     * 
-     * @return ResponseEntity HTTP status of OK if deleted<br>
-     *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
-     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-     */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<CartItem> deleteProduct(@PathVariable int id) {
-        LOG.info("DELETE /cart/" + id);
+    
+    /** 
+    * Responds to the GET request for all {@linkplain CartItem CartItem} objects in cart for a user
+    * after the quantity of a {@linkplain Product product} object has been set to zero
+    * @param productId The productId parameter which contains the id used to find the
+    *             {@link Product product}.
+    * 
+    * @return ResponseEntity with array of {@link Product products} objects (may be
+    *         empty) and HTTP status of OK.
+    *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
+    */
+    @PutMapping("clear")
+    public ResponseEntity<Product[]> clearItem(@RequestBody CartItem cartItem) {
+        LOG.info("PUT /clear " + cartItem);
         try {
-            if (cartDao.deleteFromCart(id)) {
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+            cartDao.clearItem(cartItem.getProductId(), cartItem.getUserId());
+            CartItem[] cart = cartDao.getCartForUser(cartItem.getUserId());
+            UserCartHelper cartHelper = new UserCartHelper(productDAO);      
+            Product[] userCart = cartHelper.convertCart(cart);
+            return new ResponseEntity<Product[]>(userCart, HttpStatus.OK);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @DeleteMapping("clear/{userId}")
+    public ResponseEntity<Boolean> deleteUserCart(@PathVariable int userId) {
+        try {
+            cartDao.clearUserCart(userId);
+            return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
+
 
     @GetMapping("/checkout")
     public ResponseEntity<Boolean> checkout() {

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { CartItem } from 'src/app/models/CartItem';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
+import { UserStore } from 'src/app/state/user.store';
+
 
 @Component({
   selector: 'app-cart',
@@ -12,12 +15,19 @@ export class CartComponent implements OnInit {
   cart:Product[] = [];
   inventory:Product[] = [];
   totalPrice:number = 0;
-  constructor(private cartService:CartService, private productService:ProductService) { }
+  userId:number=0;
+  constructor(private cartService:CartService, private userStore: UserStore, private productService: ProductService) { }
 
 
   ngOnInit(): void {
-    this.cartService.getCart().subscribe((cart) => this.cart = cart);
+    this.userStore.getUserId().subscribe((userId) => {
+      this.userId = userId != undefined ? userId : 0;
+      this.cartService.getCart(this.userId).subscribe((cart) => {
+        console.log(cart);
+        this.cart = cart});
+    })
     this.productService.getProducts().subscribe((inventory) => this.inventory = inventory);
+    
   }
 
   updateTotalPrice(): number{
@@ -30,9 +40,19 @@ export class CartComponent implements OnInit {
     return Number(totalPrice.toFixed(2));
   }
 
-  decrease(cartItem: Product): void {
-    let productId = cartItem.id;
-    if(productId)this.cartService.decrease(productId).subscribe((cart) => this.cart = cart);
+  decrease(product: Product): void {
+    const productId = (product?.id !=undefined) ? product.id : 0;
+    let cartItem: CartItem = {
+      userId: this.userId,
+      productId: productId,
+      quantity: 0
+    }
+    
+    if(productId)this.cartService.decrease(cartItem).subscribe(()=>{
+      this.cartService.getCart(this.userId).subscribe((cart) => {
+        console.log(cart);
+        this.cart = cart});
+    });
   }
 
   isProductInInventory(productId: number): boolean{
@@ -49,23 +69,41 @@ export class CartComponent implements OnInit {
     return -1;
   }
 
-  increase(cartItem: Product): void {
-    let productId = cartItem.id;
+  increase(product: Product): void {
+    const productId = (product?.id !=undefined) ? product.id : 0;
     if(!(this.isProductInInventory(productId!))){
-      alert(cartItem.name+" is currently out of stock. Please delete from cart before proceeding.");
+      alert(product.name+" is currently out of stock. Please delete from cart before proceeding.");
       return;
     }
     let quantityInInventory = this.getInventoryQuantity(productId!);
-    if(cartItem.quantity>quantityInInventory){
-      alert(cartItem.name+" amount exceeds stock. Please decrease amount in cart to "+quantityInInventory+" or lower.");
+    if(product.quantity>quantityInInventory){
+      alert(product.name+" amount exceeds stock. Please decrease amount in cart to "+quantityInInventory+" or lower.");
       return;
     }
-    if(productId)this.cartService.increase(productId).subscribe((cart) => this.cart = cart);
+    let cartItem: CartItem = {
+      userId: this.userId,
+      productId: productId,
+      quantity: 0
+    }
+    if(productId)this.cartService.increase(cartItem).subscribe(()=>{
+      this.cartService.getCart(this.userId).subscribe((cart) => {
+        console.log(cart);
+        this.cart = cart});
+    });
   }
 
-  clear(cartItem: Product): void {
-    let productId = cartItem.id;
-    if(productId)this.cartService.clearItem(productId).subscribe((cart) => this.cart = cart);
+  clear(product: Product): void {
+    const productId = (product?.id !=undefined) ? product.id : 0;
+    let cartItem: CartItem = {
+      userId: this.userId,
+      productId: productId,
+      quantity: 0
+    }
+    if(productId)this.cartService.clearItem(cartItem).subscribe(()=>{
+      this.cartService.getCart(this.userId).subscribe((cart) => {
+        console.log(cart);
+        this.cart = cart});
+    });
   }
 
   checkout(): void{
