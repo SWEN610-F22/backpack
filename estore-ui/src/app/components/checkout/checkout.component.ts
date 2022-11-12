@@ -33,8 +33,12 @@ export class CheckoutComponent implements OnInit {
 
   confirmCheckout(): void{
     alert("Thank you for shopping with us!");
-    this.cartService.confirmCheckout().subscribe((cart) => this.cart = cart);
-    window.open("http://localhost:4200","_self");
+    this.cartService.confirmCheckout().subscribe((success) => {
+      if(success){
+        //method call here
+      }
+    });
+    // window.open("http://localhost:4200","_self");
   }
 
 }
