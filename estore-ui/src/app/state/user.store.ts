@@ -9,7 +9,11 @@ import { User } from '../models/user.model';
 export class UserStore{
     private user$ = new BehaviorSubject<User>({username: ''});
 
-    constructor(){     
+    constructor(){
+        const userJson = localStorage.getItem("user");
+        if(userJson !=null){
+            this.user$.next(JSON.parse(userJson));
+        }  
     }
 
     public getUser():Observable<User>{
@@ -18,10 +22,12 @@ export class UserStore{
 
     public setUser(user: User){
         this.user$.next(user);
+        localStorage.setItem("user", JSON.stringify(user));
     }
 
     public clearUser(){
         this.user$.next({username: ''})
+        localStorage.removeItem("user");
     }
 
     public isLoggedIn() : Observable<boolean>{
