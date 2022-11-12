@@ -23,7 +23,7 @@ public class BackPackTest {
         assertEquals(1, backpack.getId());
         assertEquals("Lake Onterio fishing", backpack.getName());
         assertEquals("this backpack is for those who want to go fishing at lake Onterio", backpack.getDescription());
-        assertEquals("Lake Onterio Rochester NewYork", backpack.getLoaction());
+        assertEquals("Lake Onterio Rochester NewYork", backpack.getLocation());
         assertEquals("fishing", backpack.getActivity());
         assertEquals(true, Arrays.equals(products, backpack.getProductId()));
 

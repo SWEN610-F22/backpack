@@ -142,7 +142,7 @@ public class BackPackFileDAO implements BackPackDAO {
         synchronized (backpacks) {
 
             BackPack newBackPack = new BackPack(nextId(), backpack.getName(), backpack.getDescription(),
-                    backpack.getLoaction(), backpack.getActivity(), backpack.getProductId());
+                    backpack.getLocation(), backpack.getActivity(), backpack.getProductId());
             backpacks.put(newBackPack.getId(), newBackPack);
             save();
             return newBackPack;

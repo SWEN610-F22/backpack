@@ -53,11 +53,11 @@ public class BackPack {
         this.description = description;
     }
 
-    public String getLoaction() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLoaction(String location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
