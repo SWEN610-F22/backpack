@@ -76,5 +76,9 @@ public interface CartDAO {
     CartItem[] clearItem(int productId, int userId) throws IOException;
 
     boolean clearCart(int userId) throws IOException;
+
+    Integer[] getIdsForClearing(int userId) throws IOException;
+
+    int getQuantity(int userId, int productId) throws IOException;
 }
 

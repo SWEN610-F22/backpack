@@ -211,6 +211,28 @@ public class CartFileDAO implements CartDAO {
     }
 
     @Override
+    public Integer[] getIdsForClearing(int userId) throws IOException{
+        ArrayList<Integer> cartIdsForUser = new ArrayList<>();
+        for (CartItem cartItem : cart.values()){
+            if(cartItem.getUserId()==userId){
+                cartIdsForUser.add(cartItem.getProductId());
+            }
+        }
+        Integer[] cartArray = new Integer[cartIdsForUser.size()];
+        cartIdsForUser.toArray(cartArray);
+        return cartArray;
+    }
+
+    @Override
+    public int getQuantity(int userId, int productId) throws IOException{
+        for (CartItem cartItem : cart.values()){
+            if(cartItem.getUserId()==userId && cartItem.getProductId()==productId){
+                return cartItem.getQuantity();
+            }
+        }
+        return 0;
+    }
+
     public boolean clearCart(int userId) throws IOException{
         ArrayList<Integer> cartIdsForUser = new ArrayList<>();
         for (CartItem cartItem : cart.values()){

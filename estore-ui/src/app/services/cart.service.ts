@@ -57,12 +57,8 @@ export class CartService {
   }
 
   confirmCheckout():Observable<boolean>{
-    alert("Starting of function")
     let isSuccessful = this.httpClient.get<boolean>("http://localhost:8080/cart/checkout");
-    alert(isSuccessful)
     return isSuccessful;
-    // const cart = this.httpClient.get<Product[]>(this.apiUrl);
-    // return cart;
   }
 
 }

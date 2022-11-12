@@ -253,6 +253,12 @@ public class CartController {
     public ResponseEntity<Boolean> checkout() {
         LOG.info("GET /checkout");
         try {
+            Integer[] cartIds = cartDao.getIdsForClearing(this.userId);
+            for(int i=0;i<cartIds.length;i++){
+                Product thisProduct = productDAO.getProduct(cartIds[i]);
+                thisProduct.setQuantity(thisProduct.getQuantity()-cartDao.getQuantity(this.userId, thisProduct.getId()));
+                productDAO.updateProduct(thisProduct);
+            }
             boolean isSuccessful = cartDao.clearCart(this.userId);
             if(isSuccessful){
                 return new ResponseEntity<Boolean>(true, HttpStatus.OK);

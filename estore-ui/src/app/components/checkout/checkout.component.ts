@@ -13,6 +13,9 @@ export class CheckoutComponent implements OnInit {
   cart:Product[] = [];
   inventory:Product[] = [];
   totalPrice:number = 0;
+  deliveryAddress = "";
+  phoneNumber = "";
+  cardNumber = "";
   constructor(private cartService:CartService, private productService:ProductService) { }
 
 
@@ -35,10 +38,11 @@ export class CheckoutComponent implements OnInit {
     alert("Thank you for shopping with us!");
     this.cartService.confirmCheckout().subscribe((success) => {
       if(success){
-        //method call here
+        this.cartService.getCart().subscribe((cart) => this.cart = cart);
+        this.productService.getProducts().subscribe((inventory) => this.inventory = inventory);
       }
     });
-    // window.open("http://localhost:4200","_self");
+    window.open("http://localhost:4200","_self");
   }
 
 }
