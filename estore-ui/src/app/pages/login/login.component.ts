@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserStore } from 'src/app/services/user.store';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 
@@ -13,14 +14,16 @@ import { UserService } from '../../services/user.service';
 export class LoginComponent implements OnInit {
 
   user: User = new User;
+  public isLoggedIn:boolean = false;
 
-  constructor(private userService: UserService, private router:Router) { 
-    if (userService.isLoggedIn()) {
+  constructor(private userService: UserService, private router:Router, private userStore:UserStore) { 
+    if (this.isLoggedIn) {
       router.navigate(['']);
     }
   }
 
   ngOnInit(): void {
+    this.userStore.isLoggedIn().subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn)
     this.resetForm();
   }
 
@@ -35,34 +38,11 @@ export class LoginComponent implements OnInit {
 doesNotExist = false;
 
 submitData(username: String){
-
-    // console.log("user: "+username);
-              
-
-            // localStorage.setItem(this.user.username,JSON.stringify(this.user));
-            //  let data: any = localStorage.getItem(this.user.username);
-            //         console.log(JSON.parse(data));
-
-                // this.userService.createUser(this.user).subscribe((user)=>{
-                //   console.log(user);
-                //   if(user.username == ""){
-                            
-                //             this.router.navigate(['']);
-                //   }
-                //   else{
-                //     this.doesNotExist = true;
-                    
-                //   }
-                // });   
-                
-                
-                
-
                 this.userService.getUsersMatchingName(this.user.username).subscribe((users)=>{
                   users.forEach(user=>{
                     console.log(user);
                     if(user.username == this.user.username){
-                      this.userService.setUser(user);
+                      this.userStore.setUser(user);
                       this.router.navigate(['']);
                       
                     }

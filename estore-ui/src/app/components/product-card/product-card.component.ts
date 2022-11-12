@@ -3,6 +3,7 @@ import { CartItem } from 'src/app/models/CartItem';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/services/cart.service';
 import { UserService } from 'src/app/services/user.service';
+import { UserStore } from 'src/app/services/user.store';
 
 @Component({
   selector: 'app-product-card',
@@ -19,15 +20,21 @@ export class ProductCardComponent implements OnInit {
     imageUrl:"",
     quantity: 0
   }
+  public userId:number|undefined;
+  public isLoggedIn:boolean = false;
+  public isAdminLoggedIn:boolean = false;
 
-  constructor(private userService:UserService, private cartService:CartService) { }
+  constructor(private userService:UserService, private cartService:CartService, private userStore: UserStore) { }
 
   ngOnInit(): void {
+    this.userStore.getUserId().subscribe(userId => this.userId = userId);
+    this.userStore.isLoggedIn().subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn)
+    this.userStore.isAdminLoggedIn().subscribe(isAdminLoggedIn => this.isAdminLoggedIn = isAdminLoggedIn)
   }
 
   addToCart(){
 
-    let userId = this.userService.getUser()!.id;
+    let userId = this.userId;
     let productId =  this.product.id;
 
     if(userId && productId){
@@ -44,14 +51,6 @@ export class ProductCardComponent implements OnInit {
     }
     
     
-  }
-
-  isLoggedIn(){
-    return this.userService.isLoggedIn();
-  }
-
-  isAdminLoggedIn():boolean{
-    return this.userService.isAdminLoggedIn();
   }
 
 }

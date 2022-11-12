@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
+import { UserStore } from 'src/app/services/user.store';
 
 @Component({
   selector: 'app-landing',
@@ -7,14 +8,13 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent implements OnInit {
+  public isLoggedIn:boolean = false;
 
-  constructor(private userService:UserService) { }
+  constructor(private userStore:UserStore) { }
 
   ngOnInit(): void {
+    this.userStore.isLoggedIn().subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn)
   }
 
-  isLoggedIn():boolean{
-    return this.userService.isLoggedIn();
-  }
 
 }

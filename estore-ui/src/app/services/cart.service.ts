@@ -5,6 +5,7 @@ import { Product } from '../models/Product';
 import { CartItem } from '../models/CartItem';
 import { CartComponent } from '../components/cart/cart.component';
 import { UserService } from './user.service';
+import { UserStore } from './user.store';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -16,12 +17,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class CartService {
-  private userId: number = 0;
-  private apiUrl = 'http://localhost:8080/cart/user/?userId='+String(this.userId);
+  private userId: number|undefined;
+  private apiUrl;
   private entireCartUrl = 'http://localhost:8080/cart'
 
-  constructor(private httpClient:HttpClient, private userService:UserService) {
-    this.userId = (userService.getUser())?.id!;
+  constructor(private httpClient:HttpClient, private userService:UserService, private userStore:UserStore) {
+    userStore.getUserId().subscribe(userId => this.userId = userId);
     this.apiUrl = 'http://localhost:8080/cart/user/?userId='+String(this.userId);
    }
 
