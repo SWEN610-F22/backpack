@@ -37,19 +37,47 @@ export class CartComponent implements OnInit {
     return Number(totalPrice.toFixed(2));
   }
 
-  decrease(cartItem: Product): void {
-    let productId = cartItem.id;
-    if(productId)this.cartService.decrease(productId).subscribe((cart) => this.cart = cart);
+  decrease(product: Product): void {
+    const productId = (product?.id !=undefined) ? product.id : 0;
+    let cartItem: CartItem = {
+      userId: this.userId,
+      productId: productId,
+      quantity: 0
+    }
+    
+    if(productId)this.cartService.decrease(cartItem).subscribe(()=>{
+      this.cartService.getCart(this.userId).subscribe((cart) => {
+        console.log(cart);
+        this.cart = cart});
+    });
   }
 
-  increase(cartItem: Product): void {
-    let productId = cartItem.id;
-    if(productId)this.cartService.increase(productId).subscribe((cart) => this.cart = cart);
+  increase(product: Product): void {
+    const productId = (product?.id !=undefined) ? product.id : 0;
+    let cartItem: CartItem = {
+      userId: this.userId,
+      productId: productId,
+      quantity: 0
+    }
+    if(productId)this.cartService.increase(cartItem).subscribe(()=>{
+      this.cartService.getCart(this.userId).subscribe((cart) => {
+        console.log(cart);
+        this.cart = cart});
+    });
   }
 
-  clear(cartItem: Product): void {
-    let productId = cartItem.id;
-    if(productId)this.cartService.clearItem(productId).subscribe((cart) => this.cart = cart);
+  clear(product: Product): void {
+    const productId = (product?.id !=undefined) ? product.id : 0;
+    let cartItem: CartItem = {
+      userId: this.userId,
+      productId: productId,
+      quantity: 0
+    }
+    if(productId)this.cartService.clearItem(cartItem).subscribe(()=>{
+      this.cartService.getCart(this.userId).subscribe((cart) => {
+        console.log(cart);
+        this.cart = cart});
+    });
   }
 
 

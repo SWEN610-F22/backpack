@@ -32,19 +32,19 @@ export class CartService {
   }
 
 
-  decrease(productId:number): Observable<Product[]>{
-    let urlToDecrease = "http://localhost:8080/cart/decrease?productId="+productId
-    return this.httpClient.get<Product[]>(urlToDecrease);
+  decrease(cartItem:CartItem): Observable<Product[]>{
+    let urlToDecrease = "http://localhost:8080/cart/decrease"
+    return this.httpClient.put<Product[]>(urlToDecrease, cartItem, httpOptions);
   }
 
-  increase(productId:number): Observable<Product[]>{
-    let urlToIncrease = "http://localhost:8080/cart/increase?productId="+productId
-    return this.httpClient.get<Product[]>(urlToIncrease);
+  increase(cartItem:CartItem): Observable<Product[]>{
+    let urlToIncrease = "http://localhost:8080/cart/increase"
+    return this.httpClient.put<Product[]>(urlToIncrease, cartItem, httpOptions);
   }
 
-  clearItem(productId:number): Observable<Product[]>{
-    let urlToClear = "http://localhost:8080/cart/clear?productId="+productId
-    return this.httpClient.get<Product[]>(urlToClear);
+  clearItem(cartItem:CartItem): Observable<Product[]>{
+    let urlToClear = "http://localhost:8080/cart/clear"
+    return this.httpClient.put<Product[]>(urlToClear, cartItem, httpOptions);
   }
 
   addToCart(cartItem:CartItem):Observable<CartItem>{
