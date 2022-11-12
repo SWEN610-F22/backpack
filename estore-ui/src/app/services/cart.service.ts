@@ -18,23 +18,19 @@ const httpOptions = {
 })
 export class CartService {
   private userId: number|undefined;
-  private apiUrl;
-  private entireCartUrl = 'http://localhost:8080/cart'
+  private apiUrl = 'http://localhost:8080/cart'
 
-  constructor(private httpClient:HttpClient, private userService:UserService, private userStore:UserStore) {
-    userStore.getUserId().subscribe(userId => this.userId = userId);
-    this.apiUrl = 'http://localhost:8080/cart/user/?userId='+String(this.userId);
+  constructor(private httpClient:HttpClient, private userService:UserService) {
+  
    }
 
-  getCart(): Observable<Product[]>{
-    const cart = this.httpClient.get<Product[]>(this.apiUrl);
+  getCart(userId:number): Observable<Product[]>{
+    console.log(userId);
+    const endpoint = 'http://localhost:8080/cart/'+String(userId);
+    const cart = this.httpClient.get<Product[]>(endpoint);
     return cart;
   }
 
-  getEntireCart(): Observable<CartItem[]>{
-    const entireCart = this.httpClient.get<CartItem[]>(this.entireCartUrl)
-    return entireCart;
-  }
 
   decrease(productId:number): Observable<Product[]>{
     let urlToDecrease = "http://localhost:8080/cart/decrease?productId="+productId
@@ -53,7 +49,7 @@ export class CartService {
 
   addToCart(cartItem:CartItem):Observable<CartItem>{
     console.log(cartItem);
-    const newCartItem = this.httpClient.post<CartItem>(this.entireCartUrl, cartItem, httpOptions);
+    const newCartItem = this.httpClient.post<CartItem>(this.apiUrl, cartItem, httpOptions);
     return newCartItem;
   }
 

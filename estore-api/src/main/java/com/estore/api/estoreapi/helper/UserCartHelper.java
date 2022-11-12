@@ -1,6 +1,9 @@
 package com.estore.api.estoreapi.helper;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.estore.api.estoreapi.model.CartItem;
 import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.model.User;
@@ -10,24 +13,23 @@ import com.estore.api.estoreapi.persistence.UserDAO;
 
 public class UserCartHelper {
     ProductDAO productDao;
-    UserDAO userDao;
 
-    public UserCartHelper(ProductDAO productDAO, UserDAO userDAO) {
+    public UserCartHelper(ProductDAO productDAO) {
         this.productDao = productDAO;
-        this.userDao = userDAO;
     }
 
-    public UserCart convertCart(CartItem[] items) throws IOException{ 
-        UserCart cart = new UserCart();
-        CartItem item = items[0];
-        User user = userDao.getUser(item.getUserId());
-        cart.setUser(user);
+    public Product[] convertCart(CartItem[] items) throws IOException{ 
+        ArrayList<Product> cart = new ArrayList<>();
+        System.out.println(Arrays.toString(items));
         for (CartItem cartItem : items) {
             Product product = productDao.getProduct(cartItem.getProductId());
             product.setQuantity(cartItem.getQuantity());
-            cart.addProduct(product);
+            cart.add(product);
         }
-        return cart;
+        System.out.println("Products:"+cart);
+        Product[] products = cart.toArray(new Product[0]);
+        System.out.println(Arrays.toString(products));
+        return products;
     }
 
     public Product convertCartItem(CartItem item) throws IOException{

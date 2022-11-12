@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { CartItem } from 'src/app/models/CartItem';
 import { CartService } from 'src/app/services/cart.service';
+import { UserStore } from 'src/app/state/user.store';
 
 
 @Component({
@@ -12,11 +13,18 @@ import { CartService } from 'src/app/services/cart.service';
 export class CartComponent implements OnInit {
   cart:Product[] = [];
   totalPrice:number = 0;
-  constructor(private cartService:CartService) { }
+  userId:number=0;
+  constructor(private cartService:CartService, private userStore: UserStore) { }
 
 
   ngOnInit(): void {
-    this.cartService.getCart().subscribe((cart) => this.cart = cart);
+    this.userStore.getUserId().subscribe((userId) => {
+      this.userId = userId != undefined ? userId : 0;
+      this.cartService.getCart(this.userId).subscribe((cart) => {
+        console.log(cart);
+        this.cart = cart});
+    })
+    
   }
 
   updateTotalPrice(): number{

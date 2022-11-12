@@ -49,6 +49,7 @@ public class CartController {
      */
     @GetMapping("")
     public ResponseEntity<CartItem[]> getCart() {
+        LOG.info("GET /cart/");
         try {
             CartItem[] cart = cartDao.getCart();
             return new ResponseEntity<CartItem[]>(cart, HttpStatus.OK);
@@ -71,12 +72,14 @@ public class CartController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
      */
     @GetMapping("{userId}")
-    public ResponseEntity<UserCart> getCartForUser(@PathVariable int userId) {
+    public ResponseEntity<Product[]> getCartForUser(@PathVariable int userId) {
+        LOG.info("GET /cart/ " + userId);
         try {
             CartItem[] cart = cartDao.getCartForUser(userId);
-            UserCartHelper cartHelper = new UserCartHelper(productDAO, userDAO);
-            UserCart userCart = cartHelper.convertCart(cart);
-            return new ResponseEntity<UserCart>(userCart, HttpStatus.OK);
+            UserCartHelper cartHelper = new UserCartHelper(productDAO);
+            Product[] userCart = cartHelper.convertCart(cart);
+            System.out.println(Arrays.toString(userCart));
+            return new ResponseEntity<Product[]>(userCart, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -100,7 +103,7 @@ public class CartController {
         LOG.info("GET /cart/decrease " + cartItem);
         try {
             CartItem decreasedCart = cartDao.decrease(cartItem.getProductId(), cartItem.getUserId());
-            UserCartHelper cartHelper = new UserCartHelper(productDAO, userDAO);
+            UserCartHelper cartHelper = new UserCartHelper(productDAO);
             Product product = cartHelper.convertCartItem(decreasedCart);
             return new ResponseEntity<Product>(product, HttpStatus.OK);
         } catch (IOException e) {
@@ -124,7 +127,7 @@ public class CartController {
         LOG.info("PUT /cart/increase " + cartItem);
         try {
             CartItem increasedCart = cartDao.increase(cartItem.getProductId(), cartItem.getUserId());
-            UserCartHelper cartHelper = new UserCartHelper(productDAO, userDAO);
+            UserCartHelper cartHelper = new UserCartHelper(productDAO);
             Product product = cartHelper.convertCartItem(increasedCart);
             return new ResponseEntity<Product>(product, HttpStatus.OK);
         } catch (IOException e) {
@@ -148,7 +151,7 @@ public class CartController {
         LOG.info("POST /cart " + cartItem);
         try {
             CartItem createdCartItem = cartDao.addToCart(cartItem);
-            UserCartHelper cartHelper = new UserCartHelper(productDAO, userDAO);
+            UserCartHelper cartHelper = new UserCartHelper(productDAO);
             Product product = cartHelper.convertCartItem(createdCartItem);
             return new ResponseEntity<Product>(product, HttpStatus.CREATED);
         } catch (IOException e) {
@@ -169,14 +172,14 @@ public class CartController {
     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise.
     */
     @PutMapping("clear")
-    public ResponseEntity<UserCart> clearItem(@RequestBody CartItem cartItem) {
+    public ResponseEntity<Product[]> clearItem(@RequestBody CartItem cartItem) {
         LOG.info("PUT /clear " + cartItem);
         try {
             cartDao.clearItem(cartItem.getProductId(), cartItem.getUserId());
             CartItem[] cart = cartDao.getCartForUser(cartItem.getUserId());
-            UserCartHelper cartHelper = new UserCartHelper(productDAO, userDAO);      
-            UserCart userCart = cartHelper.convertCart(cart);
-            return new ResponseEntity<UserCart>(userCart, HttpStatus.OK);
+            UserCartHelper cartHelper = new UserCartHelper(productDAO);      
+            Product[] userCart = cartHelper.convertCart(cart);
+            return new ResponseEntity<Product[]>(userCart, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
