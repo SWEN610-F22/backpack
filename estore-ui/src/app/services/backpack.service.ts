@@ -16,7 +16,7 @@ const httpOptions = {
 
 
 export class BackpackService {
-private apiURL = 'http://localhost:8080/createbackpack'
+private apiURL = 'http://localhost:8080/backpack'
 
   constructor(private httpClient: HttpClient) {
 

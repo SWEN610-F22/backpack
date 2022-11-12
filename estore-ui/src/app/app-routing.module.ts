@@ -15,7 +15,7 @@ const routes: Routes = [{path: '', component: LandingComponent},
                         {path: 'inventory', component: InventoryComponent},
                         {path: 'login', component: LoginComponent},
                         {path: 'products/:id', component: ViewProductComponent},
-                         {path: 'createbackpack', component: CreateBackPackComponent}, ];
+                         {path: 'backpack/new', component: CreateBackPackComponent}, ];
 
 
 @NgModule({

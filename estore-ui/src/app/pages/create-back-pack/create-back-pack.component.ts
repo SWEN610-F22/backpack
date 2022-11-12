@@ -19,19 +19,18 @@ export class CreateBackPackComponent implements OnInit {
   }
 
   resetForm(form?:NgForm){
-    if(form!=null)
-        form.reset();
-        this.backpack={
-          name:"",
-          description:"",
-          location:"",
-          activity:"",
-          productId:[0,0,0]
-        }
+    // if(form!=null)
+    //     form.reset();
+    //     this.backpack={
+    //       name:"",
+    //       description:"",
+    //       location:"",
+    //       activity:"",
+    //       productId:[0,0,0]
+    //     }
   }
 
   submitData(){
-     
 
                 this.backpackService.createBackPack(this.backpack).subscribe((backpack)=>{
                   console.log(backpack);      
