@@ -56,4 +56,12 @@ export class CartService {
     return newCartItem;
   }
 
+  confirmCheckout():Observable<Product[]>{
+    alert("Starting of function")
+    let isSuccessful = this.httpClient.get<Boolean>("http://localhost:8080/cart/checkout");
+    alert(isSuccessful)
+    const cart = this.httpClient.get<Product[]>(this.apiUrl);
+    return cart;
+  }
+
 }

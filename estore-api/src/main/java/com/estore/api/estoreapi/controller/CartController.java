@@ -69,6 +69,7 @@ public class CartController {
     @GetMapping("/user")
     public ResponseEntity<Product[]> getCartForUser(@RequestParam(required = true) Integer userId) {
         try {
+            this.userId = userId;
             CartItem[] fullCart = cartDao.getCart();
             Product[] cart = productDAO.getCart(fullCart, userId);
             return new ResponseEntity<Product[]>(cart, HttpStatus.OK);
@@ -246,6 +247,22 @@ public class CartController {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
 
+    @GetMapping("/checkout")
+    public ResponseEntity<Boolean> checkout() {
+        LOG.info("GET /checkout");
+        try {
+            boolean isSuccessful = cartDao.clearCart(this.userId);
+            if(isSuccessful){
+                return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
+            }
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

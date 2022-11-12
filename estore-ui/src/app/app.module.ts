@@ -16,6 +16,8 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './pages/login/login.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
 import { ViewProductComponent } from './pages/view-product/view-product.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.component';
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import { ViewProductComponent } from './pages/view-product/view-product.componen
     CartPageComponent,
     LoginComponent,
     InventoryComponent,
-    RegisterComponent
+    RegisterComponent,
+    CheckoutComponent,
+    CheckoutPageComponent
 
   ],
   imports: [

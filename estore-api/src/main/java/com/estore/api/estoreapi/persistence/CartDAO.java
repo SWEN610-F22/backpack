@@ -74,5 +74,7 @@ public interface CartDAO {
      * @throws IOException if an issue with underlying storaged
      */
     CartItem[] clearItem(int productId, int userId) throws IOException;
+
+    boolean clearCart(int userId) throws IOException;
 }
 

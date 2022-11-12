@@ -184,7 +184,7 @@ public class CartFileDAO implements CartDAO {
     public CartItem addToCart(CartItem product, Integer userId) throws IOException {
         synchronized(cart) {
             for (CartItem cartItem : cart.values()) {
-                if(cartItem.getUserId()==userId && product.getProductId()==cartItem.getId()){ // If product already exists in
+                if(cartItem.getUserId()==userId && product.getProductId()==cartItem.getProductId()){ // If product already exists in
                     cartItem.setQuantity(cartItem.getQuantity()+product.getQuantity());        // this user's cart,
                     cart.put(cartItem.getId(), cartItem);                                      // set new quantity to total of
                     save();                                                                   // old quantity and new quantity
@@ -208,5 +208,21 @@ public class CartFileDAO implements CartDAO {
             else
                 return false;
         }
+    }
+
+    @Override
+    public boolean clearCart(int userId) throws IOException{
+        ArrayList<Integer> cartIdsForUser = new ArrayList<>();
+        for (CartItem cartItem : cart.values()){
+            if(cartItem.getUserId()==userId){
+                cartIdsForUser.add(cartItem.getId());
+            }
+        }
+        for (Integer id : cartIdsForUser){
+            boolean isSuccessful = deleteFromCart(id);
+            if(!isSuccessful)return false;
+            save();
+        }
+        return true;
     }
 }
