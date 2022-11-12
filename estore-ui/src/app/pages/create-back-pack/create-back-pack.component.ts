@@ -53,4 +53,8 @@ searched=false;
                   console.log(backpack);      
                 });    
   }
+
+  addToBackpack(productId:number){
+    console.log(productId);
+  }
 }
