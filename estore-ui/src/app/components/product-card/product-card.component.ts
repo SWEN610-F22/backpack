@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CartItem } from 'src/app/models/CartItem';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/services/cart.service';
@@ -19,32 +19,18 @@ export class ProductCardComponent implements OnInit {
     imageUrl:"",
     quantity: 0
   }
+  @Input() buttonText:string = "";
+  @Output() onClickButton: EventEmitter<number> = new EventEmitter();
 
   constructor(private userService:UserService, private cartService:CartService) { }
 
   ngOnInit(): void {
   }
 
-  addToCart(){
-
-    let userId = this.userService.getUser()!.id;
-    let productId =  this.product.id;
-
-    if(userId && productId){
-
-      const cartItem:CartItem = {
-        userId: userId,
-        productId: productId,
-        quantity: 1
-      };
-      this.cartService.addToCart(cartItem).subscribe((cartItem)=> {
-        console.log(cartItem)
-      });
-  
-    }
-    
-    
+  onClick(productId:undefined|number){
+    this.onClickButton.emit(productId);
   }
+
 
   isLoggedIn(){
     return this.userService.isLoggedIn();
