@@ -1,0 +1,18 @@
+<div class="container-fluid px-3">
+    <div class="row">
+        <div class="col">
+            <!-- <app-search-bar (onSearchProducts)="searchProducts($event)"></app-search-bar> -->
+        </div>
+    </div>
+    
+    <div class="row my-3"></div>
+    <div class="row" *ngFor="let backpack of backpacks">
+        <div class="card" style="width: 20%">
+            <!-- <img src="{{product.imageUrl}}" class="card-img-top" alt="{{product.name}}" height="200"> -->
+                <a routerLink="/backpacks/{{backpack.id}}" class="h6 card-title product-title">{{backpack.name}}</a>
+                <div class="h6 manufacturer-name mb-0">{{backpack.activity}}</div>
+                <div class="h6 manufacturer-name mb-0">{{backpack.location}}</div>
+        </div>
+    </div>
+</div>
+

@@ -7,6 +7,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ViewProductComponent } from './pages/view-product/view-product.component';
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { CreateBackPackComponent} from './pages/create-back-pack/create-back-pack.component';
+import { ViewBackpacksComponent } from './components/view-backpacks/view-backpacks.component';
 
 
 const routes: Routes = [{path: '', component: LandingComponent},
@@ -15,7 +16,8 @@ const routes: Routes = [{path: '', component: LandingComponent},
                         {path: 'inventory', component: InventoryComponent},
                         {path: 'login', component: LoginComponent},
                         {path: 'products/:id', component: ViewProductComponent},
-                         {path: 'backpack/new', component: CreateBackPackComponent}, ];
+                        {path: 'backpack/new', component: CreateBackPackComponent},
+                        {path: 'backpacks', component: ViewBackpacksComponent}];
 
 
 @NgModule({
