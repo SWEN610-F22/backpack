@@ -5,6 +5,6 @@ export class BackPack {
     description: string = "";
     location: string = "";
     activity: string = "";
-    productId:Array<any>=[0,0,0];
+    productId:Array<any>=[];
 
 }

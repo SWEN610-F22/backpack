@@ -17,6 +17,13 @@ import { NgForm } from '@angular/forms';
 export class CreateBackPackComponent implements OnInit {
 products:Product[] = [];
   backpack: BackPack = new BackPack;
+pros:Array<any>=[];
+count:any = 0;
+  
+  addToBackpack(productId:number){
+    this.pros.push(productId);
+    this.backpack.productId = this.pros;
+  }
 
   constructor(private backpackService: BackpackService, private productService:ProductService) { }
 
@@ -28,6 +35,7 @@ searched=false;
   searchProducts(searchWith: string){
     console.log(searchWith);
     this.searched=true;
+    
     this.productService.searchProducts(searchWith).subscribe((products) => {
       console.log(products);
       this.products = products
@@ -54,7 +62,5 @@ searched=false;
                 });    
   }
 
-  addToBackpack(productId:number){
-    console.log(productId);
-  }
+  
 }
