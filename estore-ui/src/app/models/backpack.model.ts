@@ -6,5 +6,6 @@ export class BackPack {
     location: string = "";
     activity: string = "";
     productId:Array<any>=[0,0,0];
+    imageURL?: string = "";
 
 }

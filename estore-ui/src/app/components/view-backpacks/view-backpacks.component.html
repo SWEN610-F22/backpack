@@ -7,12 +7,13 @@
     
     <div class="row my-3"></div>
     <div class="row" *ngFor="let backpack of backpacks">
-        <div class="card" style="width: 20%">
-            <!-- <img src="{{product.imageUrl}}" class="card-img-top" alt="{{product.name}}" height="200"> -->
+        <div class="card" style="width: 20%; margin: 1%">
+            <img src="{{backpack.imageURL}}" class="card-img-top" alt="{{backpack.name}}" height="200" style="margin-top: 3%; margin-bottom: 3%">
                 <a routerLink="/backpacks/{{backpack.id}}" class="h6 card-title product-title">{{backpack.name}}</a>
                 <div class="h6 manufacturer-name mb-0">{{backpack.activity}}</div>
-                <div class="h6 manufacturer-name mb-0">{{backpack.location}}</div>
+                <div class="h6 manufacturer-name mb-0">{{backpack.location}}<br></div><br>
         </div>
+        {{updateImages()}}
     </div>
 </div>
 
