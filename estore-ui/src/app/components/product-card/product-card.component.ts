@@ -3,7 +3,7 @@ import { CartItem } from 'src/app/models/CartItem';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/services/cart.service';
 import { UserService } from 'src/app/services/user.service';
-import { UserStore } from 'src/app/services/user.store';
+import { UserStore } from 'src/app/state/user.store';
 
 @Component({
   selector: 'app-product-card',

@@ -5,7 +5,7 @@ import { Product } from '../models/Product';
 import { CartItem } from '../models/CartItem';
 import { CartComponent } from '../components/cart/cart.component';
 import { UserService } from './user.service';
-import { UserStore } from './user.store';
+import { UserStore } from '../state/user.store';
 
 const httpOptions = {
   headers: new HttpHeaders({

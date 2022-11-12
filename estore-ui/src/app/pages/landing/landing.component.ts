@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { UserStore } from 'src/app/services/user.store';
+import { UserStore } from 'src/app/state/user.store';
 
 @Component({
   selector: 'app-landing',

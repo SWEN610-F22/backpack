@@ -5,7 +5,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { UserService } from 'src/app/services/user.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CartItem } from 'src/app/models/CartItem';
-import { UserStore } from 'src/app/services/user.store';
+import { UserStore } from 'src/app/state/user.store';
 
 @Component({
   selector: 'app-view-product',
