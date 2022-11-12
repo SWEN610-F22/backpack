@@ -3,11 +3,12 @@
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-xl-9">
 
-                <h1 class="text-white mb-4">create BackPack</h1>
+               
 
-                <div class="card" style="border-radius: 15px;">
-                    <div class="card-body">
-<form style="width: 23rem;" #UserRegistrationForm="ngForm">
+                <div>
+                    <div>
+<form #UserRegistrationForm="ngForm">
+    <h1 style="text-align: center;">create BackPack</h1>
                         <div class="row align-items-center pt-4 pb-3">
                             <div class="col-md-3 ps-5">
 
@@ -63,22 +64,27 @@
     <div class="col-md-9 pe-5">
 
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender" value="option1" checked #activity="ngModel" [(ngModel)]="backpack.activity" name="activity"/>
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender" value="Fishing"  #activity="ngModel" [(ngModel)]="backpack.activity" name="activity" checked/>
             <label class="form-check-label" for="femaleGender">Fishing</label>
         </div>
         
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender" value="option2" #activity="ngModel" [(ngModel)]="backpack.activity" name="activity"/>
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender" value="Camping" #activity="ngModel" [(ngModel)]="backpack.activity" name="activity"/>
             <label class="form-check-label" for="maleGender">Camping</label>
         </div>
 
 
     </div>
 </div>
+<hr class="mx-n3">
 
+<div >
+<app-search-bar (onSearchProducts)="searchProducts($event)"></app-search-bar>
+</div>
 
-
-
+<div style="width: 23rem;" *ngIf="searched">
+    <app-product-card  *ngFor="let product of products" [product]="product" class="col-lg-3 mb-3"></app-product-card>
+</div>
 
                         
                         <hr class="mx-n3">
