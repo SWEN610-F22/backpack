@@ -3,24 +3,20 @@ package com.estore.api.estoreapi.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Class to represent a product
+ * Class to represent a cart item
  */
 public class CartItem {
-    @JsonProperty("id") private int id;
     @JsonProperty("userId") private int userId;
     @JsonProperty("productId") private int productId;
     @JsonProperty("quantity") private int quantity;
 
-    public CartItem(@JsonProperty("id") int id, @JsonProperty("userId") int userId, @JsonProperty("productId") int productId, @JsonProperty("quantity") int quantity) {
-        this.id=id;
+    public CartItem( @JsonProperty("userId") int userId, @JsonProperty("productId") int productId, @JsonProperty("quantity") int quantity) {
         this.userId = userId;
         this.productId = productId;
         this.quantity = quantity;
     }
 
-    public int getId(){
-        return id;
-    }
+
 
     public int getUserId() {
         return userId;
@@ -48,7 +44,7 @@ public class CartItem {
 
     @Override
     public String toString() {
-        return "Product [id=" + id +", userId=" + userId + ", productId=" + productId + ", quantity=" + quantity + "]";
+        return "CartItem [userId=" + userId + ", productId=" + productId + ", quantity=" + quantity + "]";
     }
 
     @Override
@@ -60,7 +56,7 @@ public class CartItem {
         if (getClass() != obj.getClass())
             return false;
         CartItem other = (CartItem) obj;
-        if (id != other.id)
+        if (userId != other.userId)
             return false;
         return true;
     }

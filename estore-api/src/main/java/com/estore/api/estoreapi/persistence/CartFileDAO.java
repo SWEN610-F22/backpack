@@ -3,21 +3,19 @@ package com.estore.api.estoreapi.persistence;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.estore.api.estoreapi.model.CartItem;
-import com.estore.api.estoreapi.model.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class CartFileDAO implements CartDAO {
-    Map<Integer, CartItem> cart;
+    Map<Integer, ArrayList<CartItem>> cart;
     private ObjectMapper objectMapper;
-    private static int nextId;
     private String filename;
 
     public CartFileDAO(@Value("${cart.file}") String filename, ObjectMapper objectMapper) throws IOException {
@@ -26,187 +24,123 @@ public class CartFileDAO implements CartDAO {
         load();
     }
 
-    
-    /** 
+    /**
      * Reads the storage file for this user's cart, and loads it.
+     * 
      * @return true if successful, false if not.
      * @throws IOException if underlying storage cannot be accessed
      */
     private boolean load() throws IOException {
-        cart = new TreeMap<>();
-        nextId = 0;
-        CartItem[] productsArray = objectMapper.readValue(new File(filename), CartItem[].class);
-        for (CartItem product : productsArray) {
-            cart.put(product.getId(), product);
-            if (product.getId() > nextId)
-                nextId = product.getId();
+        cart = new HashMap<>();
+        CartItem[] cartArray = objectMapper.readValue(new File(filename), CartItem[].class);
+        for (CartItem item : cartArray) {
+            addItemToCart(item);
         }
-        ++nextId;
         return true;
     }
 
-
-    
-    /** 
-     * Loads the list of products in the cart.
-     * @return An array of {@link Product product} objects, may be empty
-     */
-    private CartItem[] getProductsArray(){
-        ArrayList<CartItem> productsList = new ArrayList<>();
-
-        for (CartItem product : cart.values()) {
-            productsList.add(product);
-
+    private CartItem addItemToCart(CartItem item) {
+        if (!cart.containsKey(item.getUserId())) {
+            cart.put(item.getUserId(), new ArrayList<>());
         }
-
-        CartItem[] productArray = new CartItem[productsList.size()];
-        productsList.toArray(productArray);
-        return productArray;
+        cart.get(item.getUserId()).add(item);
+        return item;
     }
 
     @Override
-    public CartItem[] getCart() {
-        synchronized(cart){
-            return getProductsArray();
+    public CartItem[] getCart() throws IOException {
+        ArrayList<CartItem> cartItems = new ArrayList<>();
+        for (ArrayList<CartItem> items : cart.values()) {
+            cartItems.addAll(items);
         }
+        return cartItems.toArray(new CartItem[0]);
     }
 
     @Override
-    public boolean isCartEmpty(){
-        if(cart.size()==0)return true;
-        else
-            return false;
-    }
-    
-
-    @Override
-    public CartItem updateInCart(CartItem product) throws IOException {
-        synchronized(cart) {
-            if (cart.containsKey(product.getId()) == false)
-                return null;
-            if(product.getQuantity()==0){
-                deleteFromCart(product.getId());    // If the new quantity of the product is zero, delete
-                return product;                     // the product from the cart
-            }
-            else{
-                cart.put(product.getId(), product);
-                save();
-                return product;
-            }
-        }
+    public CartItem[] getCartForUser(int userId) throws IOException {
+        return cart.get(userId).toArray(new CartItem[0]);
     }
 
     @Override
-    public CartItem[] decrease(int productId, int userId) throws IOException {
-        synchronized(cart) {
-            int cartId = 0;
-            for (CartItem product : cart.values()) {
-                if(product.getUserId()==userId && product.getProductId()==productId){ // If this product exists in the cart
-                    product.setQuantity(product.getQuantity()-1);                     // for the current user,
-                    cart.put(product.getId(), product);                               // Decrement the quantity of the product
-                    save();                                                           // and update the cart
-                    if(product.getQuantity()==0){                                     // If new quantity is zero,
-                        cartId = product.getId();                                     // remove product from cart.
-                        deleteFromCart(product.getId());
-                        save();
-                    return getCart();
-                    }
-                }
-            }
-            return null;
-        }
+    public boolean isCartEmpty() {
+        return cart.size() == 0;
     }
 
     @Override
-    public CartItem[] increase(int productId, int userId) throws IOException {
-        synchronized(cart) {
-            for (CartItem product : cart.values()) {
-                if(product.getUserId()==userId && product.getProductId()==productId){ // If this product exists in the cart
-                    product.setQuantity(product.getQuantity()+1);                     // for the current user,
-                    cart.put(product.getId(), product);                               // Increment the quantity of the product
-                    save();                                                           // and update the cart
-                    return getCart();
-                }
-            }
+    public CartItem addToCart(CartItem cartItem) throws IOException {
+        CartItem itemInCart = getProductInUserCart(cartItem.getProductId(), cartItem.getUserId());
+        CartItem createdCartItem;
+        if (itemInCart == null) {
+            createdCartItem = addItemToCart(cartItem);
+        } else {
+            createdCartItem = increase(cartItem.getProductId(), cartItem.getUserId());
         }
-        return null;
+        save();
+        return createdCartItem;
     }
 
-
-    @Override
-    public CartItem[] clearItem(int productId, int userId) throws IOException {
-        synchronized(cart) {
-            for (CartItem product : cart.values()) {
-                if(product.getUserId()==userId && product.getProductId()==productId){ // If the product exists in the cart
-                    cart.remove(product.getId());                                     // for the current user,
-                    save();                                                           // Remove the product from the cart
-                return getCart();
-                }
-            }
-            
-        }
-        return null;
-    }
-    
-
-    
-    /**
-     * Saves the {@linkplain Product products} from the map into the file as an array of JSON objects
-     * @return true if the {@link Product products} were written successfully
-     * @throws IOException when file cannot be accessed or written to
-     */
     private boolean save() throws IOException {
-        CartItem[] productArray = getProductsArray();
-        objectMapper.writeValue(new File(filename),productArray);
+        CartItem[] cartItems = getCart();
+        objectMapper.writeValue(new File(filename), cartItems);
         return true;
     }
 
-    /**
-     * Generates the next id for a new {@linkplain Product product}
-     * 
-     * @return The next id
-     */
-    private synchronized static int nextId() {
-        int id = nextId;
-        ++nextId;
-        return id;
-    }
-
-    
-    @Override
-    public CartItem getProduct(int id){
-        synchronized(cart) {
-            return cart.getOrDefault(id, null);
-        }
-    }
-
-    @Override
-    public CartItem addToCart(CartItem product, Integer userId) throws IOException {
-        synchronized(cart) {
-            for (CartItem cartItem : cart.values()) {
-                if(cartItem.getUserId()==userId && product.getProductId()==cartItem.getId()){ // If product already exists in
-                    cartItem.setQuantity(cartItem.getQuantity()+product.getQuantity());        // this user's cart,
-                    cart.put(cartItem.getId(), cartItem);                                      // set new quantity to total of
-                    save();                                                                   // old quantity and new quantity
+    private CartItem getProductInUserCart(int productId, int userId) throws IOException {
+        if (userCartExists(userId)) {
+            CartItem[] userCart = getCartForUser(userId);
+            for (CartItem cartItem : userCart) {
+                if (cartItem.getProductId() == productId) {
                     return cartItem;
                 }
             }
-            CartItem newProduct = new CartItem(nextId(), product.getUserId(), product.getProductId(), product.getQuantity());
-            cart.put(newProduct.getId(), newProduct);
-            save();
-            return newProduct;
         }
+        return null;
+    }
+
+    private boolean userCartExists(int userId) {
+        return cart.containsKey(userId);
     }
 
     @Override
-    public boolean deleteFromCart(int id) throws IOException {
-        synchronized(cart) {
-            if (cart.containsKey(id)) {
-                cart.remove(id);
-                return save();
+    public CartItem increase(int productId, int userId) throws IOException {
+        return updateCartItemQuantity(productId, userId, +1);
+    }
+
+    @Override
+    public CartItem decrease(int productId, int userId) throws IOException {
+        return updateCartItemQuantity(productId, userId, -1);
+    }
+
+    private CartItem updateCartItemQuantity(int productId, int userId, int updateBy) throws IOException {
+        CartItem item = getProductInUserCart(productId, userId);
+        if (item == null) {
+            return null;
+        }
+        item.setQuantity(item.getQuantity() + updateBy);
+        save();
+        return item;
+    }
+
+    @Override
+    public boolean clearItem(int productId, int userId) throws IOException {
+        if (userCartExists(userId)) {
+            ArrayList<CartItem> items = cart.get(userId);
+            for (CartItem item : items) {
+                if (item.getProductId() == productId) {
+                    items.remove(item);
+                    save();
+                    return true;
+                }
             }
-            else
-                return false;
+        }
+        return false;
+    }
+
+    @Override
+    public void clearUserCart(int userId) throws IOException {
+        if(userCartExists(userId)){
+            cart.remove(userId);
         }
     }
+
 }
