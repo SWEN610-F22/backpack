@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class BackPack {
     @JsonProperty("id")
     private int id;
+    @JsonProperty("userId")
+    private int userId;
     @JsonProperty("name")
     private String name;
     @JsonProperty("description")
@@ -18,10 +20,12 @@ public class BackPack {
     @JsonProperty("productId")
     private int[] productId;
 
-    public BackPack(@JsonProperty("id") int id, @JsonProperty("name") String name,
+    public BackPack(@JsonProperty("id") int id,
+            @JsonProperty("userId") int userId, @JsonProperty("name") String name,
             @JsonProperty("description") String description, @JsonProperty("location") String location,
             @JsonProperty("activity") String activity, @JsonProperty("productId") int[] productId) {
         this.id = id;
+        this.userId = userId;
         this.name = name;
         this.description = description;
         this.location = location;
@@ -35,6 +39,14 @@ public class BackPack {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -79,7 +91,8 @@ public class BackPack {
 
     @Override
     public String toString() {
-        return "BackPack [id = " + id + ", name = " + name + ", description = " + description + ", location = "
+        return "BackPack [id = " + id + ", userId = "
+                + userId + ", name = " + name + ", description = " + description + ", location = "
                 + location + ", activity = " + activity + ",  productId = " + Arrays.toString(productId) + "]";
     }
 

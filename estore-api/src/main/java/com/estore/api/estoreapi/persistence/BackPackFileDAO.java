@@ -141,7 +141,8 @@ public class BackPackFileDAO implements BackPackDAO {
     public BackPack createBackPack(BackPack backpack) throws IOException {
         synchronized (backpacks) {
 
-            BackPack newBackPack = new BackPack(nextId(), backpack.getName(), backpack.getDescription(),
+            BackPack newBackPack = new BackPack(nextId(),
+                    backpack.getUserId(), backpack.getName(), backpack.getDescription(),
                     backpack.getLocation(), backpack.getActivity(), backpack.getProductId());
             backpacks.put(newBackPack.getId(), newBackPack);
             save();

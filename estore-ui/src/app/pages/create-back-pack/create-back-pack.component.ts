@@ -4,7 +4,7 @@ import { BackpackService } from '../../services/backpack.service';
 import { NgForm } from '@angular/forms';
  import { Product } from 'src/app/models/Product';
  import { ProductService } from 'src/app/services/product.service';
-
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -19,13 +19,14 @@ products:Product[] = [];
   backpack: BackPack = new BackPack;
 pros:Array<any>=[];
 count:any = 0;
+user:any = 0;
   
   addToBackpack(productId:number){
     this.pros.push(productId);
     this.backpack.productId = this.pros;
   }
 
-  constructor(private backpackService: BackpackService, private productService:ProductService) { }
+  constructor(private backpackService: BackpackService, private productService:ProductService, private userService:UserService) { }
 
   ngOnInit(): void {
     this.resetForm();
@@ -55,10 +56,17 @@ searched=false;
     //     }
   }
 
+                       
   submitData(){
+                 
+                 this.user =  this.userService.getUser()?.id; 
+                  this.backpack.userId = this.user;
 
                 this.backpackService.createBackPack(this.backpack).subscribe((backpack)=>{
-                  console.log(backpack);      
+                  console.log(backpack);  
+                   
+                  
+
                 });    
   }
 

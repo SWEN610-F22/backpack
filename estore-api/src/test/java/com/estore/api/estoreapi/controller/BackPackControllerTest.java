@@ -36,7 +36,7 @@ public class BackPackControllerTest {
     @Test
     public void getBackPack() throws IOException {
         int[] products = new int[] { 2, 3, 4 };
-        BackPack backpack = new BackPack(1, "Lake Onterio fishing",
+        BackPack backpack = new BackPack(1, 1, "Lake Onterio fishing",
                 "this backpack is for those who want to go fishing at lake Onterio",
                 "Lake Onterio Rochester NewYork", "fishing", products);
 
@@ -65,7 +65,7 @@ public class BackPackControllerTest {
     @Test
     public void createBackPackSuccessfully() throws IOException {
         int[] products = new int[] { 2, 3, 4 };
-        BackPack backpack = new BackPack(1, "Lake Onterio fishing",
+        BackPack backpack = new BackPack(1, 1, "Lake Onterio fishing",
                 "this backpack is for those who want to go fishing at lake Onterio",
                 "Lake Onterio Rochester NewYork", "fishing", products);
         when(mockBackPackDAO.createBackPack(backpack)).thenReturn(backpack);
@@ -79,7 +79,7 @@ public class BackPackControllerTest {
     @Test
     public void createUserFail() throws IOException {
         int[] products = new int[] { 2, 3, 4 };
-        BackPack backpack = new BackPack(1, "Lake Onterio fishing",
+        BackPack backpack = new BackPack(1, 1, "Lake Onterio fishing",
                 "this backpack is for those who want to go fishing at lake Onterio",
                 "Lake Onterio Rochester NewYork", "fishing", products);
         when(mockBackPackDAO.createBackPack(backpack)).thenReturn(null);
@@ -92,7 +92,7 @@ public class BackPackControllerTest {
     @Test
     public void createUserWithException() throws IOException {
         int[] products = new int[] { 2, 3, 4 };
-        BackPack backpack = new BackPack(1, "Lake Onterio fishing",
+        BackPack backpack = new BackPack(1, 1, "Lake Onterio fishing",
                 "this backpack is for those who want to go fishing at lake Onterio",
                 "Lake Onterio Rochester NewYork", "fishing", products);
         doThrow(new IOException()).when(mockBackPackDAO).createBackPack(backpack);
@@ -105,7 +105,7 @@ public class BackPackControllerTest {
     @Test
     public void updateBackPackSuccessfully() throws IOException {
         int[] products = new int[] { 2, 3, 4 };
-        BackPack backpack = new BackPack(1, "Lake Onterio fishing",
+        BackPack backpack = new BackPack(1, 1, "Lake Onterio fishing",
                 "this backpack is for those who want to go fishing at lake Onterio",
                 "Lake Onterio Rochester NewYork", "fishing", products);
         when(mockBackPackDAO.updateBackPack(backpack)).thenReturn(backpack);
@@ -119,7 +119,7 @@ public class BackPackControllerTest {
     @Test
     public void updateBackPackFailed() throws IOException {
         int[] products = new int[] { 2, 3, 4 };
-        BackPack backpack = new BackPack(1, "Lake Onterio fishing",
+        BackPack backpack = new BackPack(1, 1, "Lake Onterio fishing",
                 "this backpack is for those who want to go fishing at lake Onterio",
                 "Lake Onterio Rochester NewYork", "fishing", products);
         when(mockBackPackDAO.updateBackPack(backpack)).thenReturn(null);
@@ -130,7 +130,7 @@ public class BackPackControllerTest {
     @Test
     public void updateBackPackHandleException() throws IOException {
         int[] products = new int[] { 2, 3, 4 };
-        BackPack backpack = new BackPack(1, "Lake Onterio fishing",
+        BackPack backpack = new BackPack(1, 1, "Lake Onterio fishing",
                 "this backpack is for those who want to go fishing at lake Onterio",
                 "Lake Onterio Rochester NewYork", "fishing", products);
         doThrow(new IOException()).when(mockBackPackDAO).updateBackPack(backpack);
@@ -143,12 +143,12 @@ public class BackPackControllerTest {
         BackPack[] backpacks = new BackPack[2];
 
         int[] products1 = new int[] { 2, 3, 4 };
-        backpacks[0] = new BackPack(1, "Lake Onterio fishing",
+        backpacks[0] = new BackPack(1, 1, "Lake Onterio fishing",
                 "this backpack is for those who want to go fishing at lake Onterio",
                 "Lake Onterio Rochester NewYork", "fishing", products1);
 
         int[] products2 = new int[] { 5, 6, 4 };
-        backpacks[1] = new BackPack(2, "Lake fatehsagar fishing",
+        backpacks[1] = new BackPack(2, 2, "Lake fatehsagar fishing",
                 "this backpack is for those who want to go fishing at lake fatehsagar",
                 "Udaipur Rajasthan India", "fishing", products2);
 
@@ -172,17 +172,17 @@ public class BackPackControllerTest {
         BackPack[] backpacks = new BackPack[3];
 
         int[] products1 = new int[] { 2, 3, 4 };
-        backpacks[0] = new BackPack(1, "Lake Onterio fishing",
+        backpacks[0] = new BackPack(1, 1, "Lake Onterio fishing",
                 "this backpack is for those who want to go fishing at lake Onterio",
                 "Lake Onterio Rochester NewYork", "fishing", products1);
 
         int[] products2 = new int[] { 5, 6, 4 };
-        backpacks[1] = new BackPack(2, "Lake fatehsagar fishing",
+        backpacks[1] = new BackPack(2, 2, "Lake fatehsagar fishing",
                 "this backpack is for those who want to go fishing at lake fatehsagar",
                 "Udaipur Rajasthan India", "fishing", products2);
 
         int[] products3 = new int[] { 5, 4 };
-        backpacks[2] = new BackPack(3, "Amazon forest camping",
+        backpacks[2] = new BackPack(3, 3, "Amazon forest camping",
                 "this backpack is for those who want to go camping in amazon",
                 "Amazon forest brazil", "camping", products3);
 
@@ -203,25 +203,25 @@ public class BackPackControllerTest {
 
     @Test
     public void testDeleteBackPack() throws IOException {
-        int userId = 99;
-        when(mockBackPackDAO.deleteBackPack(userId)).thenReturn(true);
-        ResponseEntity<BackPack> response = backpackController.deleteBackPack(userId);
+        int Id = 99;
+        when(mockBackPackDAO.deleteBackPack(Id)).thenReturn(true);
+        ResponseEntity<BackPack> response = backpackController.deleteBackPack(Id);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     public void testDeleteBackPackNotFound() throws IOException {
-        int userId = 99;
-        when(mockBackPackDAO.deleteBackPack(userId)).thenReturn(false);
-        ResponseEntity<BackPack> response = backpackController.deleteBackPack(userId);
+        int Id = 99;
+        when(mockBackPackDAO.deleteBackPack(Id)).thenReturn(false);
+        ResponseEntity<BackPack> response = backpackController.deleteBackPack(Id);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
     public void testDeleteBackPackHandleException() throws IOException {
-        int userId = 99;
-        doThrow(new IOException()).when(mockBackPackDAO).deleteBackPack(userId);
-        ResponseEntity<BackPack> response = backpackController.deleteBackPack(userId);
+        int Id = 99;
+        doThrow(new IOException()).when(mockBackPackDAO).deleteBackPack(Id);
+        ResponseEntity<BackPack> response = backpackController.deleteBackPack(Id);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 

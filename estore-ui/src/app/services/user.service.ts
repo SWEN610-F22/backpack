@@ -49,7 +49,7 @@ export class UserService {
     }
   }
 
-  getUser(): User | null {
+  getUser(): User | null{
     let user = localStorage.getItem("user");
     if (user) {
       return JSON.parse(user);
@@ -57,6 +57,7 @@ export class UserService {
       return null;
     }
   }
+
 
   setUser(user: User) {
     localStorage.setItem("user", JSON.stringify(user));

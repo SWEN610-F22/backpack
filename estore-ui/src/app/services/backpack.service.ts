@@ -34,6 +34,7 @@ createBackPack(backpack: BackPack): Observable<BackPack> {
           console.log(`Error: ${error.message}`);
         }
         return of({ "name":"",
+                     "userId":0,
                      "description":"",
                      "location":"",
                      "activity":"",
