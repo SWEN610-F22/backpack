@@ -38,7 +38,7 @@ createBackPack(backpack: BackPack): Observable<BackPack> {
                      "description":"",
                      "location":"",
                      "activity":"",
-                     "productId":[0,0,0]
+                     "productId":[0,0,0],
                     });
       })
     )
