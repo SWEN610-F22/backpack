@@ -64,7 +64,10 @@ getBackPacksMatchingLocation(location: string): Observable<BackPack[]> {
    
   }
 
-
+getBackpacks(): Observable<BackPack[]>{
+  const backpacks = this.httpClient.get<BackPack[]>(this.apiURL);
+  return backpacks;
+}
 
 }
 

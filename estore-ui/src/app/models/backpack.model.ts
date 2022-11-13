@@ -7,5 +7,5 @@ export class BackPack {
     location: string = "";
     activity: string = "";
     productId:Array<any>=[];
-
+    imageURL?: string = "";
 }
