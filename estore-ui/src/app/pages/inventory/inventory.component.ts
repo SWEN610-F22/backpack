@@ -35,7 +35,8 @@ export class InventoryComponent implements OnInit {
         console.log(err)
       }
     );
-  
+
+   
   }
   onSave(product: Product): void {
     this.savedProduct = product;
@@ -44,6 +45,10 @@ export class InventoryComponent implements OnInit {
     });
     this.dissapear = false;
      
+  }
+  onAdd(product: Product): void{
+  console.log("Add");
+
   }
 
  
