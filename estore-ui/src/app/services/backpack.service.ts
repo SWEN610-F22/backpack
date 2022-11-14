@@ -59,6 +59,13 @@ getBackPacksMatchingLocation(location: string): Observable<BackPack[]> {
     }
   }
 
+  searchBackpacks(containsText:string): Observable<BackPack[]>{
+    const endpoint = `${this.apiURL}?name=${containsText}`;
+    console.log(endpoint);
+    const backpacks =  this.httpClient.get<BackPack[]>(endpoint);
+    return backpacks;
+  }
+
   setBackPack(backpack: BackPack) {
     localStorage.setItem("backpack", JSON.stringify(backpack));
    

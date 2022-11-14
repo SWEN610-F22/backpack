@@ -22,6 +22,7 @@ import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.compo
 import { CreateBackPackComponent } from './pages/create-back-pack/create-back-pack.component';
 import { ViewBackpacksComponent } from './components/view-backpacks/view-backpacks.component';
 import { ViewBackpacksPageComponent } from './pages/view-backpacks-page/view-backpacks-page.component';
+import { SearchBackpacksBarComponent } from './components/search-backpacks-bar/search-backpacks-bar.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { ViewBackpacksPageComponent } from './pages/view-backpacks-page/view-bac
     ProductCardComponent,
     ProductCollectionComponent,
     SearchBarComponent,
+    SearchBackpacksBarComponent,
     RegisterComponent,
     ViewProductComponent,
     CartComponent,

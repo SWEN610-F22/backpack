@@ -15,6 +15,13 @@ export class ViewBackpacksComponent implements OnInit {
     this.backpackService.getBackpacks().subscribe((backpacks) => this.backpacks = backpacks);
   }
 
+  searchBackpacks(searchString: string) {
+    this.backpackService.searchBackpacks(searchString).subscribe((backpacks) => {
+      console.log(backpacks);
+      this.backpacks = backpacks
+    });
+
+  }
   updateImages(): void{
     for(let i=0; i<this.backpacks.length; i++){
       if(this.backpacks[i].activity=="fishing"){
