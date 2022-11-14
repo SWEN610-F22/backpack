@@ -223,7 +223,7 @@ public class CartController {
 
     @GetMapping("checkout/{userId}")
     public ResponseEntity<Boolean> checkout(@PathVariable int userId) {
-        LOG.info("GET /checkout");
+        LOG.info("GET /checkout/"+userId);
         try {
             Integer[] cartIds = cartDao.getIdsForClearing(userId);
             for(int i=0;i<cartIds.length;i++){

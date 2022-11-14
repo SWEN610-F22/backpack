@@ -58,7 +58,11 @@ public class CartFileDAO implements CartDAO {
 
     @Override
     public CartItem[] getCartForUser(int userId) throws IOException {
-        return cart.get(userId).toArray(new CartItem[0]);
+        ArrayList<CartItem> items= cart.get(userId);
+        if(items == null){
+            return null;
+        }
+        return items.toArray(new CartItem[0]);
     }
 
     @Override
@@ -158,6 +162,7 @@ public class CartFileDAO implements CartDAO {
     public boolean clearUserCart(int userId) throws IOException {
         if(userCartExists(userId)){
             cart.remove(userId);
+            save();
             return true;
         } else {
             return false;

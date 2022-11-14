@@ -53,8 +53,8 @@ export class CartService {
     return newCartItem;
   }
 
-  confirmCheckout():Observable<boolean>{
-    let isSuccessful = this.httpClient.get<boolean>("http://localhost:8080/cart/checkout");
+  confirmCheckout(userId:number):Observable<boolean>{
+    let isSuccessful = this.httpClient.get<boolean>("http://localhost:8080/cart/checkout/"+String(userId));
     return isSuccessful;
   }
 

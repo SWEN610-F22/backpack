@@ -20,12 +20,15 @@ public class UserCartHelper {
 
     public Product[] convertCart(CartItem[] items) throws IOException {
         ArrayList<Product> cart = new ArrayList<>();
-        for (CartItem cartItem : items) {
-            Product product = productDao.getProduct(cartItem.getProductId());
-            Product newProduct = new Product(product.getId(), product.getName(), product.getDescription(),
-                    product.getPrice(), product.getQuantity(), product.getManufacturer(), product.getImageUrl());
-            newProduct.setQuantity(cartItem.getQuantity());
-            cart.add(newProduct);
+        if (items != null) {
+
+            for (CartItem cartItem : items) {
+                Product product = productDao.getProduct(cartItem.getProductId());
+                Product newProduct = new Product(product.getId(), product.getName(), product.getDescription(),
+                        product.getPrice(), product.getQuantity(), product.getManufacturer(), product.getImageUrl());
+                newProduct.setQuantity(cartItem.getQuantity());
+                cart.add(newProduct);
+            }
         }
         Product[] products = cart.toArray(new Product[0]);
         return products;

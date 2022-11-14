@@ -44,19 +44,20 @@ export class CheckoutComponent implements OnInit {
 
   confirmCheckout(): void {
     alert("Thank you for shopping with us!");
-    this.cartService.confirmCheckout().subscribe((success) => {
+    this.cartService.confirmCheckout(this.userId).subscribe((success) => {
       if (success) {
 
         this.userStore.getUserId().subscribe((userId) => {
           this.userId = userId != undefined ? userId : 0;
           this.cartService.getCart(this.userId).subscribe((cart) => {
             console.log(cart);
-            this.cart = cart
+            this.cart = cart;
           });
+          this.productService.getProducts().subscribe((inventory) => this.inventory = inventory);
         });
 
 
-        this.productService.getProducts().subscribe((inventory) => this.inventory = inventory);
+        
       }
     });
     window.open("http://localhost:4200", "_self");
