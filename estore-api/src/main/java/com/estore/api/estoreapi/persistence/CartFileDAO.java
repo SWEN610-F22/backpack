@@ -137,47 +137,34 @@ public class CartFileDAO implements CartDAO {
     }
 
     @Override
-    public void clearUserCart(int userId) throws IOException {
+    public boolean clearUserCart(int userId) throws IOException {
         if(userCartExists(userId)){
             cart.remove(userId);
+            return true;
+        } else {
+            return false;
         }
     }
 
     @Override
     public Integer[] getIdsForClearing(int userId) throws IOException{
-        ArrayList<Integer> cartIdsForUser = new ArrayList<>();
-        for (CartItem cartItem : cart.values()){
-            if(cartItem.getUserId()==userId){
-                cartIdsForUser.add(cartItem.getProductId());
-            }
+        ArrayList<Integer> productIds = new ArrayList<>();
+        CartItem[] items = getCartForUser(userId);
+        for(CartItem cartItem: items){
+            productIds.add(cartItem.getProductId());
         }
-        Integer[] cartArray = new Integer[cartIdsForUser.size()];
-        cartIdsForUser.toArray(cartArray);
-        return cartArray;
+        return productIds.toArray(new Integer[0]);
     }
 
     @Override
     public int getQuantity(int userId, int productId) throws IOException{
-        for (CartItem cartItem : cart.values()){
-            if(cartItem.getUserId()==userId && cartItem.getProductId()==productId){
+        CartItem[] items = getCartForUser(userId);
+        for(CartItem cartItem: items){
+            if(productId == cartItem.getProductId()){
                 return cartItem.getQuantity();
             }
         }
         return 0;
     }
 
-    public boolean clearCart(int userId) throws IOException{
-        ArrayList<Integer> cartIdsForUser = new ArrayList<>();
-        for (CartItem cartItem : cart.values()){
-            if(cartItem.getUserId()==userId){
-                cartIdsForUser.add(cartItem.getId());
-            }
-        }
-        for (Integer id : cartIdsForUser){
-            boolean isSuccessful = deleteFromCart(id);
-            if(!isSuccessful)return false;
-            save();
-        }
-        return true;
-    }
 }

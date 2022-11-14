@@ -200,17 +200,17 @@ public class CartController {
     }
 
 
-    @GetMapping("/checkout")
-    public ResponseEntity<Boolean> checkout() {
+    @GetMapping("checkout/{userId}")
+    public ResponseEntity<Boolean> checkout(@PathVariable int userId) {
         LOG.info("GET /checkout");
         try {
-            Integer[] cartIds = cartDao.getIdsForClearing(this.userId);
+            Integer[] cartIds = cartDao.getIdsForClearing(userId);
             for(int i=0;i<cartIds.length;i++){
                 Product thisProduct = productDAO.getProduct(cartIds[i]);
-                thisProduct.setQuantity(thisProduct.getQuantity()-cartDao.getQuantity(this.userId, thisProduct.getId()));
+                thisProduct.setQuantity(thisProduct.getQuantity()-cartDao.getQuantity(userId, thisProduct.getId()));
                 productDAO.updateProduct(thisProduct);
             }
-            boolean isSuccessful = cartDao.clearCart(this.userId);
+            boolean isSuccessful = cartDao.clearUserCart(userId);
             if(isSuccessful){
                 return new ResponseEntity<Boolean>(true, HttpStatus.OK);
             }
