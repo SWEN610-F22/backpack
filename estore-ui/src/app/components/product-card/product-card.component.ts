@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CartItem } from 'src/app/models/CartItem';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/services/cart.service';
@@ -20,6 +20,8 @@ export class ProductCardComponent implements OnInit {
     imageUrl:"",
     quantity: 0
   }
+  @Input() buttonText:string = "";
+  @Output() onClickButton: EventEmitter<number> = new EventEmitter();
   public userId:number|undefined;
   public isLoggedIn:boolean = false;
   public isAdminLoggedIn:boolean = false;
@@ -30,6 +32,19 @@ export class ProductCardComponent implements OnInit {
     this.userStore.getUserId().subscribe(userId => this.userId = userId);
     this.userStore.isLoggedIn().subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn)
     this.userStore.isAdminLoggedIn().subscribe(isAdminLoggedIn => this.isAdminLoggedIn = isAdminLoggedIn)
+  }
+
+  onClick(productId:undefined|number){
+    this.onClickButton.emit(productId);
+  }
+
+
+  isLoggedIn(){
+    return this.userService.isLoggedIn();
+  }
+
+  isAdminLoggedIn():boolean{
+    return this.userService.isAdminLoggedIn();
   }
 
   addToCart(){

@@ -40,5 +40,45 @@ export class UserService {
     return users;
   }
 
-  
+  isLoggedIn(): boolean {
+    let user = localStorage.getItem("user");
+    if (user) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getUser(): User | null{
+    let user = localStorage.getItem("user");
+    if (user) {
+      return JSON.parse(user);
+    } else {
+      return null;
+    }
+  }
+
+
+  setUser(user: User) {
+    localStorage.setItem("user", JSON.stringify(user));
+   
+  }
+
+  isAdminLoggedIn():boolean {
+    if (this.isLoggedIn()) {
+      let user = this.getUser();
+      let username = user?.username;
+      if (username === "admin") {
+        return true;
+      }
+    }
+    return false;
+
+  }
+
+  logout(){
+    localStorage.removeItem("user");
+    
+  }
+ 
 }

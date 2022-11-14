@@ -16,6 +16,9 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './pages/login/login.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
 import { ViewProductComponent } from './pages/view-product/view-product.component';
+import { CreateBackPackComponent } from './pages/create-back-pack/create-back-pack.component';
+import { ViewBackpacksComponent } from './components/view-backpacks/view-backpacks.component';
+import { ViewBackpacksPageComponent } from './pages/view-backpacks-page/view-backpacks-page.component';
 
 
 @NgModule({
@@ -32,7 +35,10 @@ import { ViewProductComponent } from './pages/view-product/view-product.componen
     CartPageComponent,
     LoginComponent,
     InventoryComponent,
-    RegisterComponent
+    RegisterComponent,
+    CreateBackPackComponent,
+    ViewBackpacksComponent,
+    ViewBackpacksPageComponent
 
   ],
   imports: [
