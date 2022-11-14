@@ -46,7 +46,7 @@ public interface CartDAO {
      * @return An array of {@link CartItem CartItem} objects, may be empty
      * @throws IOException if an issue with underlying storaged
      */
-    CartItem increase(int productId, int userId) throws IOException;
+    CartItem increase(int productId, int userId, int maxLimit) throws IOException;
 
     /**
      * Decrements the quantity of a {@linkplain CartItem cartItem} with the given id
@@ -75,5 +75,7 @@ public interface CartDAO {
     Integer[] getIdsForClearing(int userId) throws IOException;
 
     int getQuantity(int userId, int productId) throws IOException;
+
+    public CartItem getProductInUserCart(int productId, int userId) throws IOException;
 
 }
