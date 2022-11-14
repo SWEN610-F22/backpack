@@ -17,10 +17,10 @@ const routes: Routes = [{path: '', component: LandingComponent},
                         {path: 'cart', component: CartPageComponent},
                         {path: 'inventory', component: InventoryComponent},
                         {path: 'login', component: LoginComponent},
-                        {path: 'backpack/:id', component: BackpackDetailComponent},
                         {path: 'products/:id', component: ViewProductComponent},
                         {path: 'checkout', component: CheckoutPageComponent},
                         {path: 'backpack/new', component: CreateBackPackComponent},
+                        {path: 'backpack/:id', component: BackpackDetailComponent},
                         {path: 'backpacks', component: ViewBackpacksComponent}];
 
 

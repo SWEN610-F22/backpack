@@ -39,13 +39,6 @@ export class ProductCardComponent implements OnInit {
   }
 
 
-  isLoggedIn(){
-    return this.userService.isLoggedIn();
-  }
-
-  isAdminLoggedIn():boolean{
-    return this.userService.isAdminLoggedIn();
-  }
 
   addToCart(){
 
