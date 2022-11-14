@@ -16,16 +16,16 @@ const httpOptions = {
 
 
 export class BackpackService {
-private apiURL = 'http://localhost:8080/backpack'
+  private apiURL = 'http://localhost:8080/backpack'
 
   constructor(private httpClient: HttpClient) {
 
-}
+  }
 
 
 
 
-createBackPack(backpack: BackPack): Observable<BackPack> {
+  createBackPack(backpack: BackPack): Observable<BackPack> {
     return this.httpClient.post<BackPack>(this.apiURL, backpack, httpOptions).pipe(
       catchError(error => {
         if (error.error instanceof ErrorEvent) {
@@ -33,18 +33,19 @@ createBackPack(backpack: BackPack): Observable<BackPack> {
         } else {
           console.log(`Error: ${error.message}`);
         }
-        return of({ "name":"",
-                     "userId":0,
-                     "description":"",
-                     "location":"",
-                     "activity":"",
-                     "productId":[0,0,0],
-                    });
+        return of({
+          "name": "",
+          "userId": 0,
+          "description": "",
+          "location": "",
+          "activity": "",
+          "productId": [0, 0, 0],
+        });
       })
     )
   }
 
-getBackPacksMatchingLocation(location: string): Observable<BackPack[]> {
+  getBackPacksMatchingLocation(location: string): Observable<BackPack[]> {
     const endpoint = `${this.apiURL}?location=${location}`
     const backpacks = this.httpClient.get<BackPack[]>(this.apiURL);
     return backpacks;
@@ -61,13 +62,21 @@ getBackPacksMatchingLocation(location: string): Observable<BackPack[]> {
 
   setBackPack(backpack: BackPack) {
     localStorage.setItem("backpack", JSON.stringify(backpack));
-   
+
   }
 
-getBackpacks(): Observable<BackPack[]>{
-  const backpacks = this.httpClient.get<BackPack[]>(this.apiURL);
-  return backpacks;
-}
+  getBackpacks(): Observable<BackPack[]> {
+    const backpacks = this.httpClient.get<BackPack[]>(this.apiURL);
+    return backpacks;
+  }
+
+  getBackpack(id:number): Observable<BackPack>{
+    const endpoint = this.apiURL+"/"+id;
+    return this.httpClient.get<BackPack>(endpoint);
+  }
+
+
+
 
 }
 
