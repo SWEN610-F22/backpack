@@ -10,20 +10,20 @@
           <td align="center"><b>Price</b></td>
         </tr>
         <tr align="center">
-            <tr align="center" *ngFor="let cartItem of cart">
-                <td align="left">{{cartItem.name}}</td>
+            <tr align="center" *ngFor="let product of cart">
+                <td align="left">{{product.name}}</td>
                 <td>
-                    <button type="button" style="border-radius:10px; background-color:red; margin:5%; color: white" (click)="decrease(cartItem)">
+                    <button type="button" style="border-radius:10px; background-color:red; margin:5%; color: white" (click)="decrease(product)">
                         -
                     </button>
-                    {{cartItem.quantity}}
-                    <button type="button" style="border-radius:10px; background-color:green; margin:5%; color:white" (click)="increase(cartItem)">
+                    {{product.quantity}}
+                    <button type="button" style="border-radius:10px; background-color:green; margin:5%; color:white" (click)="increase(product)">
                         +
                     </button>
                 </td>
-                <td><button type="button" (click)="clear(cartItem)" style="border-radius:10px; background-color:#FFFFFF; margin-top:1%">
+                <td><button type="button" (click)="clear(product)" style="border-radius:10px; background-color:#FFFFFF; margin-top:1%">
                     Clear</button></td>
-                <td>{{cartItem.totalPrice}}</td>
+                <td>{{product.totalPrice}}</td>
             </tr>
             <tr align="center">
                 <td></td>
@@ -35,7 +35,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td><button type="button" onclick="location.href='..'" style="border-radius:10px; background-color:#FFFFFF; margin-top:5%; margin-bottom: 15%">
+                <td><button type="button" (click)="checkout()" style="border-radius:10px; background-color:#FFFFFF; margin-top:5%; margin-bottom: 15%">
                     Proceed to checkout</button></td>
             </tr>
     </table>

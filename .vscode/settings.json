@@ -1,3 +1,6 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "sonarlint.connectedMode.project": {
+        "connectionId": "http-localhost-9000-",
+        "projectKey": "backpack-estore-api"
+    }
 }

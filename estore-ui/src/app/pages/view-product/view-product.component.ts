@@ -5,6 +5,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { UserService } from 'src/app/services/user.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CartItem } from 'src/app/models/CartItem';
+import { UserStore } from 'src/app/state/user.store';
 
 @Component({
   selector: 'app-view-product',
@@ -12,12 +13,19 @@ import { CartItem } from 'src/app/models/CartItem';
   styleUrls: ['./view-product.component.scss']
 })
 export class ViewProductComponent implements OnInit {
+  
+  public userId:number|undefined;
+  public isLoggedIn:boolean = false;
+  public isAdminLoggedIn:boolean = false;
   product!:Product;
 
-  constructor( private route: ActivatedRoute, private productService:ProductService, private userService:UserService, private cartService: CartService) { }
+  constructor( private route: ActivatedRoute, private productService:ProductService, private userService:UserService, private cartService: CartService, private userStore: UserStore) { }
 
   ngOnInit(): void {
     this.getProduct()
+    this.userStore.getUserId().subscribe(userId => this.userId = userId);
+    this.userStore.isLoggedIn().subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn)
+    this.userStore.isAdminLoggedIn().subscribe(isAdminLoggedIn => this.isAdminLoggedIn = isAdminLoggedIn)
   }
 
   getProduct(){
@@ -27,7 +35,7 @@ export class ViewProductComponent implements OnInit {
 
   addToCart(){
 
-    let userId = this.userService.getUser()!.id;
+    let userId = this.userId;
     let productId =  this.product.id;
 
     if(userId && productId){
@@ -44,14 +52,6 @@ export class ViewProductComponent implements OnInit {
     }
     
     
-  }
-
-  isLoggedIn(){
-    return this.userService.isLoggedIn();
-  }
-
-  isAdminLoggedIn():boolean{
-    return this.userService.isAdminLoggedIn();
   }
 
 }
