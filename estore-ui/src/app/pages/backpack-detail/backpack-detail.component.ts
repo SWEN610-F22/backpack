@@ -44,11 +44,11 @@ export class BackpackDetailComponent implements OnInit {
       if(product.isChecked){
         const cartItem:CartItem = {productId: Number(product.id), userId: Number(this.loggedInId), quantity: 1};
         this.cartService.addToCart(cartItem).subscribe(item => {
-          
+          this.router.navigate(['/cart']);
         })
       }
     })
-    this.router.navigate(['/cart']);
+    
   }
 
   selectAll(){
