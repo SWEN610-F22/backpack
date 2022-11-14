@@ -15,12 +15,14 @@ import org.springframework.http.ResponseEntity;
 
 import com.estore.api.estoreapi.model.BackPack;
 import com.estore.api.estoreapi.persistence.BackPackDAO;
+import com.estore.api.estoreapi.persistence.ProductDAO;
 
 @Tag("Controller-tier")
 public class BackPackControllerTest {
 
     private BackPackController backpackController;
     private BackPackDAO mockBackPackDAO;
+    private ProductDAO mockProductDAO;
 
     /**
      * Before each test, create a new UserController object and inject
@@ -30,7 +32,8 @@ public class BackPackControllerTest {
     @BeforeEach
     public void setupBackPackController() {
         mockBackPackDAO = mock(BackPackDAO.class);
-        backpackController = new BackPackController(mockBackPackDAO);
+        mockProductDAO = mock(ProductDAO.class);
+        backpackController = new BackPackController(mockBackPackDAO, mockProductDAO);
     }
 
     @Test

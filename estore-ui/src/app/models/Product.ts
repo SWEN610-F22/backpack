@@ -6,5 +6,6 @@ export interface Product{
     quantity: number,
     manufacturer: string,
     totalPrice?:number,
-    imageUrl: string
+    imageUrl: string,
+    isChecked?: boolean
 }

@@ -1,6 +1,7 @@
 package com.estore.api.estoreapi.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,16 +19,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.estore.api.estoreapi.model.BackPack;
+import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.persistence.BackPackDAO;
+import com.estore.api.estoreapi.persistence.ProductDAO;
 
 @RestController
 @RequestMapping("backpack")
 public class BackPackController {
     private static final Logger LOG = Logger.getLogger(BackPackController.class.getName());
     private BackPackDAO backpackDao;
+    private ProductDAO productDao;
 
-    public BackPackController(BackPackDAO backpackDao) {
+    public BackPackController(BackPackDAO backpackDao, ProductDAO productDAO) {
         this.backpackDao = backpackDao;
+        this.productDao = productDAO;
     }
 
     /**
@@ -83,6 +88,28 @@ public class BackPackController {
             BackPack backpack = backpackDao.getBackPack(id);
             if (backpack != null)
                 return new ResponseEntity<BackPack>(backpack, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("products/{id}")
+    public ResponseEntity<Product[]> getProductsInBackPack(@PathVariable int id){
+        LOG.info("GET /backpack/products/" + id);
+        try {
+            BackPack backpack = backpackDao.getBackPack(id);
+            if (backpack != null){
+                ArrayList<Product> products = new ArrayList<>();
+                for (int productId : backpack.getProductId()) {
+                    Product product = productDao.getProduct(productId);
+                    products.add(product);
+                }
+                Product[] productsArray = products.toArray(new Product[0]);
+                return new ResponseEntity<Product[]>(productsArray, HttpStatus.OK);
+            }
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
