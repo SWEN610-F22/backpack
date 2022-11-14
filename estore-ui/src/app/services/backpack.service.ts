@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { BackPack } from '../models/backpack.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { Product } from '../models/Product';
 
 
 const httpOptions = {
@@ -73,6 +74,11 @@ export class BackpackService {
   getBackpack(id:number): Observable<BackPack>{
     const endpoint = this.apiURL+"/"+id;
     return this.httpClient.get<BackPack>(endpoint);
+  }
+
+  getProductsForBackpack(id:number): Observable<Product[]>{
+    const endpoint = `${this.apiURL}/products/${id}`;
+    return this.httpClient.get<Product[]>(endpoint);
   }
 
 
