@@ -10,7 +10,7 @@
             <p class="lead">{{product.description}}</p>
             <div class="d-flex">
 
-                <button *ngIf="isLoggedIn() && !isAdminLoggedIn(); else disabledButton" class="btn btn-outline-dark flex-shrink-0"
+                <button *ngIf="isLoggedIn && !isAdminLoggedIn; else disabledButton" class="btn btn-outline-dark flex-shrink-0"
                     type="button" (click)="addToCart()">Add to cart</button>
                 <ng-template #disabledButton><button class="btn btn-outline-dark" disabled>Add to cart</button>
                 </ng-template>
