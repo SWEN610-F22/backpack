@@ -103,9 +103,14 @@ public class CartController {
         LOG.info("GET /cart/decrease " + cartItem);
         try {
             CartItem decreasedCart = cartDao.decrease(cartItem.getProductId(), cartItem.getUserId());
-            UserCartHelper cartHelper = new UserCartHelper(productDAO);
-            Product product = cartHelper.convertCartItem(decreasedCart);
-            return new ResponseEntity<Product>(product, HttpStatus.OK);
+            if(decreasedCart!=null){
+                UserCartHelper cartHelper = new UserCartHelper(productDAO);
+                Product product = cartHelper.convertCartItem(decreasedCart);
+                return new ResponseEntity<Product>(product, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Product>(new Product(0,"","",0,0,"",""), HttpStatus.OK);
+            }
+            
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -126,9 +131,11 @@ public class CartController {
     public ResponseEntity<Product> increase(@RequestBody CartItem cartItem) {
         LOG.info("PUT /cart/increase " + cartItem);
         try {
-            CartItem increasedCart = cartDao.increase(cartItem.getProductId(), cartItem.getUserId());
+            Product product = productDAO.getProduct(cartItem.getProductId());
+            int maxLimit = product.getQuantity();
+            CartItem increasedCart = cartDao.increase(cartItem.getProductId(), cartItem.getUserId(), maxLimit);
             UserCartHelper cartHelper = new UserCartHelper(productDAO);
-            Product product = cartHelper.convertCartItem(increasedCart);
+            product = cartHelper.convertCartItem(increasedCart);
             return new ResponseEntity<Product>(product, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
@@ -150,7 +157,21 @@ public class CartController {
     public ResponseEntity<Product> addToCart(@RequestBody CartItem cartItem) {
         LOG.info("POST /cart " + cartItem);
         try {
-            CartItem createdCartItem = cartDao.addToCart(cartItem);
+            CartItem existingItem = cartDao.getProductInUserCart(cartItem.getProductId(), cartItem.getUserId());
+            CartItem createdCartItem;
+            if(existingItem == null){
+                System.out.println("Cart Item does not exist");
+                createdCartItem = cartDao.addToCart(cartItem);
+            } else {
+                System.out.println("Cart Item exists");
+                System.out.println(existingItem);
+                Product product = productDAO.getProduct(cartItem.getProductId());
+                System.out.println(product);
+                int maxLimit = product.getQuantity();
+                System.out.println("maxLimit:"+maxLimit);
+                createdCartItem = cartDao.increase(cartItem.getProductId(), cartItem.getUserId(), maxLimit);
+            }
+        
             UserCartHelper cartHelper = new UserCartHelper(productDAO);
             Product product = cartHelper.convertCartItem(createdCartItem);
             return new ResponseEntity<Product>(product, HttpStatus.CREATED);
@@ -200,4 +221,26 @@ public class CartController {
     }
 
 
+    @GetMapping("checkout/{userId}")
+    public ResponseEntity<Boolean> checkout(@PathVariable int userId) {
+        LOG.info("GET /checkout/"+userId);
+        try {
+            Integer[] cartIds = cartDao.getIdsForClearing(userId);
+            for(int i=0;i<cartIds.length;i++){
+                Product thisProduct = productDAO.getProduct(cartIds[i]);
+                thisProduct.setQuantity(thisProduct.getQuantity()-cartDao.getQuantity(userId, thisProduct.getId()));
+                productDAO.updateProduct(thisProduct);
+            }
+            boolean isSuccessful = cartDao.clearUserCart(userId);
+            if(isSuccessful){
+                return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
+            }
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

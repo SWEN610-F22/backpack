@@ -58,7 +58,11 @@ public class CartFileDAO implements CartDAO {
 
     @Override
     public CartItem[] getCartForUser(int userId) throws IOException {
-        return cart.get(userId).toArray(new CartItem[0]);
+        ArrayList<CartItem> items= cart.get(userId);
+        if(items == null){
+            return null;
+        }
+        return items.toArray(new CartItem[0]);
     }
 
     @Override
@@ -68,13 +72,7 @@ public class CartFileDAO implements CartDAO {
 
     @Override
     public CartItem addToCart(CartItem cartItem) throws IOException {
-        CartItem itemInCart = getProductInUserCart(cartItem.getProductId(), cartItem.getUserId());
-        CartItem createdCartItem;
-        if (itemInCart == null) {
-            createdCartItem = addItemToCart(cartItem);
-        } else {
-            createdCartItem = increase(cartItem.getProductId(), cartItem.getUserId());
-        }
+        CartItem createdCartItem = addItemToCart(cartItem);
         save();
         return createdCartItem;
     }
@@ -85,7 +83,7 @@ public class CartFileDAO implements CartDAO {
         return true;
     }
 
-    private CartItem getProductInUserCart(int productId, int userId) throws IOException {
+    public CartItem getProductInUserCart(int productId, int userId) throws IOException {
         if (userCartExists(userId)) {
             CartItem[] userCart = getCartForUser(userId);
             for (CartItem cartItem : userCart) {
@@ -102,32 +100,56 @@ public class CartFileDAO implements CartDAO {
     }
 
     @Override
-    public CartItem increase(int productId, int userId) throws IOException {
-        return updateCartItemQuantity(productId, userId, +1);
-    }
-
-    @Override
-    public CartItem decrease(int productId, int userId) throws IOException {
-        return updateCartItemQuantity(productId, userId, -1);
-    }
-
-    private CartItem updateCartItemQuantity(int productId, int userId, int updateBy) throws IOException {
+    public CartItem increase(int productId, int userId, int maxLimit) throws IOException {
         CartItem item = getProductInUserCart(productId, userId);
         if (item == null) {
             return null;
         }
-        item.setQuantity(item.getQuantity() + updateBy);
+        
+        int newQuantity = item.getQuantity() + 1;
+        System.out.println("new Quantity: "+newQuantity);
+        if(newQuantity > maxLimit){
+            return item;
+        }
+        item.setQuantity(newQuantity);
         save();
         return item;
     }
 
     @Override
+    public CartItem decrease(int productId, int userId) throws IOException {
+        CartItem item = getProductInUserCart(productId, userId);
+        System.out.println(item);
+        if (item == null) {
+            return null;
+        }
+        int newQuantity = item.getQuantity() -1 ;
+        System.out.println(newQuantity);
+        if(newQuantity<=0){
+            System.out.println("Quantity <= 0");
+            clearItem(productId, userId);
+            item = null;
+        } else {
+            System.out.println("Normal Decrease");
+            item.setQuantity(newQuantity);
+        }
+        save();
+        return item;
+    }
+
+
+    @Override
     public boolean clearItem(int productId, int userId) throws IOException {
+        System.out.println("Clear Item function");
         if (userCartExists(userId)) {
+            System.out.println("User Cart Exists");
             ArrayList<CartItem> items = cart.get(userId);
+            System.out.println(items);
             for (CartItem item : items) {
                 if (item.getProductId() == productId) {
+                    System.out.println("Item found:"+item);
                     items.remove(item);
+                    System.out.println(items);
                     save();
                     return true;
                 }
@@ -137,10 +159,35 @@ public class CartFileDAO implements CartDAO {
     }
 
     @Override
-    public void clearUserCart(int userId) throws IOException {
+    public boolean clearUserCart(int userId) throws IOException {
         if(userCartExists(userId)){
             cart.remove(userId);
+            save();
+            return true;
+        } else {
+            return false;
         }
+    }
+
+    @Override
+    public Integer[] getIdsForClearing(int userId) throws IOException{
+        ArrayList<Integer> productIds = new ArrayList<>();
+        CartItem[] items = getCartForUser(userId);
+        for(CartItem cartItem: items){
+            productIds.add(cartItem.getProductId());
+        }
+        return productIds.toArray(new Integer[0]);
+    }
+
+    @Override
+    public int getQuantity(int userId, int productId) throws IOException{
+        CartItem[] items = getCartForUser(userId);
+        for(CartItem cartItem: items){
+            if(productId == cartItem.getProductId()){
+                return cartItem.getQuantity();
+            }
+        }
+        return 0;
     }
 
 }

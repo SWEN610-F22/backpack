@@ -18,27 +18,28 @@ public class UserCartHelper {
         this.productDao = productDAO;
     }
 
-    public Product[] convertCart(CartItem[] items) throws IOException{ 
+    public Product[] convertCart(CartItem[] items) throws IOException {
         ArrayList<Product> cart = new ArrayList<>();
-        System.out.println(Arrays.toString(items));
-        for (CartItem cartItem : items) {
-            Product product = productDao.getProduct(cartItem.getProductId());
-            product.setQuantity(cartItem.getQuantity());
-            cart.add(product);
+        if (items != null) {
+
+            for (CartItem cartItem : items) {
+                Product product = productDao.getProduct(cartItem.getProductId());
+                Product newProduct = new Product(product.getId(), product.getName(), product.getDescription(),
+                        product.getPrice(), product.getQuantity(), product.getManufacturer(), product.getImageUrl());
+                newProduct.setQuantity(cartItem.getQuantity());
+                cart.add(newProduct);
+            }
         }
-        System.out.println("Products:"+cart);
         Product[] products = cart.toArray(new Product[0]);
-        System.out.println(Arrays.toString(products));
         return products;
     }
 
-    public Product convertCartItem(CartItem item) throws IOException{
+    public Product convertCartItem(CartItem item) throws IOException {
         Product product = productDao.getProduct(item.getProductId());
-        product.setQuantity(item.getQuantity());
-        return product;
+        Product newProduct = new Product(product.getId(), product.getName(), product.getDescription(),
+                product.getPrice(), product.getQuantity(), product.getManufacturer(), product.getImageUrl());
+        newProduct.setQuantity(item.getQuantity());
+        return newProduct;
     }
 
-
-
-    
 }

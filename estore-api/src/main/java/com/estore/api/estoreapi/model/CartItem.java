@@ -47,6 +47,19 @@ public class CartItem {
         return "CartItem [userId=" + userId + ", productId=" + productId + ", quantity=" + quantity + "]";
     }
 
+
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + userId;
+        result = prime * result + productId;
+        return result;
+    }
+
+
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -58,9 +71,12 @@ public class CartItem {
         CartItem other = (CartItem) obj;
         if (userId != other.userId)
             return false;
+        if (productId != other.productId)
+            return false;
         return true;
     }
 
+    
    
     
 }
