@@ -20,6 +20,7 @@ export class BackpackDetailComponent implements OnInit {
   user!:User;
   products:Product[] = [];
   loggedInId:number=0;
+  public isLoggedIn:boolean = false;
 
 
   constructor(private route: ActivatedRoute, private backpackService:BackpackService, private userService:UserService, private cartService:CartService, private router:Router, private userStore:UserStore) { }
@@ -37,6 +38,7 @@ export class BackpackDetailComponent implements OnInit {
       this.products = products;
     })
     this.userStore.getUserId().subscribe(id => this.loggedInId = Number(id));
+    this.userStore.isLoggedIn().subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
   }
 
   addToCart(){

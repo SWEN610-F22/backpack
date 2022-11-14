@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackPack } from 'src/app/models/backpack.model';
 import { BackpackService } from 'src/app/services/backpack.service';
+import { UserStore } from 'src/app/state/user.store';
 
 @Component({
   selector: 'app-view-backpacks',
@@ -9,10 +10,12 @@ import { BackpackService } from 'src/app/services/backpack.service';
 })
 export class ViewBackpacksComponent implements OnInit {
   backpacks:BackPack[] = [];
-  constructor(private backpackService:BackpackService) { }
+  public isLoggedIn:boolean = false;
+  constructor(private backpackService:BackpackService, private userStore:UserStore) { }
 
   ngOnInit(): void {
     this.backpackService.getBackpacks().subscribe((backpacks) => this.backpacks = backpacks);
+    this.userStore.isLoggedIn().subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
   }
 
   updateImages(): void{
