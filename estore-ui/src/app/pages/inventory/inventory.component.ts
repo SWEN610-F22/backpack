@@ -28,6 +28,12 @@ export class InventoryComponent implements OnInit {
     this.selectedProduct = product;
     this.dissapear = true;
   }
+
+  onDelete(product: Product) {
+    this.productService.deleteProduct(product).subscribe(() => (
+      this.products = this.products.filter((p) => p.id !== product.id)));
+   }
+
   onAdd(): void {
   
     this.addProduct = true;
@@ -42,7 +48,6 @@ export class InventoryComponent implements OnInit {
         console.log(err)
       }
     );
-  
   }
   onSave(product: Product): void {
     this.savedProduct = product;
