@@ -62,6 +62,13 @@ export class BackpackService {
     }
   }
 
+  searchBackpacks(containsText:string): Observable<BackPack[]>{
+    const endpoint = `${this.apiURL}?search=${containsText}`;
+    console.log(endpoint);
+    const backpacks =  this.httpClient.get<BackPack[]>(endpoint);
+    return backpacks;
+  }
+
   setBackPack(backpack: BackPack) {
     localStorage.setItem("backpack", JSON.stringify(backpack));
 

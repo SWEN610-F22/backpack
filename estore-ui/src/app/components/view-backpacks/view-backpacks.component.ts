@@ -22,6 +22,13 @@ export class ViewBackpacksComponent implements OnInit {
     this.userStore.isLoggedIn().subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
   }
 
+  searchBackpacks(searchString: string) {
+    this.backpackService.searchBackpacks(searchString).subscribe((backpacks) => {
+      console.log(backpacks);
+      this.backpacks = backpacks
+    });
+
+  }
   updateImages(): void{
     for(let i=0; i<this.backpacks.length; i++){
       if(this.backpacks[i].activity=="fishing" || this.backpacks[i].activity=="Fishing"){
