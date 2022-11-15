@@ -16,6 +16,7 @@ export class ViewBackpacksComponent implements OnInit {
   backpacks: BackPack[] = [];
   public isLoggedIn: boolean = false;
   loggedInUserId: number = 0;
+  public isAdminLoggedIn:boolean = false;
   constructor(private backpackService: BackpackService, private userStore: UserStore) { }
 
   ngOnInit(): void {
@@ -24,6 +25,7 @@ export class ViewBackpacksComponent implements OnInit {
     this.userStore.getUserId().subscribe((userId) => {
       this.loggedInUserId = userId != undefined ? userId : 0;
     });
+    this.userStore.isAdminLoggedIn().subscribe(isAdminLoggedIn => this.isAdminLoggedIn = isAdminLoggedIn)
   }
 
   searchBackpacks(searchString: string) {
