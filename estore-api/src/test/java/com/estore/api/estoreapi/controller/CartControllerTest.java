@@ -2,6 +2,7 @@ package com.estore.api.estoreapi.controller;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -61,6 +62,70 @@ public class CartControllerTest {
 
     assertEquals(HttpStatus.OK,response.getStatusCode());
     assertArrayEquals(productArray,response.getBody());
+   }
+
+   @Test
+   void testDecrease() throws IOException{
+    CartItem[] array = new CartItem[1];
+    CartItem item = new CartItem(1, 2, 2);
+    array[0] = item;
+    Product product = new Product(2, "Fishing rod", "Can be used for fishing", 35.0, 10, "fish", "http://www.google.com");
+    
+    when(mockCartDAO.decrease(2,1)).thenReturn(item);
+    when(mockProductDAO.getProduct(2)).thenReturn(product);
+    ResponseEntity<Product> response = cartController.decrease(item);
+    product.setQuantity(3);
+
+    assertEquals(HttpStatus.OK,response.getStatusCode());
+    assertEquals(product,response.getBody());
+   }
+
+   @Test
+   void testIncrease() throws IOException{
+    CartItem[] array = new CartItem[1];
+    CartItem item = new CartItem(1, 2, 3);
+    array[0] = item;
+    Product product = new Product(2, "Fishing rod", "Can be used for fishing", 35.0, 10, "fish", "http://www.google.com");
+    
+    when(mockCartDAO.increase(2,1,10)).thenReturn(item);
+    when(mockProductDAO.getProduct(2)).thenReturn(product);
+    ResponseEntity<Product> response = cartController.increase(item);
+    product.setQuantity(3);
+
+    assertEquals(HttpStatus.OK,response.getStatusCode());
+    assertEquals(product,response.getBody());
+   }
+
+   @Test
+   void testClearItem() throws IOException{
+    CartItem[] array = new CartItem[0];
+    CartItem item = new CartItem(1, 2, 3);
+   
+    Product product = new Product(2, "Fishing rod", "Can be used for fishing", 35.0, 10, "fish", "http://www.google.com");
+    
+    when(mockCartDAO.getCartForUser(1)).thenReturn(array);
+    when(mockProductDAO.getProduct(2)).thenReturn(product);
+    when(mockCartDAO.clearItem(2,1)).thenReturn(true);
+    ResponseEntity<Product[]> response = cartController.clearItem(item);
+    product.setQuantity(3);
+    Product[] productArray = new Product[0];
+
+    assertEquals(HttpStatus.OK,response.getStatusCode());
+    assertArrayEquals(productArray,response.getBody());
+   }
+
+   @Test
+   void testDeleteUserCart() throws IOException{
+    when(mockCartDAO.clearUserCart(1)).thenReturn(true);
+    ResponseEntity<Boolean> response= cartController.deleteUserCart(1);
+    assertTrue(response.getBody());
+   }
+
+   @Test
+   public void testDeleteUserCartWithException() throws Exception {
+       doThrow(new IOException()).when(mockCartDAO).clearUserCart(10);
+       ResponseEntity<Boolean> response= cartController.deleteUserCart(10);
+       assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
    }
 
 
