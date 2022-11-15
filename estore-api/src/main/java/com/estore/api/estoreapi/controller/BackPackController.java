@@ -51,14 +51,14 @@ public class BackPackController {
      */
 
     @GetMapping("")
-    public ResponseEntity<BackPack[]> getBackPacks(@RequestParam(required = false) String location) {
+    public ResponseEntity<BackPack[]> getBackPacks(@RequestParam(required = false) String search) {
 
         try {
             BackPack[] backpacks;
-            if (location == null) {
+            if (search == null) {
                 backpacks = backpackDao.getBackPacks();
             } else {
-                backpacks = backpackDao.findBackPacks(location);
+                backpacks = backpackDao.findBackPacks(search);
             }
             return new ResponseEntity<BackPack[]>(backpacks, HttpStatus.OK);
         } catch (IOException e) {
