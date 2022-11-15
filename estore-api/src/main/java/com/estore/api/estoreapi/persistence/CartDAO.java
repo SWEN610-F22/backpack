@@ -18,12 +18,6 @@ public interface CartDAO {
 
     CartItem[] getCartForUser(int userId) throws IOException;
 
-    /**
-     * Checks if cart is empty
-     * 
-     * @return true if cart is empty, false otherwise
-     */
-    boolean isCartEmpty();
 
     /**
      * Adds and saves a {@linkplain CartItem cartItem}

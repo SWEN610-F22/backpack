@@ -66,12 +66,5 @@ public interface ProductDAO {
      */
     boolean deleteProduct(int id) throws IOException;
 
-    /**
-     * Retrieves the cart full of {@linkplain Product products} for a user with the given user id
-     * @param cartItems The {@link CartItem cartItem} with user id, product id and quantities of products.
-     * @param userId The id of the {@link User user}
-     * @return An array of {@link Product products} objects, may be empty
-     */
-    Product[] getCart(CartItem[] cartItems, int userId);
 }
 

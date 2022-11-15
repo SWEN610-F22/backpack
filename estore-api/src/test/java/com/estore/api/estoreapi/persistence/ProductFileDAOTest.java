@@ -44,7 +44,6 @@ public class ProductFileDAOTest {
     @Test
     void getProducts() {
         Product[] products = productFileDAO.getProducts();
-        assertEquals(products.length, products.length);
         for (int i = 0; i < testProducts.length; i++) {
             assertEquals(testProducts[i], products[i]);
         }

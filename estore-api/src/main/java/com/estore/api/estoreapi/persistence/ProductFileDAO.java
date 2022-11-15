@@ -154,25 +154,5 @@ public class ProductFileDAO implements ProductDAO {
         }
     }
 
-    @Override
-    public Product[] getCart(CartItem[] cartItems, int userId){
-        ArrayList<Product> cart = new ArrayList<>();
-        for (CartItem item : cartItems) {
-            if (item.getUserId()==userId) {
-                Product product = getProduct(item.getProductId());
-                if(product!=null){
-                    Product newProduct = new Product(product.getId(), product.getName(), product.getDescription(),
-                                                    product.getPrice(), item.getQuantity(), product.getManufacturer(),
-                                                    product.getManufacturer());
-                    //product.setQuantity(item.getQuantity());
-                    cart.add(newProduct);
-                }
-            }
-        }
-        Product[] productArray = new Product[cart.size()];
-        cart.toArray(productArray);
-        return productArray;
-    }
-
 
 }

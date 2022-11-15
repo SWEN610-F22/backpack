@@ -72,8 +72,7 @@ public class BackPackControllerTest {
                 "this backpack is for those who want to go fishing at lake Onterio",
                 "Lake Onterio Rochester NewYork", "fishing", products);
         when(mockBackPackDAO.createBackPack(backpack)).thenReturn(backpack);
-        BackPack[] matching = new BackPack[0];
-        when(mockBackPackDAO.findBackPacks("zac")).thenReturn(matching);
+        when(mockBackPackDAO.findBackPacks("Lake Onterio fishing")).thenReturn(new BackPack[] {});
         ResponseEntity<BackPack> response = backpackController.createBackPack(backpack);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(backpack, response.getBody());
