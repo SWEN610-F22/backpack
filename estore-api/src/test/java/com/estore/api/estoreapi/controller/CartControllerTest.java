@@ -36,10 +36,31 @@ public class CartControllerTest {
     }
 
    @Test
-   void getAllCartItems(){
+   void getAllCartItems() throws IOException { 
     CartItem[] array = new CartItem[1];
     CartItem item = new CartItem(1, 2, 3);
+    array[0] = item;
     when(mockCartDAO.getCart()).thenReturn(array);
+    ResponseEntity<CartItem[]> response = cartController.getCart();
+    assertEquals(HttpStatus.OK,response.getStatusCode());
+    assertArrayEquals(array,response.getBody());
+   }
+
+   @Test
+   void getCartForUser() throws IOException{
+    CartItem[] array = new CartItem[1];
+    CartItem item = new CartItem(1, 2, 3);
+    array[0] = item;
+    Product product = new Product(2, "Fishing rod", "Can be used for fishing", 35.0, 10, "fish", "http://www.google.com");
+    
+    when(mockCartDAO.getCartForUser(1)).thenReturn(array);
+    when(mockProductDAO.getProduct(2)).thenReturn(product);
+    ResponseEntity<Product[]> response = cartController.getCartForUser(1);
+    product.setQuantity(3);
+    Product[] productArray = new Product[] {product};
+
+    assertEquals(HttpStatus.OK,response.getStatusCode());
+    assertArrayEquals(productArray,response.getBody());
    }
 
 }
