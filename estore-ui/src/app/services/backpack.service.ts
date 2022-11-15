@@ -46,6 +46,7 @@ export class BackpackService {
     )
   }
 
+
   getBackPacksMatchingLocation(location: string): Observable<BackPack[]> {
     const endpoint = `${this.apiURL}?location=${location}`
     const backpacks = this.httpClient.get<BackPack[]>(this.apiURL);
@@ -81,8 +82,10 @@ export class BackpackService {
     return this.httpClient.get<Product[]>(endpoint);
   }
 
-
+  deleteBackpack(backpack: BackPack): Observable<BackPack[]>{
+    const url = `${this.apiURL}/${backpack.id}`;
+    return this.httpClient.delete<BackPack[]>(url)
+  }
 
 
 }
-
