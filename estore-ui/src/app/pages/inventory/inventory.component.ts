@@ -25,17 +25,21 @@ export class InventoryComponent implements OnInit {
     this.selectedProduct = product;
     this.dissapear = true;
   }
-  onDelete(product: Product): void {
-    this.productService.deleteProduct().subscribe(
-      (resp) => {
-        console.log(resp);
-        this.productService.getProducts
-      },
-      (err) => {
-        console.log(err)
-      }
-    );
-  
+  onDelete(product: Product) {
+    this.productService.deleteProduct(product).subscribe(() => (
+      this.products = this.products.filter((p) => p.id !== product.id)));
+    // this.productService.deleteProduct().subscribe(
+    //   (resp) => {
+    //     console.log(resp);
+    //     this.productService.getProducts
+    //   },
+    //   (err) => {
+    //     console.log(err)
+    //   }
+
+    // );
+
+
   }
   onSave(product: Product): void {
     this.savedProduct = product;
