@@ -38,17 +38,7 @@ export class InventoryComponent implements OnInit {
   
     this.addProduct = true;
   }
-  onDelete(product: Product): void {
-    this.productService.deleteProduct().subscribe(
-      (resp) => {
-        console.log(resp);
-        this.productService.getProducts
-      },
-      (err) => {
-        console.log(err)
-      }
-    );
-  }
+  
   onSave(product: Product): void {
     this.savedProduct = product;
     this.productService.updateProduct(this.savedProduct).subscribe((updatedProducts) => {
@@ -62,6 +52,9 @@ export class InventoryComponent implements OnInit {
     
     this.productService.createProduct(this.newProduct).subscribe((product) => {
       console.log(product);
+      this.productService.getProducts().subscribe(products =>{
+        this.products = products;
+      })
     });
     this.addProduct = false;
   }
