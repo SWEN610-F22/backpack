@@ -60,14 +60,9 @@ public class CartFileDAO implements CartDAO {
     public CartItem[] getCartForUser(int userId) throws IOException {
         ArrayList<CartItem> items= cart.get(userId);
         if(items == null){
-            return null;
+            return new CartItem[] {};
         }
         return items.toArray(new CartItem[0]);
-    }
-
-    @Override
-    public boolean isCartEmpty() {
-        return cart.size() == 0;
     }
 
     @Override
@@ -105,9 +100,7 @@ public class CartFileDAO implements CartDAO {
         if (item == null) {
             return null;
         }
-        
         int newQuantity = item.getQuantity() + 1;
-        System.out.println("new Quantity: "+newQuantity);
         if(newQuantity > maxLimit){
             return item;
         }
@@ -119,18 +112,14 @@ public class CartFileDAO implements CartDAO {
     @Override
     public CartItem decrease(int productId, int userId) throws IOException {
         CartItem item = getProductInUserCart(productId, userId);
-        System.out.println(item);
         if (item == null) {
             return null;
         }
         int newQuantity = item.getQuantity() -1 ;
-        System.out.println(newQuantity);
         if(newQuantity<=0){
-            System.out.println("Quantity <= 0");
             clearItem(productId, userId);
             item = null;
         } else {
-            System.out.println("Normal Decrease");
             item.setQuantity(newQuantity);
         }
         save();
@@ -140,16 +129,11 @@ public class CartFileDAO implements CartDAO {
 
     @Override
     public boolean clearItem(int productId, int userId) throws IOException {
-        System.out.println("Clear Item function");
         if (userCartExists(userId)) {
-            System.out.println("User Cart Exists");
             ArrayList<CartItem> items = cart.get(userId);
-            System.out.println(items);
             for (CartItem item : items) {
                 if (item.getProductId() == productId) {
-                    System.out.println("Item found:"+item);
                     items.remove(item);
-                    System.out.println(items);
                     save();
                     return true;
                 }

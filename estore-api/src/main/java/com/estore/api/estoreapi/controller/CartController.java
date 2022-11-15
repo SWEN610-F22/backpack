@@ -21,9 +21,7 @@ import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.helper.UserCartHelper;
 import com.estore.api.estoreapi.model.CartItem;
 import com.estore.api.estoreapi.persistence.ProductDAO;
-import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.model.User;
-import com.estore.api.estoreapi.model.UserCart;
 import com.estore.api.estoreapi.persistence.CartDAO;
 
 @RestController
@@ -32,12 +30,10 @@ public class CartController {
     private static final Logger LOG = Logger.getLogger(CartController.class.getName());
     private CartDAO cartDao;
     private ProductDAO productDAO;
-    private UserDAO userDAO;
 
-    public CartController(CartDAO cartdao, ProductDAO productDao, UserDAO userDAO) {
+    public CartController(CartDAO cartdao, ProductDAO productDao) {
         this.cartDao = cartdao;
         this.productDAO = productDao;
-        this.userDAO = userDAO;
     }
 
     /**

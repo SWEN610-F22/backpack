@@ -7,7 +7,6 @@ import java.util.Arrays;
 import com.estore.api.estoreapi.model.CartItem;
 import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.model.User;
-import com.estore.api.estoreapi.model.UserCart;
 import com.estore.api.estoreapi.persistence.ProductDAO;
 import com.estore.api.estoreapi.persistence.UserDAO;
 

@@ -45,7 +45,6 @@ public class UserFileDAOTest {
     @Test
     void getUsers() {
         User[] users = userFileDAO.getUsers();
-        assertEquals(users.length, users.length);
         for (int i = 0; i < testUsers.length; i++) {
             assertEquals(testUsers[i], users[i]);
         }
