@@ -40,7 +40,7 @@ public class BackPackFileDAO implements BackPackDAO {
 
     /**
      * Generates the next id for a new {@linkplain BackPack backpack}
-     * 
+     *
      * @return The next id
      */
     private synchronized static int nextId() {
@@ -53,7 +53,7 @@ public class BackPackFileDAO implements BackPackDAO {
         ArrayList<BackPack> backpacksList = new ArrayList<>();
 
         for (BackPack backpack : backpacks.values()) {
-            if (containsText == null || backpack.getName().toLowerCase().contains(containsText.toLowerCase())) {
+            if (containsText == null || backpack.getName().toLowerCase().contains(containsText.toLowerCase()) || backpack.getActivity().toLowerCase().contains(containsText.toLowerCase()) || backpack.getLocation().toLowerCase().contains(containsText.toLowerCase())) {
                 backpacksList.add(backpack);
             }
 
@@ -86,7 +86,7 @@ public class BackPackFileDAO implements BackPackDAO {
 
     /**
      * Finds all users with name matching the string in containsText
-     * 
+     *
      * @param containsText string to be matched against
      * @return BackPack[] array that matches the search text
      */
@@ -99,7 +99,7 @@ public class BackPackFileDAO implements BackPackDAO {
 
     /**
      * Returns the user with the specific id
-     * 
+     *
      * @param id The id of the {@link BackPack backpack} to get
      *
      * @return User with the specific id
@@ -127,7 +127,7 @@ public class BackPackFileDAO implements BackPackDAO {
      * Saves the {@linkplain BackPack backpacks} from the map into the file as an
      * array of
      * JSON objects
-     * 
+     *
      * @return true if the {@link BackPack backpacks} were written successfully
      * @throws IOException when file cannot be accessed or written to
      */

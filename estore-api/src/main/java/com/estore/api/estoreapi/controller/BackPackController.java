@@ -39,11 +39,9 @@ public class BackPackController {
      * Responds to the GET request for all {@linkplain BackPack backpacks} whose
      * name
      * contains the text in name. If text is empty, returns all products.
-     * 
-     * @param location The location parameter which contains the text used to find
-     *                 the
-     *                 {@link BackPack backpacks}
-     * 
+     *
+     *
+     *
      * @return ResponseEntity with array of {@link BackPack backpack} objects (may
      *         be
      *         empty) and HTTP status of OK.
@@ -51,14 +49,14 @@ public class BackPackController {
      */
 
     @GetMapping("")
-    public ResponseEntity<BackPack[]> getBackPacks(@RequestParam(required = false) String location) {
+    public ResponseEntity<BackPack[]> getBackPacks(@RequestParam(required = false) String search) {
 
         try {
             BackPack[] backpacks;
-            if (location == null) {
+            if (search == null) {
                 backpacks = backpackDao.getBackPacks();
             } else {
-                backpacks = backpackDao.findBackPacks(location);
+                backpacks = backpackDao.findBackPacks(search);
             }
             return new ResponseEntity<BackPack[]>(backpacks, HttpStatus.OK);
         } catch (IOException e) {
@@ -152,10 +150,9 @@ public class BackPackController {
     }
 
     /**
-     * Deletes a {@linkplain Backpack backpack} with the given id
-     * 
+     *
      * @param id The id of the {@link BackPack backpack} to deleted
-     * 
+     *
      * @return ResponseEntity HTTP status of OK if deleted<br>
      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
