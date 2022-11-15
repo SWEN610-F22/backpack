@@ -1,6 +1,7 @@
 package com.estore.api.estoreapi.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,27 +19,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.estore.api.estoreapi.model.BackPack;
+import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.persistence.BackPackDAO;
+import com.estore.api.estoreapi.persistence.ProductDAO;
 
 @RestController
 @RequestMapping("backpack")
 public class BackPackController {
     private static final Logger LOG = Logger.getLogger(BackPackController.class.getName());
     private BackPackDAO backpackDao;
+    private ProductDAO productDao;
 
-    public BackPackController(BackPackDAO backpackDao) {
+    public BackPackController(BackPackDAO backpackDao, ProductDAO productDAO) {
         this.backpackDao = backpackDao;
+        this.productDao = productDAO;
     }
 
     /**
      * Responds to the GET request for all {@linkplain BackPack backpacks} whose
      * name
      * contains the text in name. If text is empty, returns all products.
-     * 
-     * @param locationOrActivity The location or activity parameter which contains the text used to find
-     *                 the
-     *                 {@link BackPack backpacks}
-     * 
+     *
+     *
+     *
      * @return ResponseEntity with array of {@link BackPack backpack} objects (may
      *         be
      *         empty) and HTTP status of OK.
@@ -46,14 +49,14 @@ public class BackPackController {
      */
 
     @GetMapping("")
-    public ResponseEntity<BackPack[]> getBackPacks(@RequestParam(required = false) String locationOrActivity) {
+    public ResponseEntity<BackPack[]> getBackPacks(@RequestParam(required = false) String search) {
 
         try {
             BackPack[] backpacks;
-            if (locationOrActivity == null) {
+            if (search == null) {
                 backpacks = backpackDao.getBackPacks();
             } else {
-                backpacks = backpackDao.findBackPacks(locationOrActivity);
+                backpacks = backpackDao.findBackPacks(search);
             }
             return new ResponseEntity<BackPack[]>(backpacks, HttpStatus.OK);
         } catch (IOException e) {
@@ -83,6 +86,28 @@ public class BackPackController {
             BackPack backpack = backpackDao.getBackPack(id);
             if (backpack != null)
                 return new ResponseEntity<BackPack>(backpack, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("products/{id}")
+    public ResponseEntity<Product[]> getProductsInBackPack(@PathVariable int id){
+        LOG.info("GET /backpack/products/" + id);
+        try {
+            BackPack backpack = backpackDao.getBackPack(id);
+            if (backpack != null){
+                ArrayList<Product> products = new ArrayList<>();
+                for (int productId : backpack.getProductId()) {
+                    Product product = productDao.getProduct(productId);
+                    products.add(product);
+                }
+                Product[] productsArray = products.toArray(new Product[0]);
+                return new ResponseEntity<Product[]>(productsArray, HttpStatus.OK);
+            }
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
@@ -125,10 +150,9 @@ public class BackPackController {
     }
 
     /**
-     * Deletes a backpack with the given id
-     * 
+     *
      * @param id The id of the {@link BackPack backpack} to deleted
-     * 
+     *
      * @return ResponseEntity HTTP status of OK if deleted<br>
      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
