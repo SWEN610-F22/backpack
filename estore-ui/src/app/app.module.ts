@@ -24,7 +24,6 @@ import { ViewBackpacksComponent } from './components/view-backpacks/view-backpac
 import { ViewBackpacksPageComponent } from './pages/view-backpacks-page/view-backpacks-page.component';
 import { SearchBackpacksBarComponent } from './components/search-backpacks-bar/search-backpacks-bar.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
