@@ -59,11 +59,13 @@ public class ProductController {
     }
 
     /**
-     * Responds to the GET request for a {@linkplain Product product} for the given id
+     * Responds to the GET request for a {@linkplain Product product} for the given
+     * id
      *
      * @param id The id used to locate the {@link Product product}
      *
-     * @return ResponseEntity with {@link Product product} object and HTTP status of OK if
+     * @return ResponseEntity with {@link Product product} object and HTTP status of
+     *         OK if
      *         found<br>
      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
@@ -83,7 +85,6 @@ public class ProductController {
         }
     }
 
-
     @PutMapping("")
     public ResponseEntity<Product[]> updateProduct(@RequestBody Product product) {
         LOG.info("PUT /product " + product);
@@ -92,8 +93,7 @@ public class ProductController {
             Product newProduct = productDao.updateProduct(product);
             if (newProduct != null) {
                 return new ResponseEntity<>(productDao.getProducts(), HttpStatus.OK);
-            }
-            else
+            } else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
@@ -119,27 +119,28 @@ public class ProductController {
     }
 
     // @DeleteMapping("")
-    // public ResponseEntity<Product[]> deleteProducts(@RequestParam(required = false) String name) {
-    //     try {
-    //         Product[] products;
-    //         if (name == null) {
-    //             products = productDao.getProducts();
-    //             System.out.println("no products deleted");
-    //         } else {
-    //             products = productDao.findProducts(name);
-    //             List<Product> list = Arrays.asList(products);
-    //             for (Product p : list) {
-    //                 if (p.getName() == name) {
-    //                     list.remove(p);
-    //                 }
-    //             }
-    //             products = (Product[]) list.toArray();
-    //         }
-    //         return new ResponseEntity<Product[]>(products, HttpStatus.OK);
-    //     } catch (IOException e) {
-    //         LOG.log(Level.SEVERE, e.getLocalizedMessage());
-    //         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    //     }
+    // public ResponseEntity<Product[]> deleteProducts(@RequestParam(required =
+    // false) String name) {
+    // try {
+    // Product[] products;
+    // if (name == null) {
+    // products = productDao.getProducts();
+    // System.out.println("no products deleted");
+    // } else {
+    // products = productDao.findProducts(name);
+    // List<Product> list = Arrays.asList(products);
+    // for (Product p : list) {
+    // if (p.getName() == name) {
+    // list.remove(p);
+    // }
+    // }
+    // products = (Product[]) list.toArray();
+    // }
+    // return new ResponseEntity<Product[]>(products, HttpStatus.OK);
+    // } catch (IOException e) {
+    // LOG.log(Level.SEVERE, e.getLocalizedMessage());
+    // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    // }
 
     // }
 
