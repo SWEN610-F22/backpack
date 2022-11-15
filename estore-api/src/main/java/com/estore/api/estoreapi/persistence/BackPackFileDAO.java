@@ -53,7 +53,7 @@ public class BackPackFileDAO implements BackPackDAO {
         ArrayList<BackPack> backpacksList = new ArrayList<>();
 
         for (BackPack backpack : backpacks.values()) {
-            if (containsText == null || backpack.getName().toLowerCase().contains(containsText.toLowerCase())) {
+            if (containsText == null || backpack.getName().toLowerCase().contains(containsText.toLowerCase()) || backpack.getActivity().toLowerCase().contains(containsText.toLowerCase()) || backpack.getLocation().toLowerCase().contains(containsText.toLowerCase())) {
                 backpacksList.add(backpack);
             }
 
