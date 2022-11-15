@@ -3,12 +3,16 @@ import { BackPack } from 'src/app/models/backpack.model';
 import { BackpackService } from 'src/app/services/backpack.service';
 import { UserStore } from 'src/app/state/user.store';
 
+
+
+
 @Component({
   selector: 'app-view-backpacks',
   templateUrl: './view-backpacks.component.html',
   styleUrls: ['./view-backpacks.component.scss']
 })
 export class ViewBackpacksComponent implements OnInit {
+  
   backpacks:BackPack[] = [];
   public isLoggedIn:boolean = false;
   constructor(private backpackService:BackpackService, private userStore:UserStore) { }
@@ -33,4 +37,9 @@ export class ViewBackpacksComponent implements OnInit {
     }
   }
 
+  onDelete(backpack: BackPack) {
+    this.backpackService.deleteBackpack(backpack).subscribe(() => (
+      this.backpacks = this.backpacks.filter((b) => b.id !== backpack.id)));
+
+}
 }
