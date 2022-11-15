@@ -33,7 +33,7 @@ public interface BackPackDAO {
     /**
      * Creates and saves a {@linkplain BackPack backpack}
      * 
-     * @param user {@linkplain BackPack backpack} object to be created and saved.
+     * @param  {@linkplain BackPack backpack} object to be created and saved.
      *             The id of the user object is ignored and a new unique id is
      *             assigned.
      * @return new {@link BackPack backpack} if successful, false otherwise.
