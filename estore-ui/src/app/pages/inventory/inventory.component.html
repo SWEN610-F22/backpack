@@ -1,7 +1,16 @@
 <div class="container-fluid">
     <h2 class="my-2">INVENTORY</h2>
     <div class="row">
+        <div>
+            <button  type="button" (click)="onAdd()"
+                class="btn btn-warning btn-sm me-2">
+                <span>Add new Product</span>
+            </button>
+        
+        </div>
+        
         <div class="col-md-6 list-section">
+
             <table class="table table-responsive">
                 <thead>
                   <tr>
@@ -61,6 +70,45 @@
                     </button>
                 </div>
               </div>
+
+
+
+
+            <div *ngIf="addProduct">
+                <form #UserRegistrationForm="ngForm">
+                <div class="mb-3">
+                    <label for="product-name" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" id="product-name" #name="ngModel" [(ngModel)]="newProduct.name" required name="name">
+                </div>
+                <div class="mb-3">
+                    <label for="product-description" class="form-label">Description</label>
+                    <textarea class="form-control" id="product-description" rows="3" #description="ngModel" [(ngModel)]="newProduct.description" required name="description"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="product-price" class="form-label">Price</label>
+                    <input type="text" class="form-control" id="product-price" #price="ngModel" [(ngModel)]="newProduct.price" required name="price">
+                </div>
+                <div class="mb-3">
+                    <label for="product-quantity" class="form-label">Quantity</label>
+                    <input type="text" class="form-control" id="product-quantity" #quantity="ngModel" [(ngModel)]="newProduct.quantity" required name="quantity">
+                </div>
+                <div class="mb-3">
+                    <label for="product-manufacturer" class="form-label">Manufacturer</label>
+                    <input type="text" class="form-control" id="product-manufacturer" #manufacturer="ngModel" [(ngModel)]="newProduct.manufacturer" required name="manufacturer">
+                </div>
+                <div class="mb-3">
+                    <label for="product-imageUrl" class="form-label">ImageUrl</label>
+                    <input type="text" class="form-control" id="product-imageUrl" #imageUrl="ngModel" [(ngModel)]="newProduct. imageUrl" required name="imageUrl">
+                </div>
+                <div class="d-grid">
+                    <button class="btn btn-dark" type="submit" [disabled]="!UserRegistrationForm.valid" (click)="submitData()">
+                        Save
+                    </button>
+                </div>
+                </form>
+            </div>
+
+
         </div>
     </div>
 </div>

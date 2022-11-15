@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/models/Product';
+import {Product2} from '../../models/product.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-inventory',
@@ -12,7 +14,8 @@ export class InventoryComponent implements OnInit {
   selectedProduct?: Product;
   savedProduct?: Product;
   dissapear = true;
-  
+  addProduct = false;
+  newProduct:Product2 = new Product2;
 
   constructor(private productService: ProductService) { }
 
@@ -24,6 +27,10 @@ export class InventoryComponent implements OnInit {
   onEdit(product: Product): void {
     this.selectedProduct = product;
     this.dissapear = true;
+  }
+  onAdd(): void {
+  
+    this.addProduct = true;
   }
   onDelete(product: Product): void {
     this.productService.deleteProduct().subscribe(
@@ -44,6 +51,14 @@ export class InventoryComponent implements OnInit {
     });
     this.dissapear = false;
      
+  }
+
+  submitData() {
+    
+    this.productService.createProduct(this.newProduct).subscribe((product) => {
+      console.log(product);
+    });
+    this.addProduct = false;
   }
 
  

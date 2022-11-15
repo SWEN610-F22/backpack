@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable} from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Product } from '../models/Product';
+import {Product2} from '../models/product.model';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
@@ -40,5 +41,27 @@ export class ProductService {
   deleteProduct(): Observable<Product[]>{
     return this.httpClient.delete<Product[]>(this.apiUrl)
   }
+
+  createProduct(product: Product2): Observable<Product2> {
+    return this.httpClient.post<Product2>(this.apiUrl, product, httpOptions).pipe(
+      catchError(error => {
+        if (error.error instanceof ErrorEvent) {
+          console.log(`Error: ${error.error.message}`);
+        } else {
+          console.log(`Error: ${error.message}`);
+        }
+        return of({ "name": "",
+                    "description":"",
+                    "price":0,
+                     "quantity":0,
+                    "manufacturer":"",
+                    "imageUrl":""
+                   });
+      })
+    )
+  }
+
+
+
 }
 
