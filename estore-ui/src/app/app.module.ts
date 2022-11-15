@@ -22,6 +22,7 @@ import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.compo
 import { CreateBackPackComponent } from './pages/create-back-pack/create-back-pack.component';
 import { ViewBackpacksComponent } from './components/view-backpacks/view-backpacks.component';
 import { ViewBackpacksPageComponent } from './pages/view-backpacks-page/view-backpacks-page.component';
+import { AddInventoryComponent } from './components/add-inventory/add-inventory.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { ViewBackpacksPageComponent } from './pages/view-backpacks-page/view-bac
     CheckoutPageComponent,
     CreateBackPackComponent,
     ViewBackpacksComponent,
-    ViewBackpacksPageComponent
+    ViewBackpacksPageComponent,
+    AddInventoryComponent
 
   ],
   imports: [
