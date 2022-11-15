@@ -35,7 +35,7 @@ public class BackPackController {
      * name
      * contains the text in name. If text is empty, returns all products.
      * 
-     * @param location The location parameter which contains the text used to find
+     * @param locationOrActivity The location or activity parameter which contains the text used to find
      *                 the
      *                 {@link BackPack backpacks}
      * 
@@ -46,14 +46,14 @@ public class BackPackController {
      */
 
     @GetMapping("")
-    public ResponseEntity<BackPack[]> getBackPacks(@RequestParam(required = false) String location) {
+    public ResponseEntity<BackPack[]> getBackPacks(@RequestParam(required = false) String locationOrActivity) {
 
         try {
             BackPack[] backpacks;
-            if (location == null) {
+            if (locationOrActivity == null) {
                 backpacks = backpackDao.getBackPacks();
             } else {
-                backpacks = backpackDao.findBackPacks(location);
+                backpacks = backpackDao.findBackPacks(locationOrActivity);
             }
             return new ResponseEntity<BackPack[]>(backpacks, HttpStatus.OK);
         } catch (IOException e) {
@@ -125,7 +125,7 @@ public class BackPackController {
     }
 
     /**
-     * Deletes a {@linkplain Backpack backpack} with the given id
+     * Deletes a backpack with the given id
      * 
      * @param id The id of the {@link BackPack backpack} to deleted
      * 
