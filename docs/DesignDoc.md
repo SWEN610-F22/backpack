@@ -103,7 +103,7 @@ A Customer can create Sale. The Sale is an event which occurs after the customer
 
 Each sale will be saved in the purchase history after the payment is made (even if you have chosen the cash on delivery option). Purchase history is the collection of sales.
 
-![Domain Model](docs/Domain Model Final.pdf)
+![Domain Model](Domain-Model-Sprint4.jpeg)
 
 ## Architecture and Design
 
@@ -235,6 +235,8 @@ Admin:
 - The methods are the same as the ones described in the Controller classes above, but in their FileDao classes, the methods are defined to make changes in the database of the app (in our case local json files).
 - For eg, the createProduct() method, creates and adds a new product to the inventory database file - "products.json"
 
+![Class Diagram](Class-Diagram.jpeg)
+
 ### Static Code Analysis/Design Improvements
  - This section will be added once the code base is complete.
 =======
@@ -245,7 +247,7 @@ Admin:
 > Tier above._
 
 > _At appropriate places as part of this narrative provide one or more
-> static models (UML class diagrams) with some details such as critical attributes and methods._
+> static models (UML class diagrams) with some details such as critical attributes and methods.
 
 ### Static Code Analysis/Design Improvements
 
