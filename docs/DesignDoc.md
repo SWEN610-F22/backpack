@@ -126,7 +126,6 @@ Both the ViewModel and Model are built using Java and Spring Framework. Details 
 This section describes the web interface flow; this is how the user views and interacts
 with the e-store application.
 
-<<<<<<< HEAD
 The following are the web interface flows for a customer and an admin respectively:
 Customer: 
 1. Registered Customer: 
@@ -179,6 +178,8 @@ Admin:
   3. .ts file - which defines the dynamic functionality of the component page such as UI element interactions with the user and the app operations that follow.
   4. .spec.ts file- which are unit test files for the component source file.
 
+  ![Sequence Diagrams]()
+
 ### ViewModel Tier
 - It is implemented using the Spring framework.
 - The ViewModel tier of an application following the MVVM architecture design pattern is composed of the Controller class which provides the REST API services to manage frontend - backend interactions in the app.
@@ -189,29 +190,6 @@ Admin:
   3. updateProduct() - to edit an existing product in the inventory
   4. createProduct() - to add a new product to the inventory
   5. deleteProduct() - to delete a specific product from the inventory by providing the product id
-=======
-> _Provide a summary of the application's user interface. Describe, from
-> the user's perspective, the flow of the pages in the web application._
-
-### View Tier
-
-> _Provide a summary of the View Tier UI of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities. This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
-
-> _You must also provide sequence diagrams as is relevant to a particular aspects
-> of the design that you are describing. For example, in e-store you might create a
-> sequence diagram of a customer searching for an item and adding to their cart.
-> Be sure to include an relevant HTTP reuqests from the client-side to the server-side
-> to help illustrate the end-to-end flow._
-
-### ViewModel Tier
-
-> _Provide a summary of this tier of your architecture. This
-> section will follow the same instructions that are given for the View
-> Tier above._
->>>>>>> 119a0a1b2e88f19624ce6c82cfa5ba8a06263e0c
 
 - The User Controller class defines the following methods to provide REST API services to manage the store's users' information:
   1. getUsers() - to get a list of all the users registered in the store.
@@ -220,7 +198,6 @@ Admin:
   4. createUser() - to register a new user into the store
   5. deleteUser() - to close the account of a particular user in the store
 
-<<<<<<< HEAD
 - The Cart Controller class defines the following methods to provide REST API services to manage a user's cart:
 1. getCart () - to access all the items in a user's cart an display them to a logged in user.
 2. getCartItem () - to access the details of a particular cart item 
@@ -239,30 +216,7 @@ Admin:
 
 ### Static Code Analysis/Design Improvements
  - This section will be added once the code base is complete.
-=======
-### Model Tier
-
-> _Provide a summary of this tier of your architecture. This
-> section will follow the same instructions that are given for the View
-> Tier above._
-
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class diagrams) with some details such as critical attributes and methods.
-
-### Static Code Analysis/Design Improvements
-
-> _Discuss design improvements that you would make if the project were
-> to continue. These improvement should be based on your direct
-> analysis of where there are problems in the code base which could be
-> addressed with design changes, and describe those suggested design
-> improvements._
-
-> _With the results from the Static Code Analysis exercise,
-> discuss the resulting issues/metrics measurements along with your analysis
-> and recommendations for further improvements. Where relevant, include
-> screenshots from the tool and/or corresponding source code that was flagged._
->>>>>>> 119a0a1b2e88f19624ce6c82cfa5ba8a06263e0c
-
+ 
 ## Testing
 
 > _This section will provide information about the testing performed
