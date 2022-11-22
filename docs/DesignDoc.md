@@ -103,7 +103,7 @@ A Customer can create Sale. The Sale is an event which occurs after the customer
 
 Each sale will be saved in the purchase history after the payment is made (even if you have chosen the cash on delivery option). Purchase history is the collection of sales.
 
-![Domain Model](Revised-Final-Domain-Model.png)
+![Domain Model](docs/Domain Model Final.pdf)
 
 ## Architecture and Design
 
