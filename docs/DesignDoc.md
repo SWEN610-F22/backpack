@@ -16,12 +16,11 @@ geometry: margin=1in
 
 ## Executive Summary
 
-Backpack is an online e-store that sells gear and equipment for outdoor adventures such us camping, biking, hiking, fishing and so on. Backpack is focused on providing quality gear to outdoor enthusiasts at the best prices, nothing more nothing less. Backpack helps you experience the transformational power of nature. We understand the simple joy of having the right clothing and gear work the way it is supposed to. So our purpose is to awaken a lifelong love of the outdoors, for all. 
+Backpack is an online e-store that sells gear and equipment for outdoor adventures such us camping, biking, hiking, fishing and so on. Backpack is focused on providing quality gear to outdoor enthusiasts at the best prices, nothing more nothing less. Backpack helps you experience the transformational power of nature. We understand the simple joy of having the right clothing and gear work the way it is supposed to. So our purpose is to awaken a lifelong love of the outdoors, for all.
 
 Backpack also provides the option for users to make a curated list of equipments used during an outdoor trip to a certain destination. Users who are not familiar with the gear needed for a certain trip can reference these curated lists and add them to their cart, this makes it easier for newbies to buy equipment based on their necessity. So whether you are new to the outdoors or a seasoned pro, we hope you'll choose us to enhance your outdoor experiences.
 
 Backpack targets an audience of people who love fitness and outdoor adventures.
-
 
 ## Requirements
 
@@ -127,41 +126,33 @@ This section describes the web interface flow; this is how the user views and in
 with the e-store application.
 
 The following are the web interface flows for a customer and an admin respectively:
-Customer: 
-1. Registered Customer: 
+Customer:
+
+1. Registered Customer:
    - The customer lands on the home page.
    - Since the customer is already registered, the customer proceeds to login by clicking on the login button.
    - The customer is taken to the login page.
    - The cutomer enters their username and logs in to their account.
    - The customer is taken to their home page.
    - The customer can either a) Lookup a product using the search bar or b) Choose a product to view from the ones listed on the home page.
-            a) The customer chooses to lookup a product using the search bar.
-                - The customer enters a product name
-                - The product appears on the page
-                - The customer clicks on the producta and is taken to a new page displaying a larger image of the product along with its description and price
-                - The customer adds the product to the cart using the "Add to cart" button
-                - The customer clicks on the cart icon on the top of the page and is taken to the cart page
-                - A list of items in the cart alongside their quantities and prices are shown
-                - The customer can add and delete items in the cart.
-                - The customer can checkout the items in the cart using the "Proceed to checkout" button on this page.
-            b) The customer chooses a product to view from the ones listed on the home page
-               - The customer clicks on a product from the set of products shown on their homepage.
-               - Steps 2 through 8 are repeated from a)
-      
-    - The customer can logout once they are done shopping
+     a) The customer chooses to lookup a product using the search bar. - The customer enters a product name - The product appears on the page - The customer clicks on the producta and is taken to a new page displaying a larger image of the product along with its description and price - The customer adds the product to the cart using the "Add to cart" button - The customer clicks on the cart icon on the top of the page and is taken to the cart page - A list of items in the cart alongside their quantities and prices are shown - The customer can add and delete items in the cart. - The customer can checkout the items in the cart using the "Proceed to checkout" button on this page.
+     b) The customer chooses a product to view from the ones listed on the home page - The customer clicks on a product from the set of products shown on their homepage. - Steps 2 through 8 are repeated from a)
+   - The customer can logout once they are done shopping
 2. New Customer :
-  - The customer lands on the home page.
-  - Since they are not registered, if they try to sign in with a username, they will be shown an error message.
-  - They click on the SignUp button on the home page to proceed to register as a customer.
-  - The provide a username to register with.
-  - They click on the "Register" button.
-  - If they enter a username already in use, they will receive the message: "This username already exists."
-  - The enter a username not in use and click on the "Register" button.
-  - They get a success message "Thank you for your registration".
-  - The return to the home page.
-  - They can follow the steps from the beginning to the end in 1. to begin shopping as a registered user.
+
+- The customer lands on the home page.
+- Since they are not registered, if they try to sign in with a username, they will be shown an error message.
+- They click on the SignUp button on the home page to proceed to register as a customer.
+- The provide a username to register with.
+- They click on the "Register" button.
+- If they enter a username already in use, they will receive the message: "This username already exists."
+- The enter a username not in use and click on the "Register" button.
+- They get a success message "Thank you for your registration".
+- The return to the home page.
+- They can follow the steps from the beginning to the end in 1. to begin shopping as a registered user.
 
 Admin:
+
 - The admin lands on the home page.
 - They login as an admin using the "Login" button on the home page.
 - Once logged in, they can either shop as a registered customer following the steps in 1. under "Customer", or manage their store's inventory.
@@ -170,9 +161,11 @@ Admin:
 - They can then return to the previous page if they want to shop or logout using the drop-down at the top of the page.
 
 ### View Tier
+
 - The View Tier is implementd using the Angular framework and constitutes the front-end/client-side functionality of the app.
 - It is composed of the landing page component, login component, register component, view-product component, inventory component, and cart-page component.
-- Each of the components consist of four different types of files- 
+- Each of the components consist of four different types of files-
+
   1. .html file - which is used to design the overall UI of the component page.
   2. scss file- which is used to style the different UI elements (such as buttons, input text fields etc) of the component page.
   3. .ts file - which defines the dynamic functionality of the component page such as UI element interactions with the user and the app operations that follow.
@@ -181,10 +174,12 @@ Admin:
   ![Sequence Diagrams]()
 
 ### ViewModel Tier
+
 - It is implemented using the Spring framework.
 - The ViewModel tier of an application following the MVVM architecture design pattern is composed of the Controller class which provides the REST API services to manage frontend - backend interactions in the app.
 - Our app so far provides 3 controller classes: Product Controller, User Controller and Cart Controller to provde REST API services to operate the app inventory (Product Controller), user login and registration (User Controller) and user cart (Cart Controller).
 - The Product Controller class defines the following methods to provide REST API services to manage the store inventory :
+
   1. getProducts() - to access the entire inventory
   2. getProduct() - to access a specific product using the product id
   3. updateProduct() - to edit an existing product in the inventory
@@ -192,6 +187,7 @@ Admin:
   5. deleteProduct() - to delete a specific product from the inventory by providing the product id
 
 - The User Controller class defines the following methods to provide REST API services to manage the store's users' information:
+
   1. getUsers() - to get a list of all the users registered in the store.
   2. getUser() - to access the details of a particular user
   3. updateUser() - to update the details of a particular user
@@ -199,24 +195,50 @@ Admin:
   5. deleteUser() - to close the account of a particular user in the store
 
 - The Cart Controller class defines the following methods to provide REST API services to manage a user's cart:
+
 1. getCart () - to access all the items in a user's cart an display them to a logged in user.
-2. getCartItem () - to access the details of a particular cart item 
+2. getCartItem () - to access the details of a particular cart item
 3. updateCart() - to update the items in a user's cart
 4. deleteProduct() - to delete a product from the user's cart
 5. addToCart() - to add a new item to the user's cart
 
 ### Model Tier
+
 -The Model tier of the app is also implemented using the Spring framework and constitutes the back-end/server-side functionality of the app.
 -It is composed of the model classes each describing a CartItem, User and a Product, their corresponding DAO interfaces and their corresponding FileDAO classes implementing the corresponding DAO interfaces.
+
 - The FileDao classes define the methods described in their corresponding DAO interfaces when they implement those interfaces.
 - The methods are the same as the ones described in the Controller classes above, but in their FileDao classes, the methods are defined to make changes in the database of the app (in our case local json files).
 - For eg, the createProduct() method, creates and adds a new product to the inventory database file - "products.json"
 
-![Class Diagram](Class-Diagram.jpeg)
+1. estore-api Class Diagram
+   ![Class Diagram](Class-Diagram.jpeg)
+
+2. estore-api and estore-ui connection class diagram
+   ![Class Diagram](estore-api-and-estore-ui-connection-class-diagram.png)
+
+3. user and user-store connection class diagram
+   ![Class Diagram](user-and-user-store-connection-class-diagram.png)
+
+4. pages in estore-ui class diagram
+   ![Class Diagram](pages-in-estore-ui-class-diagram.png)
+
+5. pages and services connection class diagram
+   ![Class Diagram](pages-and-services-connection-class-diagram.png)
+
+6. components in estore-ui class diagram
+   ![Class Diagram](components-in-estore-ui-class-diagram.jpg)
+
+7. components and services connection class diagram
+   ![Class Diagram](components-and-services-connection-class-diagram.jpg)
+
+8. models and services connection class diagram
+   ![Class Diagram](models-and-services-connection-class-diagram.png)
 
 ### Static Code Analysis/Design Improvements
- - This section will be added once the code base is complete.
- 
+
+- This section will be added once the code base is complete.
+
 ## Testing
 
 > _This section will provide information about the testing performed
