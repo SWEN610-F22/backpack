@@ -2,13 +2,11 @@ package com.estore.api.estoreapi.helper;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import com.estore.api.estoreapi.model.CartItem;
 import com.estore.api.estoreapi.model.Product;
-import com.estore.api.estoreapi.model.User;
+
 import com.estore.api.estoreapi.persistence.ProductDAO;
-import com.estore.api.estoreapi.persistence.UserDAO;
 
 public class UserCartHelper {
     ProductDAO productDao;

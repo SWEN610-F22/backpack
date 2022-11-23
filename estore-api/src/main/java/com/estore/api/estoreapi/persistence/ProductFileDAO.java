@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.estore.api.estoreapi.model.Product;
-import com.estore.api.estoreapi.model.CartItem;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
@@ -43,7 +42,7 @@ public class ProductFileDAO implements ProductDAO {
      * 
      * @return The next id
      */
-    private synchronized static int nextId() {
+    private static synchronized int nextId() {
         int id = nextId;
         ++nextId;
         return id;
@@ -112,7 +111,7 @@ public class ProductFileDAO implements ProductDAO {
     @Override
     public Product updateProduct(Product product) throws IOException {
         synchronized(products) {
-            if (products.containsKey(product.getId()) == false)
+            if (!products.containsKey(product.getId()))
                 return null;  // product does not exist
 
             products.put(product.getId(), product);

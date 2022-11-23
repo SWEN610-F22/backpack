@@ -1,8 +1,6 @@
 package com.estore.api.estoreapi.controller;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,7 +49,7 @@ public class UserController {
             } else {
                 users = userDao.findUsers(username);
             }
-            return new ResponseEntity<User[]>(users, HttpStatus.OK);
+            return new ResponseEntity<>(users, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -71,11 +69,11 @@ public class UserController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable int id) {
-        LOG.info("GET /users/" + id);
+        LOG.log(Level.INFO, "GET /users/{}",id);
         try {
             User user = userDao.getUser(id);
             if (user != null)
-                return new ResponseEntity<User>(user, HttpStatus.OK);
+                return new ResponseEntity<>(user, HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
@@ -87,12 +85,12 @@ public class UserController {
 
     @PutMapping("")
     public ResponseEntity<User> updateUser(@RequestBody User user) {
-        LOG.info("PUT /user " + user);
+        LOG.log(Level.INFO, "PUT /users :{}",user);
 
         try {
             User newUser = userDao.updateUser(user);
             if (newUser != null)
-                return new ResponseEntity<User>(newUser, HttpStatus.OK);
+                return new ResponseEntity<>(newUser, HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
@@ -103,45 +101,20 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        LOG.info("POST /user " + user);
+        LOG.log(Level.INFO, "POST /users :{}",user);
         try {
             User[] existingUsers = userDao.findUsers(user.getUsername());
             if (existingUsers.length > 0) {
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             } else {
                 User createdUser = userDao.createUser(user);
-                return new ResponseEntity<User>(createdUser, HttpStatus.CREATED);
+                return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
             }
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    // @DeleteMapping("")
-    // public ResponseEntity<User[]> deleteUsers(@RequestParam(required = false) String name) {
-    //     try {
-    //         User[] users;
-    //         if (name == null) {
-    //             users = userDao.getUsers();
-    //             System.out.println("no users deleted");
-    //         } else {
-    //             users = userDao.findUsers(name);
-    //             List<User> list = Arrays.asList(users);
-    //             for (User p : list) {
-    //                 if (p.getName() == name) {
-    //                     list.remove(p);
-    //                 }
-    //             }
-    //             users = (User[]) list.toArray();
-    //         }
-    //         return new ResponseEntity<User[]>(users, HttpStatus.OK);
-    //     } catch (IOException e) {
-    //         LOG.log(Level.SEVERE, e.getLocalizedMessage());
-    //         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    //     }
-
-    // }
 
     /**
      * Deletes a {@linkplain User user} with the given id
@@ -154,7 +127,7 @@ public class UserController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable int id) {
-        LOG.info("DELETE /users/" + id);
+        LOG.log(Level.INFO, "DELETE /users/{}",id);
         try {
             if (userDao.deleteUser(id)) {
                 return new ResponseEntity<>(HttpStatus.OK);

@@ -2,8 +2,7 @@ package com.estore.api.estoreapi.persistence;
 
 import java.io.IOException;
 import com.estore.api.estoreapi.model.Product;
-import com.estore.api.estoreapi.model.CartItem;
-import com.estore.api.estoreapi.model.User;
+
 
 /**
  * Defines the interface for {@linkplain Product product} object persistence
