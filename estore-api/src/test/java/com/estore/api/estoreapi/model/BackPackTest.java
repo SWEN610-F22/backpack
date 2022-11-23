@@ -11,7 +11,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 @Tag("Model-tier")
-public class BackPackTest {
+class BackPackTest {
 
         @Test
         void createBackPack() {
@@ -45,7 +45,7 @@ public class BackPackTest {
                 BackPack backpack = new BackPack(1, 1, "Lake Onterio fishing",
                                 "this backpack is for those who want to go fishing at lake Onterio",
                                 "Lake Onterio Rochester NewYork", "fishing", products);
-                assertFalse(backpack.equals(null));
+                assertNotEquals(null, backpack);
         }
 
         @Test
@@ -57,7 +57,7 @@ public class BackPackTest {
                 BackPack backpack = new BackPack(1, 1, "Lake Onterio fishing",
                                 "this backpack is for those who want to go fishing at lake Onterio",
                                 "Lake Onterio Rochester NewYork", "fishing", products);
-                assertFalse(backpack.equals(product));
+                assertNotEquals(backpack, product);
         }
 
         @Test

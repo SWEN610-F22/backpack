@@ -18,7 +18,7 @@ import com.estore.api.estoreapi.persistence.BackPackDAO;
 import com.estore.api.estoreapi.persistence.ProductDAO;
 
 @Tag("Controller-tier")
-public class BackPackControllerTest {
+class BackPackControllerTest {
 
     private BackPackController backpackController;
     private BackPackDAO mockBackPackDAO;
