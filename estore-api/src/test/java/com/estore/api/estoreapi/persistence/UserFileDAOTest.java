@@ -28,7 +28,7 @@ public class UserFileDAOTest {
     ObjectMapper mockObjectMapper;
 
     @BeforeEach
-    public void setupUserFileDAO() throws IOException {
+    void setupUserFileDAO() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
         testUsers = new User[3];
         
@@ -51,13 +51,13 @@ public class UserFileDAOTest {
     }
 
     @Test
-    public void findUsers() {
+    void findUsers() {
         User[] users = userFileDAO.findUsers("zac");
         assertEquals(1, users.length);
     }
 
     @Test
-    public void findUserWithoutText() {
+    void findUserWithoutText() {
         User[] users = userFileDAO.findUsers(null);
         assertEquals(testUsers.length, users.length);
     }
@@ -72,7 +72,7 @@ public class UserFileDAOTest {
     }
 
     @Test
-    public void testSaveException() throws IOException {
+    void testSaveException() throws IOException {
         doThrow(new IOException()).when(mockObjectMapper).writeValue(any(File.class), any(User[].class));
         User user = new User(1, "zac", false);
         assertThrows(IOException.class, () -> userFileDAO.createUser(user), "IOException not thrown");
@@ -85,7 +85,7 @@ public class UserFileDAOTest {
     }
 
     @Test
-    public void testCreateUser() {
+    void testCreateUser() {
         // Setup
         User user = new User(1, "zac", false);
 
@@ -101,7 +101,7 @@ public class UserFileDAOTest {
     }
 
     @Test
-    public void testDeleteUser() {
+    void testDeleteUser() {
         // new user
         User user = new User(1, "zac", false);
 

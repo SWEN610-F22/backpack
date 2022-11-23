@@ -30,7 +30,7 @@ public class BackPackFileDAOTest {
     ObjectMapper mockObjectMapper;
 
     @BeforeEach
-    public void setupBackPackFileDAO() throws IOException {
+    void setupBackPackFileDAO() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
         testBackPacks = new BackPack[3];
         testBackPacks[0] = new BackPack(1,1,"backpack1","description for backpack1", "location1","activity1", new int[] {1,2,3});
@@ -52,13 +52,13 @@ public class BackPackFileDAOTest {
     }
 
     @Test
-    public void findBackPacks() {
+    void findBackPacks() {
         BackPack[] backpacks = backpackFileDAO.findBackPacks("1");
         assertEquals(1, backpacks.length);
     }
 
     @Test
-    public void findBackPackWithoutText() {
+    void findBackPackWithoutText() {
         BackPack[] backpacks = backpackFileDAO.findBackPacks(null);
         assertEquals(testBackPacks.length, backpacks.length);
     }
@@ -73,7 +73,7 @@ public class BackPackFileDAOTest {
     }
 
     @Test
-    public void testSaveException() throws IOException {
+    void testSaveException() throws IOException {
         doThrow(new IOException()).when(mockObjectMapper).writeValue(any(File.class), any(BackPack[].class));
         BackPack backpack = new BackPack(1,1,"backpack1","description for backpack1", "location1","activity1", new int[] {1,2,3});
         assertThrows(IOException.class, () -> backpackFileDAO.createBackPack(backpack), "IOException not thrown");
@@ -86,7 +86,7 @@ public class BackPackFileDAOTest {
     }
 
     @Test
-    public void testCreateBackPack() {
+    void testCreateBackPack() {
         // Setup
         BackPack backpack = new BackPack(4,4,"backpack4","description for backpack4", "location1","activity1", new int[] {1,2,3});
 
@@ -99,7 +99,7 @@ public class BackPackFileDAOTest {
     }
 
     @Test
-    public void testDeleteBackPack() {
+    void testDeleteBackPack() {
         // new backpack
         BackPack backpack = new BackPack(1,1,"backpack1","description for backpack1", "location1","activity1", new int[] {1,2,3});
 

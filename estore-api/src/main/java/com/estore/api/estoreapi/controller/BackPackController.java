@@ -56,7 +56,7 @@ public class BackPackController {
             } else {
                 backpacks = backpackDao.findBackPacks(search);
             }
-            return new ResponseEntity<BackPack[]>(backpacks, HttpStatus.OK);
+            return new ResponseEntity<>(backpacks, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

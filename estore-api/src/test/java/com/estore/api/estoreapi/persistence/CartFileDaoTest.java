@@ -32,7 +32,7 @@ public class CartFileDaoTest {
     ObjectMapper mockObjectMapper;
 
     @BeforeEach
-    public void setupCartFileDAO() throws IOException {
+    void setupCartFileDAO() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
         testItems = new CartItem[3];
         testItems[0] = new CartItem(1, 1, 1);

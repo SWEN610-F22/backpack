@@ -20,7 +20,6 @@ import static org.mockito.Mockito.when;
 
 import com.estore.api.estoreapi.model.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.test.context.TestPropertySource;
 
 public class ProductFileDAOTest {
     ProductFileDAO productFileDAO;
@@ -28,7 +27,7 @@ public class ProductFileDAOTest {
     ObjectMapper mockObjectMapper;
 
     @BeforeEach
-    public void setupProductFileDAO() throws IOException {
+    void setupProductFileDAO() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
         testProducts = new Product[3];
         testProducts[0] = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
@@ -50,13 +49,13 @@ public class ProductFileDAOTest {
     }
 
     @Test
-    public void findProducts() {
+    void findProducts() {
         Product[] products = productFileDAO.findProducts("camp");
         assertEquals(1, products.length);
     }
 
     @Test
-    public void findProductWithoutText() {
+    void findProductWithoutText() {
         Product[] products = productFileDAO.findProducts(null);
         assertEquals(testProducts.length, products.length);
     }
@@ -71,7 +70,7 @@ public class ProductFileDAOTest {
     }
 
     @Test
-    public void testSaveException() throws IOException {
+    void testSaveException() throws IOException {
         doThrow(new IOException()).when(mockObjectMapper).writeValue(any(File.class), any(Product[].class));
         Product product = new Product(1, "BootsBootsBoots", "They are indeed boots", 100.00, 10000,"fish", "http://www.google.com");
         assertThrows(IOException.class, () -> productFileDAO.createProduct(product), "IOException not thrown");
@@ -84,7 +83,7 @@ public class ProductFileDAOTest {
     }
 
     @Test
-    public void testCreateProduct() {
+    void testCreateProduct() {
         // Setup
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
 
@@ -104,7 +103,7 @@ public class ProductFileDAOTest {
     }
 
     @Test
-    public void testDeleteProduct() {
+    void testDeleteProduct() {
         // new product
         Product product = new Product(1, "Fishing Rod", "a fishing rod", 10.11, 100,"fish", "http://www.google.com");
 

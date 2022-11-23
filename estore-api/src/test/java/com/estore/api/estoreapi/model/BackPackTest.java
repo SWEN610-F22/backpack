@@ -40,7 +40,7 @@ public class BackPackTest {
         }
 
         @Test
-        public void testEqualsNull() {
+        void testEqualsNull() {
                 int[] products = new int[] { 2, 3, 4 };
                 BackPack backpack = new BackPack(1, 1, "Lake Onterio fishing",
                                 "this backpack is for those who want to go fishing at lake Onterio",
@@ -49,7 +49,7 @@ public class BackPackTest {
         }
 
         @Test
-        public void testEqualsDifferentObjects() {
+        void testEqualsDifferentObjects() {
                 Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10, "fish",
                                 "http://www.google.com");
 
@@ -61,7 +61,7 @@ public class BackPackTest {
         }
 
         @Test
-        public void testEqualsProductWithDifferentId() {
+        void testEqualsProductWithDifferentId() {
                 int[] products = new int[] { 2, 3, 4 };
                 BackPack backpack = new BackPack(1, 1, "Lake Onterio fishing",
                                 "this backpack is for those who want to go fishing at lake Onterio",
@@ -73,7 +73,7 @@ public class BackPackTest {
         }
 
         @Test
-        public void testEqualsWithSameId() {
+        void testEqualsWithSameId() {
                 int[] products = new int[] { 2, 3, 4 };
                 BackPack backpack = new BackPack(1, 1, "Lake Onterio fishing",
                                 "this backpack is for those who want to go fishing at lake Onterio",

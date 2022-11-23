@@ -188,7 +188,7 @@ public class CartController {
             CartItem[] cart = cartDao.getCartForUser(cartItem.getUserId());
             UserCartHelper cartHelper = new UserCartHelper(productDAO);      
             Product[] userCart = cartHelper.convertCart(cart);
-            return new ResponseEntity<Product[]>(userCart, HttpStatus.OK);
+            return new ResponseEntity<>(userCart, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

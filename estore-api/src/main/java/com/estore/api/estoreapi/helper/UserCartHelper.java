@@ -27,8 +27,7 @@ public class UserCartHelper {
                 cart.add(newProduct);
             }
         }
-        Product[] products = cart.toArray(new Product[0]);
-        return products;
+        return cart.toArray(new Product[0]);
     }
 
     public Product convertCartItem(CartItem item) throws IOException {

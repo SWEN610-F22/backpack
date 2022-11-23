@@ -110,9 +110,7 @@ public class BackPack {
         if (getClass() != obj.getClass())
             return false;
         BackPack other = (BackPack) obj;
-        if (id != other.id)
-            return false;
-        return true;
+        return id == other.id;
     }
 
 }

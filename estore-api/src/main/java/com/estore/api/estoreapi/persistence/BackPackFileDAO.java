@@ -27,15 +27,25 @@ public class BackPackFileDAO implements BackPackDAO {
 
     private boolean load() throws IOException {
         backpacks = new TreeMap<>();
-        nextId = 0;
+        setNextId(0);
         BackPack[] backpacksArray = objectMapper.readValue(new File(filename), BackPack[].class);
         for (BackPack backpack : backpacksArray) {
             backpacks.put(backpack.getId(), backpack);
-            if (backpack.getId() > nextId)
-                nextId = backpack.getId();
+            if (backpack.getId() > getNextId())
+                setNextId(backpack.getId());
         }
-        ++nextId;
+        setNextId(getNextId()+1);
         return true;
+    }
+
+    
+
+    public static int getNextId() {
+        return nextId;
+    }
+
+    public static void setNextId(int nextId) {
+        BackPackFileDAO.nextId = nextId;
     }
 
     /**
@@ -43,7 +53,7 @@ public class BackPackFileDAO implements BackPackDAO {
      *
      * @return The next id
      */
-    private synchronized static int nextId() {
+    private static synchronized int nextId() {
         int id = nextId;
         ++nextId;
         return id;
@@ -114,7 +124,7 @@ public class BackPackFileDAO implements BackPackDAO {
     @Override
     public BackPack updateBackPack(BackPack backpack) throws IOException {
         synchronized (backpacks) {
-            if (backpacks.containsKey(backpack.getId()) == false)
+            if (!backpacks.containsKey(backpack.getId()))
                 return null; // user does not exist
 
             backpacks.put(backpack.getId(), backpack);
