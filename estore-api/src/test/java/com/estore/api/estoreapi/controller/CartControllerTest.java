@@ -2,6 +2,7 @@ package com.estore.api.estoreapi.controller;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -133,4 +134,120 @@ public class CartControllerTest {
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
+    @Test
+    void testGetCartWithException() throws IOException{
+        doThrow(new IOException()).when(mockCartDAO).getCart();
+        ResponseEntity<CartItem[]> response = cartController.getCart();
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
+    @Test
+    void testGetCartForUserWithException() throws IOException{
+        doThrow(new IOException()).when(mockCartDAO).getCartForUser(10);
+        ResponseEntity<Product[]> response = cartController.getCartForUser(10);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
+    @Test
+    void testDecreaseWhenCartItemIsRemoved() throws IOException{
+        when(mockCartDAO.decrease(2, 1)).thenReturn(null);
+        CartItem item = new CartItem(1, 2, 2);
+        Product product = new Product(0, "", "", 0, 0, "", "");
+        ResponseEntity<Product> response = cartController.decrease(item);
+        assertEquals(product, response.getBody());
+    }
+
+    @Test
+    void testDecreaseWithException() throws IOException{
+        CartItem item = new CartItem(1, 2, 2);
+        doThrow(new IOException()).when(mockCartDAO).decrease(2, 1);
+        ResponseEntity<Product> response = cartController.decrease(item);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void testIncreaseWithException() throws IOException{
+        CartItem item = new CartItem(1, 2, 2);
+        doThrow(new IOException()).when(mockCartDAO).increase(2, 1,1);
+        doThrow(new IOException()).when(mockProductDAO).getProduct(2);
+        ResponseEntity<Product> response = cartController.increase(item);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void testClearWithException() throws IOException{
+        CartItem item = new CartItem(1, 2, 2);
+        doThrow(new IOException()).when(mockCartDAO).clearItem(2, 1);
+        ResponseEntity<Product[]> response = cartController.clearItem(item);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void testAddToCart() throws IOException{
+        CartItem item = new CartItem(1, 2, 2);
+        Product product2 = new Product(2, "Product2", "Description2", 10, 10, "giehige", "http://www.google.com");
+        when(mockCartDAO.getProductInUserCart(2, 1)).thenReturn(null);
+        when(mockCartDAO.addToCart(item)).thenReturn(item);
+        when(mockProductDAO.getProduct(2)).thenReturn(product2);
+        ResponseEntity<Product> response = cartController.addToCart(item);
+        assertEquals(product2, response.getBody());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+    }
+
+    @Test
+    void testAddToCartWhenItemExists() throws IOException{
+        CartItem item = new CartItem(1, 2, 2);
+        Product product2 = new Product(2, "Product2", "Description2", 10, 10, "giehige", "http://www.google.com");
+        when(mockCartDAO.getProductInUserCart(2, 1)).thenReturn(item);
+        when(mockCartDAO.increase(2,1,10)).thenReturn(item);
+        when(mockProductDAO.getProduct(2)).thenReturn(product2);
+        ResponseEntity<Product> response = cartController.addToCart(item);
+        assertEquals(product2, response.getBody());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+    }
+
+    @Test
+    void testAddToCartWithException() throws IOException{
+        CartItem item = new CartItem(1, 2, 2);
+        when(mockCartDAO.getProductInUserCart(2, 1)).thenReturn(null);
+        doThrow(new IOException()).when(mockCartDAO).addToCart(item);
+        ResponseEntity<Product> response = cartController.addToCart(item);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
+    @Test
+    void testCheckout() throws IOException{
+        Integer[] productIds = {2};
+        when(mockCartDAO.getIdsForClearing(1)).thenReturn(productIds);
+        Product product2 = new Product(2, "Product2", "Description2", 10, 10, "giehige", "http://www.google.com");
+        when(mockProductDAO.getProduct(2)).thenReturn(product2);
+        when(mockCartDAO.clearUserCart(1)).thenReturn(true);
+        ResponseEntity<Boolean> response = cartController.checkout(1);
+        assertTrue(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testCheckoutWhenFalse() throws IOException{
+        Integer[] productIds = {2};
+        when(mockCartDAO.getIdsForClearing(1)).thenReturn(productIds);
+        Product product2 = new Product(2, "Product2", "Description2", 10, 10, "giehige", "http://www.google.com");
+        when(mockProductDAO.getProduct(2)).thenReturn(product2);
+        when(mockCartDAO.clearUserCart(1)).thenReturn(false);
+        ResponseEntity<Boolean> response = cartController.checkout(1);
+        assertFalse(response.getBody());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void testCheckoutWithException() throws IOException{
+        Integer[] productIds = {2};
+        when(mockCartDAO.getIdsForClearing(1)).thenReturn(productIds);
+        Product product2 = new Product(2, "Product2", "Description2", 10, 10, "giehige", "http://www.google.com");
+        when(mockProductDAO.getProduct(2)).thenReturn(product2);
+        when(mockCartDAO.clearUserCart(1)).thenReturn(true);
+        doThrow(new IOException()).when(mockCartDAO).clearUserCart(1);
+        ResponseEntity<Boolean> response = cartController.checkout(1);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
 }
