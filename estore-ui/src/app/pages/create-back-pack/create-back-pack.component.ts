@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackPack } from '../../models/backpack.model';
 import { BackpackService } from '../../services/backpack.service';
-import { NgForm } from '@angular/forms';
 import { Product } from 'src/app/models/Product';
 import { ProductService } from 'src/app/services/product.service';
 import { UserService } from 'src/app/services/user.service';
@@ -10,8 +9,7 @@ import { UserStore } from 'src/app/state/user.store';
 
 @Component({
   selector: 'app-create-back-pack',
-  templateUrl: './create-back-pack.component.html',
-  styleUrls: ['./create-back-pack.component.scss']
+  templateUrl: './create-back-pack.component.html'
 })
 
 
@@ -31,7 +29,6 @@ export class CreateBackPackComponent implements OnInit {
   constructor(private backpackService: BackpackService, private productService: ProductService, private userService: UserService, private userStore: UserStore) { }
 
   ngOnInit(): void {
-    this.resetForm();
     this.userStore.getUserId().subscribe((id) => this.userId = Number(id));
     this.productService.getProducts().subscribe((products) => this.products = products);
   }
@@ -45,20 +42,6 @@ export class CreateBackPackComponent implements OnInit {
       this.products = products
     });
   }
-
-
-  resetForm(form?: NgForm) {
-    // if(form!=null)
-    //     form.reset();
-    //     this.backpack={
-    //       name:"",
-    //       description:"",
-    //       location:"",
-    //       activity:"",
-    //       productId:[0,0,0]
-    //     }
-  }
-
 
   submitData() {
     this.backpack.userId = this.userId;

@@ -1,15 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-view-backpacks-page',
-  templateUrl: './view-backpacks-page.component.html',
-  styleUrls: ['./view-backpacks-page.component.scss']
+  templateUrl: './view-backpacks-page.component.html'
 })
-export class ViewBackpacksPageComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+export class ViewBackpacksPageComponent {
 
 }

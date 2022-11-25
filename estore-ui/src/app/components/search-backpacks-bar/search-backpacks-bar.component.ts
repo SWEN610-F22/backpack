@@ -2,17 +2,11 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-search-backpacks-bar',
-  templateUrl: './search-backpacks-bar.component.html',
-  styleUrls: ['./search-backpacks-bar.component.scss']
+  templateUrl: './search-backpacks-bar.component.html'
 })
-export class SearchBackpacksBarComponent implements OnInit {
+export class SearchBackpacksBarComponent {
 
   @Output() onSearchBackpacks: EventEmitter<string> = new EventEmitter();
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
   onSearch(searchString : string){
     this.onSearchBackpacks.emit(searchString);

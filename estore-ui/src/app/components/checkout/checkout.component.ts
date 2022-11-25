@@ -5,8 +5,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { UserStore } from 'src/app/state/user.store';
 @Component({
   selector: 'app-checkout',
-  templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.scss']
+  templateUrl: './checkout.component.html'
 })
 export class CheckoutComponent implements OnInit {
 

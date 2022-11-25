@@ -76,7 +76,7 @@ export class CartComponent implements OnInit {
       alert(product.name+" is currently out of stock. Please delete from cart before proceeding.");
       return;
     }
-    let quantityInInventory = this.getInventoryQuantity(productId!);
+    let quantityInInventory = this.getInventoryQuantity(productId);
     if(product.quantity>quantityInInventory){
       alert(product.name+" amount exceeds stock. Please decrease amount in cart to "+quantityInInventory+" or lower.");
       return;

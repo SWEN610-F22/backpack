@@ -1,6 +1,6 @@
 export class BackPack {
 
-    id?: number|undefined;
+    id?: number;
     userId?:number;
     name: string = "";
     description: string = "";

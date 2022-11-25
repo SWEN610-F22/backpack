@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/models/Product';
 import {Product2} from '../../models/product.model';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-inventory',

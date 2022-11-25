@@ -1,5 +1,5 @@
 export class Product2 {
-    id?:number|undefined;
+    id?:number;
     name: string = "";
     description: string = "";
     price?: number;
