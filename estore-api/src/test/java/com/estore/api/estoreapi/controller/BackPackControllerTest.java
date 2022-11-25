@@ -1,12 +1,12 @@
 package com.estore.api.estoreapi.controller;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.estore.api.estoreapi.model.BackPack;
+import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.persistence.BackPackDAO;
 import com.estore.api.estoreapi.persistence.ProductDAO;
 
@@ -224,6 +225,41 @@ class BackPackControllerTest {
         int Id = 99;
         doThrow(new IOException()).when(mockBackPackDAO).deleteBackPack(Id);
         ResponseEntity<BackPack> response = backpackController.deleteBackPack(Id);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
+    @Test
+    void getProductsInBackPack() throws IOException {
+        int[] products = new int[] { 2, 3, 4 };
+        BackPack backpack = new BackPack(1, 1, "Lake Onterio fishing",
+                "this backpack is for those who want to go fishing at lake Onterio",
+                "Lake Onterio Rochester NewYork", "fishing", products);
+
+        Product product2 = new Product(2, "Product2", "Description2", 10, 10, "giehige", "http://www.google.com");
+        Product product3 = new Product(3, "Product3", "Description3", 10, 10, "giehige", "http://www.google.com");
+        Product product4 = new Product(4, "Product4", "Description4", 10, 10, "giehige", "http://www.google.com");
+        Product[] productsArray = {product2, product3, product4};
+        when(mockBackPackDAO.getBackPack(backpack.getId())).thenReturn(backpack);
+        when(mockProductDAO.getProduct(2)).thenReturn(product2);
+        when(mockProductDAO.getProduct(3)).thenReturn(product3);
+        when(mockProductDAO.getProduct(4)).thenReturn(product4);
+        ResponseEntity<Product[]> response = backpackController.getProductsInBackPack(backpack.getId());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertArrayEquals(productsArray, response.getBody());
+    }
+
+    @Test
+    void getProductsInBackpackWhenBackpackNotFound() throws IOException{
+        when(mockBackPackDAO.getBackPack(1)).thenReturn(null);
+        ResponseEntity<Product[]> response = backpackController.getProductsInBackPack(1);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void getProductsInternalServerError() throws IOException{
+        int Id = 99;
+        doThrow(new IOException()).when(mockBackPackDAO).getBackPack(Id);
+        ResponseEntity<Product[]> response = backpackController.getProductsInBackPack(Id);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
