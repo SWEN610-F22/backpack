@@ -33,7 +33,7 @@ export class CartComponent implements OnInit {
   updateTotalPrice(): number{
     let totalPrice = 0;
     for(const product of this.cart){
-      let thisRowTotal = (product.price) * (product.quantity!)
+      let thisRowTotal = (product.price) * (product.quantity);
       product.totalPrice = Number(thisRowTotal.toFixed(2));
       totalPrice += thisRowTotal;
     }

@@ -5,8 +5,7 @@ import {Product2} from '../../models/product.model';
 
 @Component({
   selector: 'app-inventory',
-  templateUrl: './inventory.component.html',
-  styleUrls: ['./inventory.component.scss']
+  templateUrl: './inventory.component.html'
 })
 export class InventoryComponent implements OnInit {
   products: Product[] = [];

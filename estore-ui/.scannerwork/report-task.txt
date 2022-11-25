@@ -2,5 +2,5 @@ projectKey=estore-ui
 serverUrl=http://localhost:9000
 serverVersion=9.7.1.62043
 dashboardUrl=http://localhost:9000/dashboard?id=estore-ui
-ceTaskId=AYSw4WGV_yPkaS8CTv10
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYSw4WGV_yPkaS8CTv10
+ceTaskId=AYSw9PZl_yPkaS8CTv13
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYSw9PZl_yPkaS8CTv13

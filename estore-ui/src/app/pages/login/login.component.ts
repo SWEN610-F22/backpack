@@ -14,9 +14,9 @@ import { UserService } from '../../services/user.service';
 export class LoginComponent implements OnInit {
 
   user: User = new User;
-  public isLoggedIn:boolean = false;
+  public isLoggedIn: boolean = false;
 
-  constructor(private userService: UserService, private router:Router, private userStore:UserStore) { 
+  constructor(private userService: UserService, private router: Router, private userStore: UserStore) {
     if (this.isLoggedIn) {
       router.navigate(['']);
     }
@@ -27,34 +27,32 @@ export class LoginComponent implements OnInit {
     this.resetForm();
   }
 
-  resetForm(form?:NgForm){
-    if(form!=null)
-        form.reset();
-        this.user={
-          username:""
-        }
+  resetForm(form?: NgForm) {
+    if (form != null) {
+      form.reset();
+      this.user = {
+        username: ""
+      }
+    }
   }
 
-doesNotExist = false;
+  doesNotExist = false;
 
-submitData(username: String){
-                this.userService.getUsersMatchingName(this.user.username).subscribe((users)=>{
-                  users.forEach(user=>{
-                    console.log(user);
-                    if(user.username == this.user.username){
-                      this.userStore.setUser(user);
-                      this.router.navigate(['']);
-                      
-                    }
-                  })
+  submitData(username: string) {
+    this.userService.getUsersMatchingName(username).subscribe((users) => {
+      users.forEach(user => {
+        console.log(user);
+        if (user.username == this.user.username) {
+          this.userStore.setUser(user);
+          this.router.navigate(['']);
 
-                  this.doesNotExist = true;
-                 
+        }
+      })
+
+      this.doesNotExist = true;
+    })
 
 
-                })
-    
-                
-}
+  }
 
 }

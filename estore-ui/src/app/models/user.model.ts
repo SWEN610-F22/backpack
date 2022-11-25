@@ -1,5 +1,5 @@
 export class User {
-    id?: number|undefined;
+    id?: number;
     username: string = "";
     isAdmin?: boolean = false;
 }

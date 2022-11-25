@@ -2,16 +2,16 @@
     
     <div class="row my-3"></div>
     
-    <table style="width:80%;">
+    <table style="width:80%;" aria-describedby="cart">
         <tr>
-          <td align="left"><b>Product</b></td>
-          <td align="center"><b>Quantity</b></td>
-          <td></td>
-          <td align="center"><b>Price</b></td>
+          <th><strong>Product</strong></th>
+          <th><strong>Quantity</strong></th>
+          <th></th>
+          <th><strong>Price</strong></th>
         </tr>
-        <tr align="center">
-            <tr align="center" *ngFor="let product of cart">
-                <td align="left">{{product.name}}</td>
+        <tr >
+            <tr *ngFor="let product of cart">
+                <td>{{product.name}}</td>
                 <td>
                     <button type="button" style="border-radius:10px; background-color:red; margin:5%; color: white" (click)="decrease(product)">
                         -
@@ -25,13 +25,13 @@
                     Clear</button></td>
                 <td>{{product.totalPrice}}</td>
             </tr>
-            <tr align="center">
+            <tr>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td>Total price: {{updateTotalPrice()}}</td>
             </tr>
-            <tr align="center">
+            <tr>
                 <td></td>
                 <td></td>
                 <td></td>
