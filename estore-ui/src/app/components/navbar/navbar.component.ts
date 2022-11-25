@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { User } from 'src/app/models/user.model';
 import { UserStore } from 'src/app/state/user.store';
 
 @Component({
@@ -12,7 +10,7 @@ import { UserStore } from 'src/app/state/user.store';
 })
 export class NavbarComponent implements OnInit {
 
-  public username!:String;
+  public username!:string;
   public isLoggedIn:boolean = false;
   public isAdminLoggedIn:boolean = false;
 

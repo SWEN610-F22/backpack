@@ -36,11 +36,11 @@ export class UserService {
 
   getUsersMatchingName(username: string): Observable<User[]> {
     const endpoint = `${this.apiURL}?name=${username}`
-    const users = this.httpClient.get<User[]>(this.apiURL);
+    const users = this.httpClient.get<User[]>(endpoint);
     return users;
   }
 
-  getUser(id:Number):Observable<User>{
+  getUser(id:number):Observable<User>{
     const endpoint =`${this.apiURL}/${id}`;
     return this.httpClient.get<User>(endpoint);
   }

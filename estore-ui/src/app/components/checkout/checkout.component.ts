@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
-import { NgForm } from '@angular/forms';
 import { UserStore } from 'src/app/state/user.store';
 @Component({
   selector: 'app-checkout',
@@ -34,9 +33,9 @@ export class CheckoutComponent implements OnInit {
 
   updateTotalPrice(): number {
     let totalPrice = 0;
-    for (let i = 0; i < this.cart.length; i++) {
-      let thisRowTotal = (this.cart[i].price) * (this.cart[i].quantity!)
-      this.cart[i].totalPrice = Number(thisRowTotal.toFixed(2));
+    for (const product of this.cart) {
+      let thisRowTotal = (product.price) * (product.quantity);
+      product.totalPrice = Number(thisRowTotal.toFixed(2));
       totalPrice += thisRowTotal;
     }
     return Number(totalPrice.toFixed(2));
