@@ -8,8 +8,7 @@ import { UserStore } from 'src/app/state/user.store';
 
 @Component({
   selector: 'app-cart',
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  templateUrl: './cart.component.html'
 })
 export class CartComponent implements OnInit {
   cart:Product[] = [];

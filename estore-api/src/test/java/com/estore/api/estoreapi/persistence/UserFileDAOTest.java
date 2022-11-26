@@ -4,12 +4,13 @@ import java.io.File;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.when;
 import com.estore.api.estoreapi.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class UserFileDAOTest {
+class UserFileDAOTest {
     UserFileDAO userFileDAO;
     User[] testUsers;
     ObjectMapper mockObjectMapper;
@@ -28,7 +29,7 @@ public class UserFileDAOTest {
     void setupUserFileDAO() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
         testUsers = new User[3];
-        
+
         testUsers[0] = new User(1, "zac", false);
         testUsers[1] = new User(2, "vin", false);
         testUsers[2] = new User(3, "merg", false);
@@ -116,8 +117,8 @@ public class UserFileDAOTest {
         Boolean result2 = assertDoesNotThrow(() -> userFileDAO.deleteUser(realUser.getId()),
                 "Unexpected exception thrown");
 
-        assertEquals(result, true);
-        assertEquals(result2, false);
+        assertTrue(result);
+        assertFalse(result2);
 
     }
 

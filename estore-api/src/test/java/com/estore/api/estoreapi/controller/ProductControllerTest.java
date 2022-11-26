@@ -17,7 +17,7 @@ import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.persistence.ProductDAO;
 
 @Tag("Controller-tier")
-public class ProductControllerTest {
+class ProductControllerTest {
     private ProductController productController;
     private ProductDAO mockProductDAO;
 

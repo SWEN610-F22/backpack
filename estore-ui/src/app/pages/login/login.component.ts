@@ -30,9 +30,9 @@ export class LoginComponent implements OnInit {
   resetForm(form?: NgForm) {
     if (form != null) {
       form.reset();
-      this.user = {
-        username: ""
-      }
+    }
+    this.user = {
+      username: ""
     }
   }
 

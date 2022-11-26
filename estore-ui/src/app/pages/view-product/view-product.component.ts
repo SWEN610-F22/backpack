@@ -9,8 +9,7 @@ import { UserStore } from 'src/app/state/user.store';
 
 @Component({
   selector: 'app-view-product',
-  templateUrl: './view-product.component.html',
-  styleUrls: ['./view-product.component.scss']
+  templateUrl: './view-product.component.html'
 })
 export class ViewProductComponent implements OnInit {
   

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @Tag("Model-tier")
-public class CartItemTest {
+class CartItemTest {
 CartItem cartItem = new CartItem(1, 1, 1);
     @Test
     void createProduct(){
@@ -57,14 +57,14 @@ CartItem cartItem = new CartItem(1, 1, 1);
     @Test
     void testEqualsNull(){
         CartItem cartItem = new CartItem(1, 2, 3);
-        assertFalse(cartItem.equals(null));   
+        assertNotEquals(null, cartItem);   
     }
 
     @Test
     void testEqualsDifferentObjects(){
         CartItem cartItem = new CartItem(1, 2, 3);
         User user = new User(1, "user", false);
-        assertFalse(cartItem.equals(user));   
+        assertNotEquals(cartItem, user);   
     }
 
     @Test

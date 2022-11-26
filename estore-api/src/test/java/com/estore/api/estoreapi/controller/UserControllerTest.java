@@ -17,7 +17,7 @@ import com.estore.api.estoreapi.model.User;
 import com.estore.api.estoreapi.persistence.UserDAO;
 
 @Tag("Controller-tier")
-public class UserControllerTest {
+class UserControllerTest {
     private UserController userController;
     private UserDAO mockUserDAO;
 

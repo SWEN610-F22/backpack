@@ -2,13 +2,11 @@ package com.estore.api.estoreapi.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @Tag("Model-tier")
-public class ProductTest {
+class ProductTest {
 Product product = new Product(10,"doesn't matter", "it doesn't matter", 45.78, 7,"fish", "http://www.google.com");
     @Test
     void createProduct(){
@@ -25,22 +23,9 @@ Product product = new Product(10,"doesn't matter", "it doesn't matter", 45.78, 7
         Product productOriginal = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         Product productSame = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         Product productNewDiff = new Product(2, "Not a fishing rod", "Can not be used for fishing", 53.0, 1,"fish", "http://www.google.com");
-        Product productNull = new Product(2, null, "Can not be used for fishing", 53.0, 1,"fish", "http://www.google.com");
 
-        assertTrue(productOriginal!=productNewDiff);
-        assertTrue(productOriginal!=null);
-        assertTrue(productOriginal.getId()!=productNewDiff.getId());
-        assertTrue(productNull.getName()!=productOriginal.getName());
-        assertTrue(productOriginal.getName()!=productNewDiff.getName());
-        assertTrue(productOriginal.getQuantity()!=productNewDiff.getQuantity());
-
-        assertTrue(productOriginal==productOriginal);
-        assertTrue(productOriginal.getClass()==productSame.getClass());
-        assertTrue(productOriginal.getClass()==productNewDiff.getClass());
-        assertTrue(null==null);
-        assertTrue(productOriginal.getId()==productSame.getId());
-        assertTrue(productOriginal.getName()==productSame.getName());
-        assertTrue(productOriginal.getQuantity()==productSame.getQuantity());
+        assertEquals(productOriginal, productSame);
+        assertNotEquals(productOriginal, productNewDiff);
     }
 
 
@@ -94,14 +79,14 @@ Product product = new Product(10,"doesn't matter", "it doesn't matter", 45.78, 7
     @Test
     void testEqualsNull(){
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
-        assertFalse(product.equals(null));   
+        assertNotEquals(null,product);   
     }
 
     @Test
     void testEqualsDifferentObjects(){
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         User user = new User(1, "user", false);
-        assertFalse(product.equals(user));   
+        assertNotEquals(product, user);   
     }
 
     @Test

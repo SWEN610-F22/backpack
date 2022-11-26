@@ -22,7 +22,7 @@ import com.estore.api.estoreapi.persistence.ProductDAO;
 import com.estore.api.estoreapi.persistence.CartDAO;
 
 @Tag("Controller-tier")
-public class CartControllerTest {
+class CartControllerTest {
     private CartController cartController;
     private CartDAO mockCartDAO;
     private ProductDAO mockProductDAO;
