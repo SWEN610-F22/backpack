@@ -5,34 +5,24 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.model.CartItem;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.test.context.TestPropertySource;
 
-public class CartFileDaoTest {
+class CartFileDaoTest {
     CartFileDAO cartFileDAO;
     CartItem[] testItems;
     ObjectMapper mockObjectMapper;
 
     @BeforeEach
-    public void setupCartFileDAO() throws IOException {
+    void setupCartFileDAO() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
         testItems = new CartItem[3];
         testItems[0] = new CartItem(1, 1, 1);
@@ -80,106 +70,104 @@ public class CartFileDaoTest {
     }
 
     @Test
-    void testGetProductInUserCart(){
+    void testGetProductInUserCart() {
         CartItem matchItem = testItems[0];
         CartItem item = assertDoesNotThrow(() -> cartFileDAO.getProductInUserCart(1, 1), "Unexpected exception thrown");
         assertEquals(matchItem, item);
     }
 
     @Test
-    void testGetProductNotInUserCart(){
+    void testGetProductNotInUserCart() {
         CartItem item = assertDoesNotThrow(() -> cartFileDAO.getProductInUserCart(5, 4), "Unexpected exception thrown");
         assertNull(item);
     }
 
     @Test
-    void testIncrease(){
+    void testIncrease() {
         CartItem matchItem = new CartItem(1, 1, 2);
         CartItem item = assertDoesNotThrow(() -> cartFileDAO.increase(1, 1, 5), "Unexpected exception thrown");
         assertEquals(matchItem, item);
     }
 
     @Test
-    void testIncreaseWhenLimitExceeds(){
+    void testIncreaseWhenLimitExceeds() {
         CartItem matchItem = new CartItem(1, 1, 1);
         CartItem item = assertDoesNotThrow(() -> cartFileDAO.increase(1, 1, 1), "Unexpected exception thrown");
         assertEquals(matchItem, item);
     }
 
     @Test
-    void testIncreaseWhenProductDoesNotExist(){
+    void testIncreaseWhenProductDoesNotExist() {
         CartItem item = assertDoesNotThrow(() -> cartFileDAO.increase(1, 4, 1), "Unexpected exception thrown");
         assertNull(item);
     }
 
     @Test
-    void testDecrease(){
+    void testDecrease() {
         CartItem matchItem = new CartItem(2, 2, 1);
         CartItem item = assertDoesNotThrow(() -> cartFileDAO.decrease(2, 2), "Unexpected exception thrown");
         assertEquals(matchItem, item);
     }
 
     @Test
-    void testDecreaseWhenQtyOne(){
+    void testDecreaseWhenQtyOne() {
         CartItem item = assertDoesNotThrow(() -> cartFileDAO.decrease(1, 1), "Unexpected exception thrown");
         assertNull(item);
     }
 
     @Test
-    void testDecreaseWhenProductDoesNotExist(){
+    void testDecreaseWhenProductDoesNotExist() {
         CartItem item = assertDoesNotThrow(() -> cartFileDAO.decrease(1, 4), "Unexpected exception thrown");
         assertNull(item);
     }
 
     @Test
-    void testClearItemWhenCartExists(){
+    void testClearItemWhenCartExists() {
         boolean response = assertDoesNotThrow(() -> cartFileDAO.clearItem(1, 1), "Unexpected exception thrown");
         assertTrue(response);
 
     }
 
     @Test
-    void testClearItemWhenCartDoesNotExist(){
+    void testClearItemWhenCartDoesNotExist() {
         boolean response = assertDoesNotThrow(() -> cartFileDAO.clearItem(1, 5), "Unexpected exception thrown");
         assertFalse(response);
 
     }
 
     @Test
-    void testClearCartWhenCartExists(){
+    void testClearCartWhenCartExists() {
         boolean response = assertDoesNotThrow(() -> cartFileDAO.clearUserCart(1), "Unexpected exception thrown");
         assertTrue(response);
 
     }
 
     @Test
-    void testClearCartWhenCartDoesNotExist(){
+    void testClearCartWhenCartDoesNotExist() {
         boolean response = assertDoesNotThrow(() -> cartFileDAO.clearUserCart(5), "Unexpected exception thrown");
         assertFalse(response);
 
     }
 
     @Test
-    void testGetIdsForClearing(){
-        Integer[] match = {1};
+    void testGetIdsForClearing() {
+        Integer[] match = { 1 };
         Integer[] ids = assertDoesNotThrow(() -> cartFileDAO.getIdsForClearing(1), "Unexpected exception thrown");
         assertArrayEquals(match, ids);
     }
 
     @Test
-    void testGetQuantityIfProductExists(){
+    void testGetQuantityIfProductExists() {
         int expected = 1;
-        int  quantity = assertDoesNotThrow(() -> cartFileDAO.getQuantity(1, 1), "Unexpected exception thrown");
-        assertEquals(expected,quantity);
+        int quantity = assertDoesNotThrow(() -> cartFileDAO.getQuantity(1, 1), "Unexpected exception thrown");
+        assertEquals(expected, quantity);
     }
 
     @Test
-    void testGetQuantityIfProductDoesNotExist(){
+    void testGetQuantityIfProductDoesNotExist() {
         int expected = 0;
-        int  quantity = assertDoesNotThrow(() -> cartFileDAO.getQuantity(1, 5), "Unexpected exception thrown");
-        assertEquals(expected,quantity);
+        int quantity = assertDoesNotThrow(() -> cartFileDAO.getQuantity(1, 5), "Unexpected exception thrown");
+        assertEquals(expected, quantity);
     }
-
-
 
 }

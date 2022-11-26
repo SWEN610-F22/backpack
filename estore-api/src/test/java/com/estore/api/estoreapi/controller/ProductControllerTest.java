@@ -17,7 +17,7 @@ import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.persistence.ProductDAO;
 
 @Tag("Controller-tier")
-public class ProductControllerTest {
+class ProductControllerTest {
     private ProductController productController;
     private ProductDAO mockProductDAO;
 
@@ -26,13 +26,13 @@ public class ProductControllerTest {
      * a mock Product DAO
      */
     @BeforeEach
-    public void setupProductController() {
+    void setupProductController() {
         mockProductDAO = mock(ProductDAO.class);
         productController = new ProductController(mockProductDAO);
     }
 
     @Test
-    public void getProduct() throws IOException {
+    void getProduct() throws IOException {
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10, "fish", "http://www.google.com");
     
         when(mockProductDAO.getProduct(product.getId())).thenReturn(product);
@@ -42,7 +42,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void getProductNotFound() throws Exception {
+    void getProductNotFound() throws Exception {
         int productId = 99;
         when(mockProductDAO.getProduct(productId)).thenReturn(null);
         ResponseEntity<Product> response = productController.getProduct(productId);
@@ -50,7 +50,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void getProductWithException() throws Exception {
+    void getProductWithException() throws Exception {
         int productId = 99;
         doThrow(new IOException()).when(mockProductDAO).getProduct(productId);
         ResponseEntity<Product> response = productController.getProduct(productId);
@@ -58,7 +58,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void createProductSuccessfully() throws IOException {
+    void createProductSuccessfully() throws IOException {
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         when(mockProductDAO.createProduct(product)).thenReturn(product);
         Product[] matching = new Product[0];
@@ -69,7 +69,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void createProductFail() throws IOException {
+    void createProductFail() throws IOException {
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         when(mockProductDAO.createProduct(product)).thenReturn(null);
         Product[] matching = {product};
@@ -79,7 +79,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void createProductWithException() throws IOException { 
+    void createProductWithException() throws IOException { 
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         doThrow(new IOException()).when(mockProductDAO).createProduct(product);
         Product[] matching = new Product[0];
@@ -89,7 +89,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void updateProductSuccessfully() throws IOException {
+    void updateProductSuccessfully() throws IOException {
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         Product[] products = new Product[1];
         products[0] = product;
@@ -102,7 +102,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void updateProductFailed() throws IOException {
+    void updateProductFailed() throws IOException {
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         when(mockProductDAO.updateProduct(product)).thenReturn(null);
         ResponseEntity<Product[]> response = productController.updateProduct(product);
@@ -110,7 +110,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void updateProductHandleException() throws IOException {
+    void updateProductHandleException() throws IOException {
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         doThrow(new IOException()).when(mockProductDAO).updateProduct(product);
         ResponseEntity<Product[]> response = productController.updateProduct(product);
@@ -118,7 +118,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void getProducts() throws IOException {
+    void getProducts() throws IOException {
         Product[] products = new Product[2];
         products[0] = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         products[1] = new Product(2, "Fishing rod 2", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
@@ -129,14 +129,14 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void getProductsWithException() throws IOException {
+    void getProductsWithException() throws IOException {
         doThrow(new IOException()).when(mockProductDAO).getProducts();
         ResponseEntity<Product[]> response = productController.getProducts(null);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
     }
 
     @Test
-    public void getProductsWithSearch() throws IOException {
+    void getProductsWithSearch() throws IOException {
         String searchString = "camp";
         Product[] products = new Product[3];
         products[0] = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
@@ -150,7 +150,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void testSearchProductsHandleException() throws IOException {
+    void testSearchProductsHandleException() throws IOException {
         String searchString = "camp";
         doThrow(new IOException()).when(mockProductDAO).findProducts(searchString);
         ResponseEntity<Product[]> response = productController.getProducts(searchString);
@@ -158,7 +158,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void testDeleteProduct() throws IOException {
+    void testDeleteProduct() throws IOException {
         int productId = 99;
         when(mockProductDAO.deleteProduct(productId)).thenReturn(true);
         ResponseEntity<Product> response = productController.deleteProduct(productId);
@@ -166,7 +166,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void testDeleteProductNotFound() throws IOException {
+    void testDeleteProductNotFound() throws IOException {
         int productId = 99;
         when(mockProductDAO.deleteProduct(productId)).thenReturn(false);
         ResponseEntity<Product> response = productController.deleteProduct(productId);
@@ -174,7 +174,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void testDeleteProductHandleException() throws IOException {
+    void testDeleteProductHandleException() throws IOException {
         int productId = 99;
         doThrow(new IOException()).when(mockProductDAO).deleteProduct(productId);
         ResponseEntity<Product> response = productController.deleteProduct(productId);

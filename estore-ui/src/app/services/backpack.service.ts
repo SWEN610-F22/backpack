@@ -49,7 +49,7 @@ export class BackpackService {
 
   getBackPacksMatchingLocation(location: string): Observable<BackPack[]> {
     const endpoint = `${this.apiURL}?location=${location}`
-    const backpacks = this.httpClient.get<BackPack[]>(this.apiURL);
+    const backpacks = this.httpClient.get<BackPack[]>(endpoint);
     return backpacks;
   }
 

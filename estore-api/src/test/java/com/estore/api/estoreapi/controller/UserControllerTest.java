@@ -17,7 +17,7 @@ import com.estore.api.estoreapi.model.User;
 import com.estore.api.estoreapi.persistence.UserDAO;
 
 @Tag("Controller-tier")
-public class UserControllerTest {
+class UserControllerTest {
     private UserController userController;
     private UserDAO mockUserDAO;
 
@@ -26,13 +26,13 @@ public class UserControllerTest {
      * a mock User DAO
      */
     @BeforeEach
-    public void setupUserController() {
+    void setupUserController() {
         mockUserDAO = mock(UserDAO.class);
         userController = new UserController(mockUserDAO);
     }
 
     @Test
-    public void getUser() throws IOException {
+    void getUser() throws IOException {
         User user = new User(1, "zac", false);
     
         when(mockUserDAO.getUser(user.getId())).thenReturn(user);
@@ -42,7 +42,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getUserNotFound() throws Exception {
+    void getUserNotFound() throws Exception {
         int userId = 99;
         when(mockUserDAO.getUser(userId)).thenReturn(null);
         ResponseEntity<User> response = userController.getUser(userId);
@@ -50,7 +50,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getUserWithException() throws Exception {
+    void getUserWithException() throws Exception {
         int userId = 99;
         doThrow(new IOException()).when(mockUserDAO).getUser(userId);
         ResponseEntity<User> response = userController.getUser(userId);
@@ -58,7 +58,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void createUserSuccessfully() throws IOException {
+    void createUserSuccessfully() throws IOException {
         User user = new User(1, "zac", false);
         when(mockUserDAO.createUser(user)).thenReturn(user);
         User[] matching = new User[0];
@@ -69,7 +69,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void createUserFail() throws IOException {
+    void createUserFail() throws IOException {
         User user = new User(1, "zac", false);
         when(mockUserDAO.createUser(user)).thenReturn(null);
         User[] matching = {user};
@@ -79,7 +79,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void createUserWithException() throws IOException { 
+    void createUserWithException() throws IOException { 
         User user = new User(1, "zac", false);
         doThrow(new IOException()).when(mockUserDAO).createUser(user);
         User[] matching = new User[0];
@@ -89,7 +89,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void updateUserSuccessfully() throws IOException {
+    void updateUserSuccessfully() throws IOException {
         User user = new User(1, "zac", false);
         when(mockUserDAO.updateUser(user)).thenReturn(user);
         ResponseEntity<User> response = userController.updateUser(user);
@@ -100,7 +100,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void updateUserFailed() throws IOException {
+    void updateUserFailed() throws IOException {
         User user = new User(1, "zac", false);
         when(mockUserDAO.updateUser(user)).thenReturn(null);
         ResponseEntity<User> response = userController.updateUser(user);
@@ -108,7 +108,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void updateUserHandleException() throws IOException {
+    void updateUserHandleException() throws IOException {
         User user = new User(1, "zac", false);
         doThrow(new IOException()).when(mockUserDAO).updateUser(user);
         ResponseEntity<User> response = userController.updateUser(user);
@@ -116,7 +116,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getUsers() throws IOException {
+    void getUsers() throws IOException {
         User[] users = new User[2];
         users[0] = new User(1, "zac", false);
         users[1] = new User(2, "vin", false);
@@ -127,14 +127,14 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getUsersWithException() throws IOException {
+    void getUsersWithException() throws IOException {
         doThrow(new IOException()).when(mockUserDAO).getUsers();
         ResponseEntity<User[]> response = userController.getUsers(null);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
     }
 
     @Test
-    public void getUsersWithSearch() throws IOException {
+    void getUsersWithSearch() throws IOException {
         String searchString = "camp";
         User[] users = new User[3];
         users[0] = new User(1, "zac", false);
@@ -148,7 +148,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testSearchUsersHandleException() throws IOException {
+    void testSearchUsersHandleException() throws IOException {
         String searchString = "camp";
         doThrow(new IOException()).when(mockUserDAO).findUsers(searchString);
         ResponseEntity<User[]> response = userController.getUsers(searchString);
@@ -156,7 +156,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testDeleteUser() throws IOException {
+    void testDeleteUser() throws IOException {
         int userId = 99;
         when(mockUserDAO.deleteUser(userId)).thenReturn(true);
         ResponseEntity<User> response = userController.deleteUser(userId);
@@ -164,7 +164,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testDeleteUserNotFound() throws IOException {
+    void testDeleteUserNotFound() throws IOException {
         int userId = 99;
         when(mockUserDAO.deleteUser(userId)).thenReturn(false);
         ResponseEntity<User> response = userController.deleteUser(userId);
@@ -172,7 +172,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testDeleteUserHandleException() throws IOException {
+    void testDeleteUserHandleException() throws IOException {
         int userId = 99;
         doThrow(new IOException()).when(mockUserDAO).deleteUser(userId);
         ResponseEntity<User> response = userController.deleteUser(userId);

@@ -22,7 +22,7 @@
         
         <div class="col-md-6 list-section">
 
-            <table class="table table-responsive">
+            <table class="table table-responsive" aria-describedby="inventory">
                 <thead>
                   <tr>
                     <th scope="col">Product Name</th>
@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let product of products" >
-                    <td scope="row">{{product.name}}</td>
+                    <td>{{product.name}}</td>
                     <td>${{product.price}}</td>
                     <td>{{product.quantity}}</td>
                     <td> <button [class.selected]="product === selectedProduct" type="button" (click)="onEdit(product)" class="btn btn-warning btn-sm me-2">

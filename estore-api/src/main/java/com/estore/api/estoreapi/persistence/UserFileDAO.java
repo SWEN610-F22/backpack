@@ -27,15 +27,25 @@ public class UserFileDAO implements UserDAO {
 
     private boolean load() throws IOException {
         users = new TreeMap<>();
-        nextId = 0;
+        setNextId(0);
         User[] usersArray = objectMapper.readValue(new File(filename), User[].class);
         for (User user : usersArray) {
             users.put(user.getId(), user);
             if (user.getId() > nextId)
-                nextId = user.getId();
+                setNextId(user.getId());
         }
-        ++nextId;
+        setNextId(getNextId()+1);
         return true;
+    }
+
+    
+
+    public static int getNextId() {
+        return nextId;
+    }
+
+    public static void setNextId(int nextId) {
+        UserFileDAO.nextId = nextId;
     }
 
     /**
@@ -43,7 +53,7 @@ public class UserFileDAO implements UserDAO {
      * 
      * @return The next id
      */
-    private synchronized static int nextId() {
+    private static synchronized int nextId() {
         int id = nextId;
         ++nextId;
         return id;
@@ -114,7 +124,7 @@ public class UserFileDAO implements UserDAO {
     @Override
     public User updateUser(User user) throws IOException {
         synchronized (users) {
-            if (users.containsKey(user.getId()) == false)
+            if (!users.containsKey(user.getId()))
                 return null; // user does not exist
 
             users.put(user.getId(), user);

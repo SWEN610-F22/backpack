@@ -2,8 +2,6 @@ package com.estore.api.estoreapi.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,7 +56,7 @@ public class BackPackController {
             } else {
                 backpacks = backpackDao.findBackPacks(search);
             }
-            return new ResponseEntity<BackPack[]>(backpacks, HttpStatus.OK);
+            return new ResponseEntity<>(backpacks, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -81,11 +79,11 @@ public class BackPackController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BackPack> getBackPack(@PathVariable int id) {
-        LOG.info("GET /backpacks/" + id);
+        LOG.log(Level.INFO, "GET /backpacks/{}",id);
         try {
             BackPack backpack = backpackDao.getBackPack(id);
             if (backpack != null)
-                return new ResponseEntity<BackPack>(backpack, HttpStatus.OK);
+                return new ResponseEntity<>(backpack, HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
@@ -96,7 +94,7 @@ public class BackPackController {
 
     @GetMapping("products/{id}")
     public ResponseEntity<Product[]> getProductsInBackPack(@PathVariable int id){
-        LOG.info("GET /backpack/products/" + id);
+        LOG.log(Level.INFO, "GET /backpack/products/{}",id);
         try {
             BackPack backpack = backpackDao.getBackPack(id);
             if (backpack != null){
@@ -106,7 +104,7 @@ public class BackPackController {
                     products.add(product);
                 }
                 Product[] productsArray = products.toArray(new Product[0]);
-                return new ResponseEntity<Product[]>(productsArray, HttpStatus.OK);
+                return new ResponseEntity<>(productsArray, HttpStatus.OK);
             }
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -118,12 +116,12 @@ public class BackPackController {
 
     @PutMapping("")
     public ResponseEntity<BackPack> updateBackPack(@RequestBody BackPack backpack) {
-        LOG.info("PUT /backpack " + backpack);
+        LOG.log(Level.INFO, "PUT /backpack :{}",backpack);       
 
         try {
             BackPack newBackPack = backpackDao.updateBackPack(backpack);
             if (newBackPack != null)
-                return new ResponseEntity<BackPack>(newBackPack, HttpStatus.OK);
+                return new ResponseEntity<>(newBackPack, HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
@@ -134,14 +132,14 @@ public class BackPackController {
 
     @PostMapping("")
     public ResponseEntity<BackPack> createBackPack(@RequestBody BackPack backpack) {
-        LOG.info("POST /backpack " + backpack);
+        LOG.log(Level.INFO, "POST /backpack :{}",backpack);  
         try {
             BackPack[] existingBackPacks = backpackDao.findBackPacks(backpack.getName());
             if (existingBackPacks.length > 0) {
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             } else {
                 BackPack createdBackPack = backpackDao.createBackPack(backpack);
-                return new ResponseEntity<BackPack>(createdBackPack, HttpStatus.CREATED);
+                return new ResponseEntity<>(createdBackPack, HttpStatus.CREATED);
             }
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
@@ -160,7 +158,8 @@ public class BackPackController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BackPack> deleteBackPack(@PathVariable int id) {
-        LOG.info("DELETE /backpacks/" + id);
+        LOG.log(Level.INFO, "DELETE /backpacks/{}",id);  
+
         try {
             if (backpackDao.deleteBackPack(id)) {
                 return new ResponseEntity<>(HttpStatus.OK);

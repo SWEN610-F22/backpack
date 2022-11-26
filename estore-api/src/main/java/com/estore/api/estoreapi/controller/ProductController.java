@@ -1,8 +1,6 @@
 package com.estore.api.estoreapi.controller;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,7 +40,7 @@ public class ProductController {
      */
     @GetMapping("")
     public ResponseEntity<Product[]> getProducts(@RequestParam(required = false) String name) {
-        LOG.info("GET /products/" + name);
+        LOG.log(Level.INFO, "GET /products?name={}",name);
         try {
             Product[] products;
             if (name == null) {
@@ -50,7 +48,7 @@ public class ProductController {
             } else {
                 products = productDao.findProducts(name);
             }
-            return new ResponseEntity<Product[]>(products, HttpStatus.OK);
+            return new ResponseEntity<>(products, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -72,11 +70,11 @@ public class ProductController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable int id) {
-        LOG.info("GET /products/" + id);
+        LOG.log(Level.INFO, "GET /products/{}",id);
         try {
             Product product = productDao.getProduct(id);
             if (product != null)
-                return new ResponseEntity<Product>(product, HttpStatus.OK);
+                return new ResponseEntity<>(product, HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
@@ -87,7 +85,7 @@ public class ProductController {
 
     @PutMapping("")
     public ResponseEntity<Product[]> updateProduct(@RequestBody Product product) {
-        LOG.info("PUT /product " + product);
+        LOG.log(Level.INFO, "PUT /products :{}",product);
 
         try {
             Product newProduct = productDao.updateProduct(product);
@@ -103,46 +101,20 @@ public class ProductController {
 
     @PostMapping("")
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        LOG.info("POST /product " + product);
+        LOG.log(Level.INFO, "POST /products :{}",product);
         try {
             Product[] existingProducts = productDao.findProducts(product.getName());
             if (existingProducts.length > 0) {
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             } else {
                 Product createdProduct = productDao.createProduct(product);
-                return new ResponseEntity<Product>(createdProduct, HttpStatus.CREATED);
+                return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
             }
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    // @DeleteMapping("")
-    // public ResponseEntity<Product[]> deleteProducts(@RequestParam(required =
-    // false) String name) {
-    // try {
-    // Product[] products;
-    // if (name == null) {
-    // products = productDao.getProducts();
-    // System.out.println("no products deleted");
-    // } else {
-    // products = productDao.findProducts(name);
-    // List<Product> list = Arrays.asList(products);
-    // for (Product p : list) {
-    // if (p.getName() == name) {
-    // list.remove(p);
-    // }
-    // }
-    // products = (Product[]) list.toArray();
-    // }
-    // return new ResponseEntity<Product[]>(products, HttpStatus.OK);
-    // } catch (IOException e) {
-    // LOG.log(Level.SEVERE, e.getLocalizedMessage());
-    // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
-
-    // }
 
     /**
      * Deletes a {@linkplain Product product} with the given id
@@ -155,7 +127,7 @@ public class ProductController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Product> deleteProduct(@PathVariable int id) {
-        LOG.info("DELETE /products/" + id);
+        LOG.log(Level.INFO, "DELETE /products/{}",id);
         try {
             if (productDao.deleteProduct(id)) {
                 return new ResponseEntity<>(HttpStatus.OK);

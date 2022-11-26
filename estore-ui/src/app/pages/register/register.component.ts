@@ -19,37 +19,37 @@ export class RegisterComponent implements OnInit {
     this.resetForm();
   }
 
-  resetForm(form?:NgForm){
-    if(form!=null)
-        form.reset();
-        this.user={
-          username:""
-        }
+  resetForm(form?: NgForm) {
+    if (form != null)
+      form.reset();
+    this.user = {
+      username: ""
+    }
   }
 
-submitted=false;
-alreadyExists=false;
+  submitted = false;
+  alreadyExists = false;
 
-submitData(username: String){
+  submitData(username: string) {
 
-    console.log("user: "+username);
-              
+    console.log("user: " + username);
 
-            localStorage.setItem(this.user.username,JSON.stringify(this.user));
-             let data: any = localStorage.getItem(this.user.username);
-                    console.log(JSON.parse(data));
 
-                this.userService.createUser(this.user).subscribe((user)=>{
-                  console.log(user);
-                  if(user.username == ""){
-                            this.alreadyExists = true;
-                            this.submitted = false;
-                  }
-                  else{
-                    this.submitted = true;
-                  }
-                });    
-     
-}
+    localStorage.setItem(this.user.username, JSON.stringify(this.user));
+    let data: any = localStorage.getItem(this.user.username);
+    console.log(JSON.parse(data));
+
+    this.userService.createUser(this.user).subscribe((user) => {
+      console.log(user);
+      if (user.username == "") {
+        this.alreadyExists = true;
+        this.submitted = false;
+      }
+      else {
+        this.submitted = true;
+      }
+    });
+
+  }
 
 }

@@ -3,9 +3,7 @@ import { Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Product } from '../models/Product';
 import { CartItem } from '../models/CartItem';
-import { CartComponent } from '../components/cart/cart.component';
 import { UserService } from './user.service';
-import { UserStore } from '../state/user.store';
 
 const httpOptions = {
   headers: new HttpHeaders({

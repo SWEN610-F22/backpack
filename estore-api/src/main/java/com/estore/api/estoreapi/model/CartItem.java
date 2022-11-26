@@ -71,12 +71,7 @@ public class CartItem {
         CartItem other = (CartItem) obj;
         if (userId != other.userId)
             return false;
-        if (productId != other.productId)
-            return false;
-        return true;
+        return productId == other.productId;
     }
 
-    
-   
-    
 }

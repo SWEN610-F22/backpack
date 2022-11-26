@@ -1,11 +1,8 @@
 package com.estore.api.estoreapi.controller;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.ArrayList;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.estore.api.estoreapi.model.Product;
@@ -48,7 +44,7 @@ public class CartController {
         LOG.info("GET /cart/");
         try {
             CartItem[] cart = cartDao.getCart();
-            return new ResponseEntity<CartItem[]>(cart, HttpStatus.OK);
+            return new ResponseEntity<>(cart, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -69,12 +65,12 @@ public class CartController {
      */
     @GetMapping("{userId}")
     public ResponseEntity<Product[]> getCartForUser(@PathVariable int userId) {
-        LOG.info("GET /cart/ " + userId);
+        LOG.log(Level.INFO, "GET /cart/{}",userId);  
         try {
             CartItem[] cart = cartDao.getCartForUser(userId);
             UserCartHelper cartHelper = new UserCartHelper(productDAO);
             Product[] userCart = cartHelper.convertCart(cart);
-            return new ResponseEntity<Product[]>(userCart, HttpStatus.OK);
+            return new ResponseEntity<>(userCart, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -95,15 +91,16 @@ public class CartController {
     */
     @PutMapping("decrease")
     public ResponseEntity<Product> decrease(@RequestBody CartItem cartItem) {
-        LOG.info("GET /cart/decrease " + cartItem);
+        LOG.log(Level.INFO, "GET /cart/decrease: {}",cartItem);
+
         try {
             CartItem decreasedCart = cartDao.decrease(cartItem.getProductId(), cartItem.getUserId());
             if(decreasedCart!=null){
                 UserCartHelper cartHelper = new UserCartHelper(productDAO);
                 Product product = cartHelper.convertCartItem(decreasedCart);
-                return new ResponseEntity<Product>(product, HttpStatus.OK);
+                return new ResponseEntity<>(product, HttpStatus.OK);
             } else {
-                return new ResponseEntity<Product>(new Product(0,"","",0,0,"",""), HttpStatus.OK);
+                return new ResponseEntity<>(new Product(0,"","",0,0,"",""), HttpStatus.OK);
             }
             
         } catch (IOException e) {
@@ -124,14 +121,15 @@ public class CartController {
     */
     @PutMapping("increase")
     public ResponseEntity<Product> increase(@RequestBody CartItem cartItem) {
-        LOG.info("PUT /cart/increase " + cartItem);
+        LOG.log(Level.INFO, "GET /cart/increase: {}",cartItem);
+
         try {
             Product product = productDAO.getProduct(cartItem.getProductId());
             int maxLimit = product.getQuantity();
             CartItem increasedCart = cartDao.increase(cartItem.getProductId(), cartItem.getUserId(), maxLimit);
             UserCartHelper cartHelper = new UserCartHelper(productDAO);
             product = cartHelper.convertCartItem(increasedCart);
-            return new ResponseEntity<Product>(product, HttpStatus.OK);
+            return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -150,26 +148,21 @@ public class CartController {
      */
     @PostMapping("")
     public ResponseEntity<Product> addToCart(@RequestBody CartItem cartItem) {
-        LOG.info("POST /cart " + cartItem);
+        LOG.log(Level.INFO, "POST /cart : {}",cartItem);
         try {
             CartItem existingItem = cartDao.getProductInUserCart(cartItem.getProductId(), cartItem.getUserId());
             CartItem createdCartItem;
             if(existingItem == null){
-                System.out.println("Cart Item does not exist");
                 createdCartItem = cartDao.addToCart(cartItem);
             } else {
-                System.out.println("Cart Item exists");
-                System.out.println(existingItem);
                 Product product = productDAO.getProduct(cartItem.getProductId());
-                System.out.println(product);
                 int maxLimit = product.getQuantity();
-                System.out.println("maxLimit:"+maxLimit);
                 createdCartItem = cartDao.increase(cartItem.getProductId(), cartItem.getUserId(), maxLimit);
             }
         
             UserCartHelper cartHelper = new UserCartHelper(productDAO);
             Product product = cartHelper.convertCartItem(createdCartItem);
-            return new ResponseEntity<Product>(product, HttpStatus.CREATED);
+            return new ResponseEntity<>(product, HttpStatus.CREATED);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -189,13 +182,13 @@ public class CartController {
     */
     @PutMapping("clear")
     public ResponseEntity<Product[]> clearItem(@RequestBody CartItem cartItem) {
-        LOG.info("PUT /clear " + cartItem);
+        LOG.log(Level.INFO, "PUT /clear: {}",cartItem);
         try {
             cartDao.clearItem(cartItem.getProductId(), cartItem.getUserId());
             CartItem[] cart = cartDao.getCartForUser(cartItem.getUserId());
             UserCartHelper cartHelper = new UserCartHelper(productDAO);      
             Product[] userCart = cartHelper.convertCart(cart);
-            return new ResponseEntity<Product[]>(userCart, HttpStatus.OK);
+            return new ResponseEntity<>(userCart, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -218,7 +211,7 @@ public class CartController {
 
     @GetMapping("checkout/{userId}")
     public ResponseEntity<Boolean> checkout(@PathVariable int userId) {
-        LOG.info("GET /checkout/"+userId);
+        LOG.log(Level.INFO, "GET /cart/checkout/{}",userId);
         try {
             Integer[] cartIds = cartDao.getIdsForClearing(userId);
             for(int i=0;i<cartIds.length;i++){
@@ -228,14 +221,14 @@ public class CartController {
             }
             boolean isSuccessful = cartDao.clearUserCart(userId);
             if(isSuccessful){
-                return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+                return new ResponseEntity<>(true, HttpStatus.OK);
             }
             else{
-                return new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
             }
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

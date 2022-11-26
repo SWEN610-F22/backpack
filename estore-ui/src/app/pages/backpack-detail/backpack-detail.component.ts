@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BackPack } from 'src/app/models/backpack.model';
 import { CartItem } from 'src/app/models/CartItem';
 import { Product } from 'src/app/models/Product';
@@ -7,7 +7,6 @@ import { User } from 'src/app/models/user.model';
 import { BackpackService } from 'src/app/services/backpack.service';
 import { CartService } from 'src/app/services/cart.service';
 import { UserService } from 'src/app/services/user.service';
-import { Router } from '@angular/router';
 import { UserStore } from 'src/app/state/user.store';
 
 @Component({

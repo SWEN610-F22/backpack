@@ -59,9 +59,7 @@ public class User {
         if (getClass() != obj.getClass())
             return false;
         User other = (User) obj;
-        if (id != other.id)
-            return false;
-        return true;
+        return (id == other.id);
     }
 
 }

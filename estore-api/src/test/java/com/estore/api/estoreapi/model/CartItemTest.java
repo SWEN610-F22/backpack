@@ -2,13 +2,12 @@ package com.estore.api.estoreapi.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @Tag("Model-tier")
-public class CartItemTest {
+class CartItemTest {
 CartItem cartItem = new CartItem(1, 1, 1);
     @Test
     void createProduct(){
@@ -56,27 +55,27 @@ CartItem cartItem = new CartItem(1, 1, 1);
 
 
     @Test
-    public void testEqualsNull(){
+    void testEqualsNull(){
         CartItem cartItem = new CartItem(1, 2, 3);
-        assertFalse(cartItem.equals(null));   
+        assertNotEquals(null, cartItem);   
     }
 
     @Test
-    public void testEqualsDifferentObjects(){
+    void testEqualsDifferentObjects(){
         CartItem cartItem = new CartItem(1, 2, 3);
         User user = new User(1, "user", false);
-        assertFalse(cartItem.equals(user));   
+        assertNotEquals(cartItem, user);   
     }
 
     @Test
-    public void testEqualsProductWithDifferentId(){
+    void testEqualsProductWithDifferentId(){
         CartItem cartItem = new CartItem(1, 2, 3);        
         CartItem cartItem2 = new CartItem(2, 2, 3); 
         assertNotEquals(cartItem, cartItem2);
     }
 
     @Test
-    public void testEqualsWithSameId(){
+    void testEqualsWithSameId(){
         CartItem cartItem = new CartItem(1, 2, 3);        
         CartItem cartItem2 = new CartItem(1, 2, 3); 
         assertEquals(cartItem, cartItem2);

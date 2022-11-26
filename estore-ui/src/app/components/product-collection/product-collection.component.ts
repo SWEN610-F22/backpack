@@ -8,8 +8,7 @@ import { UserStore } from 'src/app/state/user.store';
 
 @Component({
   selector: 'app-product-collection',
-  templateUrl: './product-collection.component.html',
-  styleUrls: ['./product-collection.component.scss']
+  templateUrl: './product-collection.component.html'
 })
 export class ProductCollectionComponent implements OnInit {
   products: Product[] = [];

@@ -42,7 +42,7 @@ export class UserStore{
         )
     }
 
-    public getUserName() : Observable<String>{
+    public getUserName() : Observable<string>{
         return this.getUser().pipe(
             map((user) => user.username)
         )

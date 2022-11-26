@@ -11,9 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
@@ -22,20 +20,22 @@ import static org.mockito.Mockito.when;
 
 import com.estore.api.estoreapi.model.BackPack;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.test.context.TestPropertySource;
 
-public class BackPackFileDAOTest {
+class BackPackFileDAOTest {
     BackPackFileDAO backpackFileDAO;
     BackPack[] testBackPacks;
     ObjectMapper mockObjectMapper;
 
     @BeforeEach
-    public void setupBackPackFileDAO() throws IOException {
+    void setupBackPackFileDAO() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
         testBackPacks = new BackPack[3];
-        testBackPacks[0] = new BackPack(1,1,"backpack1","description for backpack1", "location1","activity1", new int[] {1,2,3});
-        testBackPacks[1] = new BackPack(2,2,"backpack2","description for backpack2", "location2","activity2", new int[] {4,5,6});
-        testBackPacks[2] = new BackPack(3,3,"backpack3","description for backpack3", "location3","activity3", new int[] {7,8,9});
+        testBackPacks[0] = new BackPack(1, 1, "backpack1", "description for backpack1", "location1", "activity1",
+                new int[] { 1, 2, 3 });
+        testBackPacks[1] = new BackPack(2, 2, "backpack2", "description for backpack2", "location2", "activity2",
+                new int[] { 4, 5, 6 });
+        testBackPacks[2] = new BackPack(3, 3, "backpack3", "description for backpack3", "location3", "activity3",
+                new int[] { 7, 8, 9 });
 
         when(mockObjectMapper
                 .readValue(new File("backpacks.json"), BackPack[].class))
@@ -52,30 +52,33 @@ public class BackPackFileDAOTest {
     }
 
     @Test
-    public void findBackPacks() {
+    void findBackPacks() {
         BackPack[] backpacks = backpackFileDAO.findBackPacks("1");
         assertEquals(1, backpacks.length);
     }
 
     @Test
-    public void findBackPackWithoutText() {
+    void findBackPackWithoutText() {
         BackPack[] backpacks = backpackFileDAO.findBackPacks(null);
         assertEquals(testBackPacks.length, backpacks.length);
     }
 
     @Test
     void updateBackPack() {
-        BackPack backpack = new BackPack(1,1,"backpack1","description for backpack1", "location1","activity1", new int[] {1,2,3});
-        BackPack result = assertDoesNotThrow(() -> backpackFileDAO.updateBackPack(backpack), "Unexpected exception thrown");
+        BackPack backpack = new BackPack(1, 1, "backpack1", "description for backpack1", "location1", "activity1",
+                new int[] { 1, 2, 3 });
+        BackPack result = assertDoesNotThrow(() -> backpackFileDAO.updateBackPack(backpack),
+                "Unexpected exception thrown");
         assertNotNull(result);
         BackPack realBackPack = backpackFileDAO.getBackPack(backpack.getId());
         assertEquals(realBackPack, backpack);
     }
 
     @Test
-    public void testSaveException() throws IOException {
+    void testSaveException() throws IOException {
         doThrow(new IOException()).when(mockObjectMapper).writeValue(any(File.class), any(BackPack[].class));
-        BackPack backpack = new BackPack(1,1,"backpack1","description for backpack1", "location1","activity1", new int[] {1,2,3});
+        BackPack backpack = new BackPack(1, 1, "backpack1", "description for backpack1", "location1", "activity1",
+                new int[] { 1, 2, 3 });
         assertThrows(IOException.class, () -> backpackFileDAO.createBackPack(backpack), "IOException not thrown");
     }
 
@@ -86,9 +89,10 @@ public class BackPackFileDAOTest {
     }
 
     @Test
-    public void testCreateBackPack() {
+    void testCreateBackPack() {
         // Setup
-        BackPack backpack = new BackPack(4,4,"backpack4","description for backpack4", "location1","activity1", new int[] {1,2,3});
+        BackPack backpack = new BackPack(4, 4, "backpack4", "description for backpack4", "location1", "activity1",
+                new int[] { 1, 2, 3 });
 
         // Invoke
         BackPack result = assertDoesNotThrow(() -> backpackFileDAO.createBackPack(backpack),
@@ -99,9 +103,10 @@ public class BackPackFileDAOTest {
     }
 
     @Test
-    public void testDeleteBackPack() {
+    void testDeleteBackPack() {
         // new backpack
-        BackPack backpack = new BackPack(1,1,"backpack1","description for backpack1", "location1","activity1", new int[] {1,2,3});
+        BackPack backpack = new BackPack(1, 1, "backpack1", "description for backpack1", "location1", "activity1",
+                new int[] { 1, 2, 3 });
 
         // backpack currently in system with same id
         BackPack realBackPack = backpackFileDAO.getBackPack(backpack.getId());

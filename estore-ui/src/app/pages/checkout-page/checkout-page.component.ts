@@ -1,15 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-checkout-page',
-  templateUrl: './checkout-page.component.html',
-  styleUrls: ['./checkout-page.component.scss']
+  templateUrl: './checkout-page.component.html'
 })
-export class CheckoutPageComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+export class CheckoutPageComponent{
 
 }

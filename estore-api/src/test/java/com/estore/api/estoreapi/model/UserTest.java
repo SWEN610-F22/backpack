@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 @Tag("Model-tier")
-public class UserTest {
+class UserTest {
 
     @Test
     void createUser() {
@@ -34,27 +34,27 @@ public class UserTest {
     }
    
     @Test
-    public void testEqualsNull(){
+    void testEqualsNull(){
         User user = new User(1, "Regina", true);
-        assertFalse(user.equals(null));   
+        assertNotEquals(null, user);  
     }
 
     @Test
-    public void testEqualsDifferentObjects(){
+    void testEqualsDifferentObjects(){
         Product product = new Product(1, "Fishing rod", "Can be used for fishing", 35.0, 10,"fish", "http://www.google.com");
         User user = new User(1, "user", false);
-        assertFalse(user.equals(product));   
+        assertNotEquals(user, product);
     }
 
     @Test
-    public void testEqualsProductWithDifferentId(){
+    void testEqualsProductWithDifferentId(){
         User user = new User(1, "Regina", true);
         User user2 = new User(2, "Regina", true);
         assertNotEquals(user, user2);
     }
 
     @Test
-    public void testEqualsWithSameId(){
+    void testEqualsWithSameId(){
         User user = new User(1, "Regina", true);
         User user2 = new User(1, "Regina", true);
         assertEquals(user, user2);

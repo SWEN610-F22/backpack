@@ -8,8 +8,7 @@ import { UserStore } from 'src/app/state/user.store';
 
 @Component({
   selector: 'app-cart',
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  templateUrl: './cart.component.html'
 })
 export class CartComponent implements OnInit {
   cart:Product[] = [];
@@ -32,9 +31,9 @@ export class CartComponent implements OnInit {
 
   updateTotalPrice(): number{
     let totalPrice = 0;
-    for(let i=0; i<this.cart.length; i++){
-      let thisRowTotal = (this.cart[i].price) * (this.cart[i].quantity!)
-      this.cart[i].totalPrice = Number(thisRowTotal.toFixed(2));
+    for(const product of this.cart){
+      let thisRowTotal = (product.price) * (product.quantity);
+      product.totalPrice = Number(thisRowTotal.toFixed(2));
       totalPrice += thisRowTotal;
     }
     return Number(totalPrice.toFixed(2));
@@ -56,26 +55,27 @@ export class CartComponent implements OnInit {
   }
 
   isProductInInventory(productId: number): boolean{
-    for(let i=0;i<this.inventory.length;i++){
-      if(this.inventory[i].id==productId)return true;
+    for(const product of this.inventory){
+      if(product.id==productId)return true;
     }
     return false;
   }
 
   getInventoryQuantity(productId: number): number{
-    for(let i=0;i<this.inventory.length;i++){
-      if(this.inventory[i].id==productId)return this.inventory[i].quantity;
+    for(const product of this.inventory){
+      if(product.id==productId)
+      return product.quantity;
     }
     return -1;
   }
 
   increase(product: Product): void {
     const productId = (product?.id !=undefined) ? product.id : 0;
-    if(!(this.isProductInInventory(productId!))){
+    if(!(this.isProductInInventory(productId))){
       alert(product.name+" is currently out of stock. Please delete from cart before proceeding.");
       return;
     }
-    let quantityInInventory = this.getInventoryQuantity(productId!);
+    let quantityInInventory = this.getInventoryQuantity(productId);
     if(product.quantity>quantityInInventory){
       alert(product.name+" amount exceeds stock. Please decrease amount in cart to "+quantityInInventory+" or lower.");
       return;
@@ -107,14 +107,14 @@ export class CartComponent implements OnInit {
   }
 
   checkout(): void{
-    for(let i=0; i<this.cart.length; i++){
-      if(!(this.isProductInInventory((this.cart[i].id)!))){
-        alert(this.cart[i].name+" is currently out of stock. Please delete from cart before proceeding.");
+    for(const product of this.cart){
+      if(!(this.isProductInInventory((product.id)!))){
+        alert(product.name+" is currently out of stock. Please delete from cart before proceeding.");
         return;
       }
-      let quantityInInventory = this.getInventoryQuantity(this.cart[i].id!);
-      if(this.cart[i].quantity>=quantityInInventory){
-        alert(this.cart[i].name+" amount exceeds stock. Please decrease amount in cart to "+quantityInInventory+" or lower.");
+      let quantityInInventory = this.getInventoryQuantity(product.id!);
+      if(product.quantity>=quantityInInventory){
+        alert(product.name+" amount exceeds stock. Please decrease amount in cart to "+quantityInInventory+" or lower.");
         return;
       }
     }

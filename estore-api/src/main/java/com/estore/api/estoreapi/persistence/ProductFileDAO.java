@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.estore.api.estoreapi.model.Product;
-import com.estore.api.estoreapi.model.CartItem;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
@@ -28,28 +27,37 @@ public class ProductFileDAO implements ProductDAO {
 
     private boolean load() throws IOException {
         products = new TreeMap<>();
-        nextId = 0;
+        setNextId(0);
         Product[] productsArray = objectMapper.readValue(new File(filename), Product[].class);
         for (Product product : productsArray) {
             products.put(product.getId(), product);
             if (product.getId() > nextId)
-                nextId = product.getId();
+                setNextId(product.getId());
         }
-        ++nextId;
+        setNextId(getNextId() + 1);
         return true;
     }
+
+    public static int getNextId() {
+        return nextId;
+    }
+
+    public static void setNextId(int nextId) {
+        ProductFileDAO.nextId = nextId;
+    }
+
     /**
      * Generates the next id for a new {@linkplain Product product}
      * 
      * @return The next id
      */
-    private synchronized static int nextId() {
+    private static synchronized int nextId() {
         int id = nextId;
         ++nextId;
         return id;
     }
 
-    private Product[] getProductsArray(String containsText){
+    private Product[] getProductsArray(String containsText) {
         ArrayList<Product> productsList = new ArrayList<>();
 
         for (Product product : products.values()) {
@@ -64,7 +72,7 @@ public class ProductFileDAO implements ProductDAO {
         return productArray;
     }
 
-    private Product[] getProductsArray(){
+    private Product[] getProductsArray() {
         ArrayList<Product> productsList = new ArrayList<>();
 
         for (Product product : products.values()) {
@@ -79,41 +87,43 @@ public class ProductFileDAO implements ProductDAO {
 
     @Override
     public Product[] getProducts() {
-        synchronized(products){
+        synchronized (products) {
             return getProductsArray();
         }
     }
 
-    /** Finds all products with name matching the string in containsText
+    /**
+     * Finds all products with name matching the string in containsText
+     * 
      * @param containsText string to be matched against
      * @return Product[] array that matches the search text
      */
     @Override
     public Product[] findProducts(String containsText) {
-        synchronized(products) {
+        synchronized (products) {
             return getProductsArray(containsText);
         }
     }
 
     /**
-     *  Returns the product with the specific id
+     * Returns the product with the specific id
+     * 
      * @param id The id of the {@link Product product} to get
      *
      * @return Product with the specific id
      */
     @Override
     public Product getProduct(int id) {
-        synchronized(products) {
+        synchronized (products) {
             return products.getOrDefault(id, null);
         }
     }
-    
 
     @Override
     public Product updateProduct(Product product) throws IOException {
-        synchronized(products) {
-            if (products.containsKey(product.getId()) == false)
-                return null;  // product does not exist
+        synchronized (products) {
+            if (!products.containsKey(product.getId()))
+                return null; // product does not exist
 
             products.put(product.getId(), product);
             save();
@@ -122,21 +132,24 @@ public class ProductFileDAO implements ProductDAO {
     }
 
     /**
-     * Saves the {@linkplain Product products} from the map into the file as an array of JSON objects
+     * Saves the {@linkplain Product products} from the map into the file as an
+     * array of JSON objects
+     * 
      * @return true if the {@link Product products} were written successfully
      * @throws IOException when file cannot be accessed or written to
      */
     private boolean save() throws IOException {
         Product[] productArray = getProductsArray();
-        objectMapper.writeValue(new File(filename),productArray);
+        objectMapper.writeValue(new File(filename), productArray);
         return true;
     }
 
     @Override
     public Product createProduct(Product product) throws IOException {
-        synchronized(products) {
-            Product newProduct = new Product(nextId(),product.getName(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getManufacturer(), product.getImageUrl());
-            products.put(newProduct.getId(),newProduct);
+        synchronized (products) {
+            Product newProduct = new Product(nextId(), product.getName(), product.getDescription(), product.getPrice(),
+                    product.getQuantity(), product.getManufacturer(), product.getImageUrl());
+            products.put(newProduct.getId(), newProduct);
             save();
             return newProduct;
         }
@@ -144,15 +157,13 @@ public class ProductFileDAO implements ProductDAO {
 
     @Override
     public boolean deleteProduct(int id) throws IOException {
-        synchronized(products) {
+        synchronized (products) {
             if (products.containsKey(id)) {
                 products.remove(id);
                 return save();
-            }
-            else
+            } else
                 return false;
         }
     }
-
 
 }
