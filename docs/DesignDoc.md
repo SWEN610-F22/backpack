@@ -171,7 +171,9 @@ Admin:
   3. .ts file - which defines the dynamic functionality of the component page such as UI element interactions with the user and the app operations that follow.
   4. .spec.ts file- which are unit test files for the component source file.
 
-  ![Sequence Diagrams]()
+### Sequence Diagram for creating a backpack
+
+![Sequence Diagrams](Create-backpack-sequence-diagram.jpg)
 
 ### ViewModel Tier
 
@@ -219,7 +221,6 @@ Admin:
 
 3. estore-api Class Diagram (Cart)
    ![Class Diagram](E-store-API-Class-Diagram-Cart.png)
-   
 4. estore-api Class Diagram (BackPack)
    ![Class Diagram](E-store-API-Class-Diagram-BackPack.png)
 
@@ -239,10 +240,10 @@ Admin:
    ![Class Diagram](components-in-estore-ui-class-diagram.jpg)
 
 10. components and services connection class diagram
-   ![Class Diagram](components-and-services-connection-class-diagram.jpg)
+    ![Class Diagram](components-and-services-connection-class-diagram.jpg)
 
 11. models and services connection class diagram
-   ![Class Diagram](models-and-services-connection-class-diagram.png)
+    ![Class Diagram](models-and-services-connection-class-diagram.png)
 
 ### Static Code Analysis/Design Improvements
 
