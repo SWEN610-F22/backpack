@@ -211,28 +211,37 @@ Admin:
 - The methods are the same as the ones described in the Controller classes above, but in their FileDao classes, the methods are defined to make changes in the database of the app (in our case local json files).
 - For eg, the createProduct() method, creates and adds a new product to the inventory database file - "products.json"
 
-1. estore-api Class Diagram
-   ![Class Diagram](Class-Diagram.jpeg)
+1. estore-api Class Diagram (Product)
+   ![Class Diagram](E-store-API-Class-Diagram-Product.png)
 
-2. estore-api and estore-ui connection class diagram
+2. estore-api Class Diagram (User)
+   ![Class Diagram](E-store-API-Class-Diagram-User.png)
+
+3. estore-api Class Diagram (Cart)
+   ![Class Diagram](E-store-API-Class-Diagram-Cart.png)
+   
+4. estore-api Class Diagram (BackPack)
+   ![Class Diagram](E-store-API-Class-Diagram-BackPack.png)
+
+5. estore-api and estore-ui connection class diagram
    ![Class Diagram](estore-api-and-estore-ui-connection-class-diagram.png)
 
-3. user and user-store connection class diagram
+6. user and user-store connection class diagram
    ![Class Diagram](user-and-user-store-connection-class-diagram.png)
 
-4. pages in estore-ui class diagram
+7. pages in estore-ui class diagram
    ![Class Diagram](pages-in-estore-ui-class-diagram.png)
 
-5. pages and services connection class diagram
+8. pages and services connection class diagram
    ![Class Diagram](pages-and-services-connection-class-diagram.png)
 
-6. components in estore-ui class diagram
+9. components in estore-ui class diagram
    ![Class Diagram](components-in-estore-ui-class-diagram.jpg)
 
-7. components and services connection class diagram
+10. components and services connection class diagram
    ![Class Diagram](components-and-services-connection-class-diagram.jpg)
 
-8. models and services connection class diagram
+11. models and services connection class diagram
    ![Class Diagram](models-and-services-connection-class-diagram.png)
 
 ### Static Code Analysis/Design Improvements
