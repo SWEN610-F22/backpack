@@ -245,27 +245,37 @@ Admin:
 11. models and services connection class diagram
     ![Class Diagram](models-and-services-connection-class-diagram.jpg)
 
-### Static Code Analysis/Design Improvements
+### Static Code Analysis
+Static code analysis is a method of debugging that is done by examining the code without executing the program. We used a popular static code analysis tool called SonarQube to validate that our code was free from code smells and to also scan for vulnerabilities. All the code written had a rating of A after refactoring.
 
-- This section will be added once the code base is complete.
+![Static Code Analysis](static-code-analysis.png)
+
+The following design improvements were made so far:
+- User sessions were previously stored solely using local storage which made the web application less reactive. It was, therefore, supplemented with Behavior Subjects and Observables.
+- The cart controller had a global user ID that denoted the owner of the cart. This resulted in tightly coupled code, which was resolved by making the user ID local.
+- The cart file DAO initially used an arraylist for loading the data from the json file. This cause nested loops and made lookups tedious. It was replaced with a hashmap
+
+Further design improvements:
+- Introduce ngrx store for state manangement of the angular application. This will reduce the number of calls made to the server significantly and make the application faster.
+- Provide token based authentication with silent refresh.
 
 ## Testing
 
-> _This section will provide information about the testing performed
-> and the results of the testing._
+To test the Java code for the Spring API, each developer has written unit test cases using JUnit. The overall code coverage of the API is 95%.  
+For each user story a developer worked on, anoter team member acted as a tester and manually tested the feature to ensure that the acceptance criteria have been met.
+
+The UI built using angular has not been tested.
 
 ### Acceptance Testing
-
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+  
+Before a developer starts working on the story, they write down the acceptance criteria that ensure that the specification requirements have been met. All the user stories have passed their acceptance criteria test. The team ensured that each acceptance criteria was checked before marking the story done. 
 
 ### Unit Testing and Code Coverage
 
-> _Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets. If there are any anomalies, discuss
-> those._
+Unit testing was performed for each class in the Spring API. The code coverage target was set to 80%. This target made sure that all the important business logic was being tested without being too time-extensive to test trivial details.  
+80% code coverage has been achieved on each class in the API.
+
+![Code Coverage Overview](code-coverage-overview.png)
+![Code Coverage Model](code-coverage-model.png)
+![Code Coverage Controller](code-coverage-controller.png)
+![Code Coverage Persistence](code-coverage-persistence.png)

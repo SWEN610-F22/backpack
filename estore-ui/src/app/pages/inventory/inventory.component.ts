@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/models/Product';
-import {Product2} from '../../models/product.model';
 
 @Component({
   selector: 'app-inventory',
@@ -13,7 +12,7 @@ export class InventoryComponent implements OnInit {
   savedProduct?: Product;
   dissapear = true;
   addProduct = false;
-  newProduct:Product2 = new Product2;
+  newProduct:Product = {name: "", description: "", price: 0, quantity: 0, manufacturer: "", imageUrl: ""};
 
   constructor(private productService: ProductService) { }
 
