@@ -228,13 +228,13 @@ Admin:
    ![Class Diagram](estore-api-and-estore-ui-connection-class-diagram.png)
 
 6. user and user-store connection class diagram
-   ![Class Diagram](user-and-user-store-connection-class-diagram.png)
+   ![Class Diagram](user-and-user-store-connection-class-diagram.jpg)
 
 7. pages in estore-ui class diagram
-   ![Class Diagram](pages-in-estore-ui-class-diagram.png)
+   ![Class Diagram](pages-in-estore-ui-class-diagram.jpg)
 
 8. pages and services connection class diagram
-   ![Class Diagram](pages-and-services-connection-class-diagram.png)
+   ![Class Diagram](pages-and-services-connection-class-diagram.jpg)
 
 9. components in estore-ui class diagram
    ![Class Diagram](components-in-estore-ui-class-diagram.jpg)
@@ -243,7 +243,7 @@ Admin:
     ![Class Diagram](components-and-services-connection-class-diagram.jpg)
 
 11. models and services connection class diagram
-    ![Class Diagram](models-and-services-connection-class-diagram.png)
+    ![Class Diagram](models-and-services-connection-class-diagram.jpg)
 
 ### Static Code Analysis/Design Improvements
 
