@@ -175,6 +175,10 @@ Admin:
 
 ![Sequence Diagrams](Create-backpack-sequence-diagram.jpg)
 
+### Sequence Diagram for customer adding to cart
+
+![Sequence Diagrams](Sequence-diagram-for-add-to-cart.png)
+
 ### ViewModel Tier
 
 - It is implemented using the Spring framework.
