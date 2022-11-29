@@ -225,7 +225,7 @@ Admin:
    ![Class Diagram](E-store-API-Class-Diagram-BackPack.png)
 
 5. estore-api and estore-ui connection class diagram
-   ![Class Diagram](estore-api-and-estore-ui-connection-class-diagram.png)
+   ![Class Diagram](estore-api-and-estore-ui-connection-class-diagram.jpg)
 
 6. user and user-store connection class diagram
    ![Class Diagram](user-and-user-store-connection-class-diagram.jpg)
